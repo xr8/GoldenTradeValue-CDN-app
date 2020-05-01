@@ -40,17 +40,21 @@ function isEmpty(val){
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = true;
-    var iphost = "localhost";
+    var local = false;
+    
+    var hostlocal = "localhost";
+    var hostweb   = "api.gtvsa.com";
+    
     if (local == true) {
 
-        url_base  = "//" + iphost + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
-        url_api   = "//" + iphost + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
+        url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
+        url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
         
         }else{
            
-            url_base            = "//app/";
-            url_api             = "//api/";
+        url_base  = "//" + hostweb + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
+        url_api   = "//" + hostweb + "/";
+        
 
         }
 
