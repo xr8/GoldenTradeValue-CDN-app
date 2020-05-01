@@ -1,4 +1,5 @@
 console.log("Load Js Usuarios");
+apiConecction();
 
 $(document).ready(function(){
 	
@@ -10,11 +11,16 @@ $(document).ready(function(){
 		
 		//---> Update User
 		console.info('Run: Update User');		
-		
-
 		$("#btnUpdateUser").click(function(event) {			
 			updateUser();
 			});	
+
+		//---> Delete User
+		console.info('Run: Delete User');	
+		$("#btnDeleteUser").click(function(event) {			
+			deleteUser();
+			});	
+		
 
 		//---> New User
 		console.info('Run: New User');
@@ -55,9 +61,11 @@ $(document).ready(function(){
 
 				oneUser(id_advance);
 				$("#user-update").prop("disabled",false);
+				$("#user-delete").prop("disabled",false);
 				})
 			
 				$("#user-update").prop("disabled",true);
+				$("#user-delete").prop("disabled",true);
 
 			//--->					
 			}).fail(function(jqXHR, textStatus , errorThrown) {
@@ -74,6 +82,7 @@ $(document).ready(function(){
 		  			});			
 		//--->		
 		}		
+	
 	//---> all user
 	function oneUser(id_advance){
 		//--->			
@@ -95,10 +104,15 @@ $(document).ready(function(){
 					user: "admin"
 					*/
 					$("#updateInputUsuario").val(val.user);
+					$("#usuariodelete").html(val.user);
+
 					$("#updateInputPermiso").val(val.permissions).change();
 					$("#updateInputEmail").val(val.email);
+					
 					$("#updateInputNombre").val(val.firstname);
 					$("#updateInputApellido").val(val.secondname);
+						$("#nombredelete").html(val.firstname + " " + val.secondname);
+
 					$("#updateInputTelefono").val(val.telefono);
 					$("#updateInputPuesto").val(val.puesto);
 					
@@ -121,12 +135,13 @@ $(document).ready(function(){
 		//--->		
 		}
 
+	//---> user new
 	function newUser(){
 
 		var settings = {
 		  "async"       : true,
 		  "crossDomain" : true,
-		  "url"         : "http://localhost/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/user/createdata",
+		  "url"         : url_user_new,
 		  "method"      : "POST",
 		  "headers": {
 		  	"xr8-api-key" : "ewf45r4435trge",
@@ -151,8 +166,9 @@ $(document).ready(function(){
 			
 			//--->
 			console.info('Run: reload alluser')
-    			$("#exampleModal").modal('hide');
+    			
 				allUser();
+				$("#exampleModal").modal('hide');
 
 				}).fail(function(jqXHR, textStatus , errorThrown) {
 					
@@ -166,13 +182,14 @@ $(document).ready(function(){
 			    		});
 
 		}		
-
+	
+	//---> user update
 	function updateUser(){
 
 		var settings = {
 		  "async"       : true,
 		  "crossDomain" : true,
-		  "url"         : "http://localhost/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/user/update",
+		  "url"         : url_user_update,
 		  "method"      : "POST",
 		  "headers": {
 		  	"xr8-api-key" : "ewf45r4435trge",
@@ -198,8 +215,9 @@ $(document).ready(function(){
 			
 			//--->
 			console.info('Run: reload alluser')
-    			$("#updateModal").modal('hide');
+    			
 				allUser();
+				$("#updateModal").modal('hide');
 
 				}).fail(function(jqXHR, textStatus , errorThrown) {
 					
@@ -213,3 +231,49 @@ $(document).ready(function(){
 			    		});
 
 		}				
+
+	
+	//---> user delate
+	function deleteUser(){
+
+		var settings = {
+		  "async"       : true,
+		  "crossDomain" : true,
+		  "url"         : url_user_delete,
+		  "method"      : "POST",
+		  "headers": {
+		  	"xr8-api-key" : "ewf45r4435trge",
+		    "content-type" : "application/x-www-form-urlencoded",
+		    "cache-control": "no-cache"
+		  },"data": {
+		    "id_advance"  : $("#iduserupdate").val(),
+		  	}
+		}
+
+		//--->
+		console.info('Run: user new xhr')
+		$.ajax(settings).done(function(data) {
+			
+			//--->
+			console.info('Run: reload alluser')
+ 		
+			$("#deleteModal").modal('hide');
+			allUser();
+
+				}).fail(function(jqXHR, textStatus , errorThrown) {
+					
+					//--->
+					console.info('Run: error alluser')
+	                	xhrError(jqXHR, textStatus , errorThrown);
+
+			  		}).always(function() {
+						//--->
+						console.info('Run: allways alluser')
+			    		});
+
+
+
+
+		}				
+
+		
