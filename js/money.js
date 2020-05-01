@@ -43,17 +43,19 @@ function isEmpty(val){
     var local = false;
     
     var hostlocal = "localhost";
-    var hostweb   = "api.gtvsa.com";
+    var hostweb   = "gtvsa.com";
     
     if (local == true) {
 
         url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
         url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
+        url_cdn   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-CDN/";
         
         }else{
            
-        url_base  = "//" + hostweb + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
-        url_api   = "//" + hostweb + "/";
+        url_base  = "//app." + hostweb + "/";
+        url_api   = "//api." + hostweb + "/";
+        url_cdn   = "//cdn." + hostweb + "/";
         
 
         }
