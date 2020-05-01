@@ -1,3 +1,56 @@
+console.log("Load Js Login");
+
+/*==============================================
+                API URLS                  
+==============================================*/    
+    //url_base
+    var local = true;
+    console.log('Run: on the server localhost');
+
+    var hostlocal = "localhost";
+    var hostweb   = "gtvsa.com";
+    
+    if (local == true) {
+        url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
+        url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
+        url_cdn   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-CDN/app/";
+        }else{
+            url_base  = "//app." + hostweb + "/";
+            url_api   = "//api." + hostweb + "/";
+            url_cdn   = "//cdn." + hostweb + "/";
+            }
+
+    //*********************************************************************************//
+    //                                                                                 //
+    //                                      REAL                                       //
+    //                                                                                 //
+    //*********************************************************************************//  
+        //0.- url_api
+            url_api_api  = url_api + "";
+        //1.- url_user
+            url_user_one = url_api + "user/readerdata";          
+            url_user_all = url_api + "user/readerdata";
+
+        //--->
+        console.info('Run:')
+        function apiConecction(){
+
+            $.getJSON(url_api_api,function(data) {
+                //--->
+                $.each(data, function(i, val) {
+                    })              
+                //--->
+                }).fail(function(jqXHR, textStatus , errorThrown) {
+                    //--->
+                    console.info('Run:')
+                    xhrError(jqXHR, textStatus , errorThrown);
+                    }).always(function() {
+                        //--->
+                        console.info('Run:')
+                        });
+        }
+        
+        //--->  
 /*==============================================
                 Error XHR jQ                 
 ==============================================*/  
@@ -36,45 +89,13 @@ function isEmpty(val){
                 Var Empty                 
 ==============================================*/ 
 
-/*==============================================
-                API URLS                  
-==============================================*/    
-    //url_base
-    var local = false;
-    
-    var hostlocal = "localhost";
-    var hostweb   = "gtvsa.com";
-    
-    if (local == true) {
-
-        url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
-        url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
-        url_cdn   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-CDN/";
-        
-        }else{
-           
-        url_base  = "//app." + hostweb + "/";
-        url_api   = "//api." + hostweb + "/";
-        url_cdn   = "//cdn." + hostweb + "/";
-        
-
-        }
-
-    //*********************************************************************************//
-    //                                                                                 //
-    //                                      REAL                                       //
-    //                                                                                 //
-    //*********************************************************************************//  
-        //1.-url_user
-            url_user_one   = url_api + "user/readerdata";          
-            url_user_all   = url_api + "user/readerdata";
-
-!function(e,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.feather=n():e.feather=n()}("undefined"!=typeof self?self:this,function(){return function(e){var n={};function i(l){if(n[l])return n[l].exports;var t=n[l]={i:l,l:!1,exports:{}};return e[l].call(t.exports,t,t.exports,i),t.l=!0,t.exports}return i.m=e,i.c=n,i.d=function(e,n,l){i.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:l})},i.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},i.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(n,"a",n),n},i.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},i.p="",i(i.s=61)}([function(e,n,i){var l=i(20)("wks"),t=i(11),r=i(1).Symbol,o="function"==typeof r;(e.exports=function(e){return l[e]||(l[e]=o&&r[e]||(o?r:t)("Symbol."+e))}).store=l},function(e,n){var i=e.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=i)},function(e,n){var i=e.exports={version:"2.5.6"};"number"==typeof __e&&(__e=i)},function(e,n){var i={}.hasOwnProperty;e.exports=function(e,n){return i.call(e,n)}},function(e,n,i){e.exports=!i(27)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(e,n,i){var l=i(13);e.exports=function(e){if(!l(e))throw TypeError(e+" is not an object!");return e}},function(e,n,i){var l=i(5),t=i(56),r=i(55),o=Object.defineProperty;n.f=i(4)?Object.defineProperty:function(e,n,i){if(l(e),n=r(n,!0),l(i),t)try{return o(e,n,i)}catch(e){}if("get"in i||"set"in i)throw TypeError("Accessors not supported!");return"value"in i&&(e[n]=i.value),e}},function(e,n,i){var l=i(6),t=i(12);e.exports=i(4)?function(e,n,i){return l.f(e,n,t(1,i))}:function(e,n,i){return e[n]=i,e}},function(e,n,i){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var l=o(i(35)),t=o(i(33)),r=o(i(32));function o(e){return e&&e.__esModule?e:{default:e}}n.default=Object.keys(t.default).map(function(e){return new l.default(e,t.default[e],r.default[e])}).reduce(function(e,n){return e[n.name]=n,e},{})},function(e,n,i){var l=i(20)("keys"),t=i(11);e.exports=function(e){return l[e]||(l[e]=t(e))}},function(e,n){e.exports={}},function(e,n){var i=0,l=Math.random();e.exports=function(e){return"Symbol(".concat(void 0===e?"":e,")_",(++i+l).toString(36))}},function(e,n){e.exports=function(e,n){return{enumerable:!(1&e),configurable:!(2&e),writable:!(4&e),value:n}}},function(e,n){e.exports=function(e){return"object"==typeof e?null!==e:"function"==typeof e}},function(e,n){e.exports=function(e){if(void 0==e)throw TypeError("Can't call method on  "+e);return e}},function(e,n){var i=Math.ceil,l=Math.floor;e.exports=function(e){return isNaN(e=+e)?0:(e>0?l:i)(e)}},function(e,n,i){var l;
 /*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
+  Copyright (c) 20
+  Licensed under 
+  http://
 */
+!function(e,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.feather=n():e.feather=n()}("undefined"!=typeof self?self:this,function(){return function(e){var n={};function i(l){if(n[l])return n[l].exports;var t=n[l]={i:l,l:!1,exports:{}};return e[l].call(t.exports,t,t.exports,i),t.l=!0,t.exports}return i.m=e,i.c=n,i.d=function(e,n,l){i.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:l})},i.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},i.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(n,"a",n),n},i.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},i.p="",i(i.s=61)}([function(e,n,i){var l=i(20)("wks"),t=i(11),r=i(1).Symbol,o="function"==typeof r;(e.exports=function(e){return l[e]||(l[e]=o&&r[e]||(o?r:t)("Symbol."+e))}).store=l},function(e,n){var i=e.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=i)},function(e,n){var i=e.exports={version:"2.5.6"};"number"==typeof __e&&(__e=i)},function(e,n){var i={}.hasOwnProperty;e.exports=function(e,n){return i.call(e,n)}},function(e,n,i){e.exports=!i(27)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(e,n,i){var l=i(13);e.exports=function(e){if(!l(e))throw TypeError(e+" is not an object!");return e}},function(e,n,i){var l=i(5),t=i(56),r=i(55),o=Object.defineProperty;n.f=i(4)?Object.defineProperty:function(e,n,i){if(l(e),n=r(n,!0),l(i),t)try{return o(e,n,i)}catch(e){}if("get"in i||"set"in i)throw TypeError("Accessors not supported!");return"value"in i&&(e[n]=i.value),e}},function(e,n,i){var l=i(6),t=i(12);e.exports=i(4)?function(e,n,i){return l.f(e,n,t(1,i))}:function(e,n,i){return e[n]=i,e}},function(e,n,i){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var l=o(i(35)),t=o(i(33)),r=o(i(32));function o(e){return e&&e.__esModule?e:{default:e}}n.default=Object.keys(t.default).map(function(e){return new l.default(e,t.default[e],r.default[e])}).reduce(function(e,n){return e[n.name]=n,e},{})},function(e,n,i){var l=i(20)("keys"),t=i(11);e.exports=function(e){return l[e]||(l[e]=t(e))}},function(e,n){e.exports={}},function(e,n){var i=0,l=Math.random();e.exports=function(e){return"Symbol(".concat(void 0===e?"":e,")_",(++i+l).toString(36))}},function(e,n){e.exports=function(e,n){return{enumerable:!(1&e),configurable:!(2&e),writable:!(4&e),value:n}}},function(e,n){e.exports=function(e){return"object"==typeof e?null!==e:"function"==typeof e}},function(e,n){e.exports=function(e){if(void 0==e)throw TypeError("Can't call method on  "+e);return e}},function(e,n){var i=Math.ceil,l=Math.floor;e.exports=function(e){return isNaN(e=+e)?0:(e>0?l:i)(e)}},function(e,n,i){var l;
+
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see

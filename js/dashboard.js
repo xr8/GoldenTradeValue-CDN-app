@@ -1,6 +1,6 @@
-
+console.log("Load Js Login");
+apiConecction();
 /* globals Chart:false, feather:false */
-
 (function () {
   'use strict'
 
