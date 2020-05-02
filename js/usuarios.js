@@ -46,7 +46,14 @@ $(document).ready(function(){
 			$.each(data, function(i, val) {
 				if (val.telefono == null) {telefono = "vacio"}else{telefono = val.telefono}
 				if (val.puesto == null) {puesto = "vacio"}else{puesto = val.puesto}
-					$("#allUser").fadeIn(3000).append("<tr><th scope=\"row\"><input name=\"idX\" type=\"checkbox\" class=\"idAcheckbox\" id=\"" + val.id_advance + "\"></th><td>" + val.firstname  + "</td><td>" + val.secondname + "</td><td>" + val.email      + "</td><td>" + telefono   + "</td><td>" + puesto + "</td></tr>");
+
+					if (val.user == 'admin') {
+						$("#allUser").fadeIn(3000).append("<tr class=\"text-center table-primary\"><th scope=\"row\">#</th><td class=\"text-capitalize\">"+val.user+"</td><td class=\"text-capitalize\">"+val.firstname+"</td><td class=\"text-capitalize\">"+val.secondname+"</td><td>"+val.email+"</td><td>"+telefono+"</td><td class=\"text-uppercase\">"+puesto+"</td></tr>");
+						}else{
+							$("#allUser").fadeIn(3000).append("<tr class=\"text-center\"><th scope=\"row\"><input name=\"idX\" type=\"checkbox\" class=\"idAcheckbox\" id=\""+val.id_advance+"\"></th><td class=\"text-capitalize\">"+val.user+"</td><td class=\"text-capitalize\">"+val.firstname+"</td><td class=\"text-capitalize\">"+val.secondname+"</td><td>"+val.email+"</td><td>"+telefono+"</td><td class=\"text-uppercase\">"+puesto+"</td></tr>");
+							}
+					
+
 				})				
 			//--->
 
@@ -232,7 +239,6 @@ $(document).ready(function(){
 
 		}				
 
-	
 	//---> user delate
 	function deleteUser(){
 
