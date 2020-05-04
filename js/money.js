@@ -4,7 +4,7 @@ console.log("Load Js Login");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = false;
+    var local = true;
     console.log('Run: on the server localhost');
 
     var hostlocal = "localhost";
@@ -27,13 +27,22 @@ console.log("Load Js Login");
     //*********************************************************************************//  
         //0.- url_api
             url_api_api  = url_api + "";
+
         //1.- url_user
-            url_user_one = url_api + "user/readerdata";          
-            url_user_all = url_api + "user/readerdata";
+            url_user_one    = url_api + "user/readerdata";          
+            url_user_all    = url_api + "user/readerdata";
 
             url_user_new    = url_api + "user/createdata";
-            url_user_update = url_api + "user/update";
-            url_user_delete = url_api + "user/delete";
+            url_user_update = url_api + "user/updatedata";
+            url_user_delete = url_api + "user/deletedata";
+
+        //1.- url_clientes
+            url_clientes_one    = url_api + "clientes/readerdata";          
+            url_clientes_all    = url_api + "clientes/readerdata";
+
+            url_clientes_new    = url_api + "clientes/createdata";
+            url_clientes_update = url_api + "clientes/updatedata";
+            url_clientes_delete = url_api + "clientes/deletedata";
 
         //--->
         console.info('Run:')
