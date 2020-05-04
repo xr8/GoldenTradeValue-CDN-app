@@ -4,7 +4,7 @@ console.log("Load Js Login");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = true;
+    var local = false;
     console.log('Run: on the server localhost');
 
     var hostlocal = "localhost";
@@ -44,6 +44,13 @@ console.log("Load Js Login");
             url_clientes_update = url_api + "clientes/updatedata";
             url_clientes_delete = url_api + "clientes/deletedata";
 
+        //1.- url_clientes
+            url_proveedores_one    = url_api + "proveedores/readerdata";          
+            url_proveedores_all    = url_api + "proveedores/readerdata";
+
+            url_proveedores_new    = url_api + "proveedores/createdata";
+            url_proveedores_update = url_api + "proveedores/updatedata";
+            url_proveedores_delete = url_api + "proveedores/deletedata";
         //--->
         console.info('Run:')
         function apiConecction(){
