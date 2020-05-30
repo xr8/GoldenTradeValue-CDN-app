@@ -47,7 +47,7 @@ $(document).ready(function(){
 				if (val.telefono == null) {telefono = "vacio"}else{telefono = val.telefono}
 				if (val.puesto == null) {puesto = "vacio"}else{puesto = val.puesto}
 
-					$("#allUser").fadeIn(3000).append("<tr class=\"text-center\"><th scope=\"row\"><input name=\"idX\" type=\"checkbox\" class=\"idAcheckbox\" id=\""+val.id_advance+"\"></th><td class=\"text-capitalize\">"+val.firstname+"</td><td class=\"text-capitalize\">"+val.secondname+"</td><td>"+val.email+"</td><td>"+telefono+"</td></tr>");
+					$("#allUser").fadeIn(3000).append("<tr class=\"text-center\"><th scope=\"row\"><input name=\"idX\" type=\"checkbox\" class=\"idAcheckbox\" id=\""+val.id_advance+"\"></th><td class=\"text-capitalize\">"+val.rs_rfc+"</td><td class=\"text-capitalize\">"+val.rs_pais+"</td><td class=\"text-capitalize\">"+val.rs_giro+"</td><td class=\"text-capitalize\">"+val.firstname+"</td><td class=\"text-capitalize\">"+val.secondname+"</td><td>"+val.email+"</td><td>"+telefono+"</td><td>"+val.rfc+"</td><td>"+val.curp+"</td><td>"+val.direccion+"</td></tr>");
 
 				})				
 			//--->
@@ -94,30 +94,42 @@ $(document).ready(function(){
 				//--->
 				$.each(data, function(i, val) {
 					/*
+					{id_advance: "0f9385c23d1d5825d266", time: "2020-05-29 15:05:15", email: "viernes@gomez.com",…}
+					1_fechaconsti: "2020-05-30"
+					1_giro: "2"
+					1_id_advance: "0f9385c23d1d5825d266"
+					1_pais: "2"
+					1_rfc: "2"
 					Message: "Datasuccessful"
-					email: "biohizard@gmail.com"
-					firstname: "jorge"
-					id_advance: "CLjFxfEC16HE9AZ948Ws"
-					permissions: "admin"
-					puesto: "vendedor"
-					secondname: "garibaldo"
-					telefono: "55555"
-					time: "2019-08-26 17:37:55"
-					user: "admin"
+					curp: "BEML920313HMCLNS09"
+					direccion: "Av. Paseo de la Reforma No 347, Cuauhtémoc, CP 06500 Ciudad de México, CDMX"
+					email: "viernes@gomez.com"
+					firstname: "viernes"
+					id_advance: "0f9385c23d1d5825d266"
+					rfc: "SAOK790530QZ2"
+					secondname: "gomez"
+					telefono: "5511112222"
+					time: "2020-05-29 15:05:15"
 					*/
-					$("#updateInputUsuario").val(val.user);
+
+					$("#nombredelete").html(val.firstname+" "+val.secondname);
 					$("#emaildelete").html(val.email);
 
-					$("#updateInputPermiso").val(val.permissions).change();
-					$("#updateInputEmail").val(val.email);
-					
-					$("#updateInputNombre").val(val.firstname);
-					$("#updateInputApellido").val(val.secondname);
-						$("#nombredelete").html(val.firstname + " " + val.secondname);
 
-					$("#updateInputTelefono").val(val.telefono);
-					$("#updateInputPuesto").val(val.puesto);
-					
+					$("#updateInputRfc1").val(val.rs_rfc).change();
+					$("#updateInputPais1").val(val.rs_pais).change();
+					$("#updateInputgiro1").val(val.rs_giro).change();
+
+					$("#updateInputNombre").val(val.firstname).change();
+					$("#updateInputApellido").val(val.secondname).change();
+					$("#updateInputEmail").val(val.email).change();
+
+					$("#updateInputTelefono").val(val.telefono).change();
+					$("#updateInputRfc").val(val.rfc).change();
+					$("#updateInputCurp").val(val.curp).change();
+
+					$("#updateInputDireccion").val(val.direccion).change();
+							
 					})
 				//--->
 
@@ -141,21 +153,28 @@ $(document).ready(function(){
 	function newClientes(){
 
 		var settings = {
-		  "async"       : true,
-		  "crossDomain" : true,
-		  "url"         : url_clientes_new,
-		  "method"      : "POST",
-		  "headers": {
-		  	"xr8-api-key" : "ewf45r4435trge",
-		    "content-type" : "application/x-www-form-urlencoded",
-		    "cache-control": "no-cache"
-		  },"data": {
-		    "email"       : $("#exampleInputEmail").val(),
-		    "first"       : $("#exampleInputNombre").val(),
-		    "second"      : $("#exampleInputApellido").val(),
-		    "tel"         : $("#exampleInputTelefono").val()
-		  	}
-		}
+      async: true,
+      crossDomain: true,
+      url: url_clientes_new,
+      method: "POST",
+      headers: {
+        "xr8-api-key": "ewf45r4435trge",
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache",
+      },
+      data: {
+        rfc1: $("#exampleInputRfc1").val(),
+        pais1: $("#exampleInputPais1").val(),
+        giro1: $("#exampleInputgiro1").val(),
+        first: $("#exampleInputNombre").val(),
+        second: $("#exampleInputApellido").val(),
+        email: $("#exampleInputEmail").val(),
+        tel: $("#exampleInputTelefono").val(),
+        rfc: $("#exampleInputRfc").val(),
+        curp: $("#exampleInputCurp").val(),
+        direccion: $("#exampleInputDireccion").val()
+      }
+    };
 
 		//--->
 		console.info('Run: user new xhr')
@@ -193,16 +212,19 @@ $(document).ready(function(){
 		    "content-type" : "application/x-www-form-urlencoded",
 		    "cache-control": "no-cache"
 		  },"data": {
-		    "id_advance"  : $("#iduserupdate").val(),
-		    "user"        : $("#updateInputUsuario").val(),
-		    "permissions" : $("#updateInputPermiso").val(),
-		    "email"       : $("#updateInputEmail").val(),
-		    "password"    : $("#updateInputPassword").val(),
-		    "first"       : $("#updateInputNombre").val(),
-		    "second"      : $("#updateInputApellido").val(),
-		    "tel"         : $("#updateInputTelefono").val(),
-		    "puesto"      : $("#updateInputPuesto").val()
+			id_advance  : $("#iduserupdate").val(),
 
+			rfc1        : $("#updateInputRfc1").val(),
+			pais1       : $("#updateInputPais1").val(),
+			giro1       : $("#updateInputgiro1").val(),
+
+			first       : $("#updateInputNombre").val(),
+			second      : $("#updateInputApellido").val(),
+			email       : $("#updateInputEmail").val(),
+			tel         : $("#updateInputTelefono").val(),
+			rfc         : $("#updateInputRfc").val(),
+			curp        : $("#updateInputCurp").val(),
+			direccion   : $("#updateInputDireccion").val()
 		  	}
 		}
 
