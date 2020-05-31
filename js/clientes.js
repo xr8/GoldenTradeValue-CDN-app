@@ -79,7 +79,8 @@ function allClientes() {
               "</td><td>" +
               val.direccion +
               "</td></tr>"
-          );
+		  );
+		  
       });
       //--->
 
@@ -204,8 +205,8 @@ function newClientes() {
       tel: $("#exampleInputTelefono").val(),
       rfc: $("#exampleInputRfc").val(),
       curp: $("#exampleInputCurp").val(),
-      direccion: $("#exampleInputDireccion").val(),
-    },
+      direccion: $("#exampleInputDireccion").val()
+    }
   };
 
   //--->
