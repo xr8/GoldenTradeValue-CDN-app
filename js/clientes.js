@@ -8,6 +8,12 @@ $(document).ready(function () {
   console.info("Run: Load User");
   allClientes();
 
+  //---> New User
+  console.info("Run: New User");
+  $("#b-nuew-user").click(function () {
+    newClientes();
+  });
+
   //---> Update User
   console.info("Run: Update User");
   $("#btnUpdateUser").click(function (event) {
@@ -20,10 +26,10 @@ $(document).ready(function () {
     deleteClientes();
   });
 
-  //---> New User
-  console.info("Run: New User");
-  $("#b-nuew-user").click(function () {
-    newClientes();
+  //---> ResumenUser
+  console.info("Run: Resume User");
+  $("#user-resume").click(function () {
+    
   });
 });
 
@@ -37,16 +43,18 @@ function allClientes() {
 
   //--->
   console.info("Run: all user print div");
-  $.getJSON(url_clientes_all + "?id_advance=&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09",function (data) {
+  $.getJSON(
+    url_clientes_all +
+      "?id_advance=&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09",
+    function (data) {
       //--->
       $.each(data, function (i, val) {
-
         if (val.telefono == null) {
           telefono = "vacio";
         } else {
           telefono = val.telefono;
-		}
-		
+        }
+
         if (val.puesto == null) {
           puesto = "vacio";
         } else {
@@ -56,31 +64,33 @@ function allClientes() {
         $("#allUser")
           .fadeIn(3000)
           .append(
-            '<tr class="text-center"><th scope="row"><input name="idX" type="checkbox" class="idAcheckbox" id="' +
+            '<tr class="text-center">' +
+              '<th scope="row"><input name="idX" type="checkbox" class="idAcheckbox" id="' +
               val.id_advance +
-              '"></th><td class="text-capitalize">' +
-              val.rs_rfc +
-              '</td><td class="text-capitalize">' +
-              val.rs_pais +
-              '</td><td class="text-capitalize">' +
-              val.rs_giro +
-              '</td><td class="text-capitalize">' +
+              '"></th>' +
+              '<td class="text-capitalize">' +
               val.firstname +
-              '</td><td class="text-capitalize">' +
+              "</td>" +
+              '<td class="text-capitalize">' +
               val.secondname +
-              "</td><td>" +
+              "</td>" +
+              '<td class="text-lowercase">' +
               val.email +
-              "</td><td>" +
+              "</td>" +
+              '<td class="text-capitalize">' +
               telefono +
-              "</td><td>" +
+              "</td>" +
+              '<td class="text-lowercase">' +
               val.rfc +
-              "</td><td>" +
+              "</td>" +
+              '<td class="text-lowercase">' +
               val.curp +
-              "</td><td>" +
+              "</td>" +
+              '<td class="text-capitalize">' +
               val.direccion +
-              "</td></tr>"
-		  );
-		  
+              "</td>" +
+              "</tr>"
+          );
       });
       //--->
 
@@ -98,10 +108,12 @@ function allClientes() {
         oneClientes(id_advance);
         $("#user-update").prop("disabled", false);
         $("#user-delete").prop("disabled", false);
+        $("#user-resume").prop("disabled", false);
       });
 
       $("#user-update").prop("disabled", true);
       $("#user-delete").prop("disabled", true);
+      $("#user-resume").prop("disabled", true);
 
       //--->
     }
@@ -126,7 +138,7 @@ function oneClientes(id_advance) {
     url_clientes_one +
       "?id_advance=" +
       id_advance +
-      "&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09",
+      "&a181a603769c1f98ad927e7367c7aa51=68934a3e9455fa72420237eb05902327",
     function (data) {
       //--->
       $.each(data, function (i, val) {
@@ -152,19 +164,46 @@ function oneClientes(id_advance) {
         $("#nombredelete").html(val.firstname + " " + val.secondname);
         $("#emaildelete").html(val.email);
 
+        var a = moment().format(val.rs_fecha, "dd-mm-yyy");
+
+        //Begin: UPDATE
+        /*Razon Social*/
+        $("#updateInputFecha1").val(a).change();
         $("#updateInputRfc1").val(val.rs_rfc).change();
         $("#updateInputPais1").val(val.rs_pais).change();
         $("#updateInputgiro1").val(val.rs_giro).change();
 
+        /*Datos del representante legal*/
         $("#updateInputNombre").val(val.firstname).change();
         $("#updateInputApellido").val(val.secondname).change();
         $("#updateInputEmail").val(val.email).change();
-
         $("#updateInputTelefono").val(val.telefono).change();
         $("#updateInputRfc").val(val.rfc).change();
         $("#updateInputCurp").val(val.curp).change();
-
         $("#updateInputDireccion").val(val.direccion).change();
+        //End: UPDATE
+
+
+        //Begin: RESUMEN
+        console.log("Load Resume");
+        /*Razon Social*/
+        $("#resumenInputFecha1").html(a).change();
+        $("#resumenInputRfc1").html(val.rs_rfc).change();
+        $("#resumenInputPais1").html(val.rs_pais).change();
+        $("#resumenInputgiro1").html(val.rs_giro).change();
+
+        /*Datos del representante legal*/
+        $("#resumenInputNombre").html(val.firstname + " " + val.secondname).change();
+        $("#resumenInputRfc").html(val.rfc).change();
+        $("#resumenInputCurp").html(val.curp).change();
+        $("#resumenInputDireccion").html(val.direccion).change();
+        $("#resumenInputTelefono").html(val.telefono).change();
+        $("#resumenInputEmail").html(val.email).change();
+        
+
+        
+        //End: RESUMEN        
+
       });
       //--->
 
@@ -196,6 +235,7 @@ function newClientes() {
       "cache-control": "no-cache",
     },
     data: {
+      fecha1: $("#exampleInputFecha1").val(),
       rfc1: $("#exampleInputRfc1").val(),
       pais1: $("#exampleInputPais1").val(),
       giro1: $("#exampleInputgiro1").val(),
@@ -205,8 +245,8 @@ function newClientes() {
       tel: $("#exampleInputTelefono").val(),
       rfc: $("#exampleInputRfc").val(),
       curp: $("#exampleInputCurp").val(),
-      direccion: $("#exampleInputDireccion").val()
-    }
+      direccion: $("#exampleInputDireccion").val(),
+    },
   };
 
   //--->
@@ -245,6 +285,7 @@ function updateClientes() {
     data: {
       id_advance: $("#iduserupdate").val(),
 
+      fecha1: $("#updateInputFecha1").val(),
       rfc1: $("#updateInputRfc1").val(),
       pais1: $("#updateInputPais1").val(),
       giro1: $("#updateInputgiro1").val(),
