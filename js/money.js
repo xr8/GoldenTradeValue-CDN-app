@@ -4,17 +4,17 @@ console.log("Load Js GTV");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = true;
-    console.log('Run: on the server localhost');
-
-    var hostlocal = "localhost";
-    var hostweb   = "gtvsa.com";
+    var local = false;
     
     if (local == true) {
+        console.log('Run: on the server localhost');
+        var hostlocal = "localhost";
         url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
         url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
         url_cdn   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-CDN/app/";
         }else{
+            console.log('Run: on the server web');
+            var hostweb   = "gtvsa.com";
             url_base  = "//app." + hostweb + "/";
             url_api   = "//api." + hostweb + "/";
             url_cdn   = "//cdn." + hostweb + "/";
