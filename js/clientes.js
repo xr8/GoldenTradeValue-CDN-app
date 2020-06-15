@@ -28,9 +28,7 @@ $(document).ready(function () {
 
   //---> ResumenUser
   console.info("Run: Resume User");
-  $("#user-resume").click(function () {
-    
-  });
+  $("#user-resume").click(function () {});
 });
 
 //---> all user
@@ -183,7 +181,6 @@ function oneClientes(id_advance) {
         $("#updateInputDireccion").val(val.direccion).change();
         //End: UPDATE
 
-
         //Begin: RESUMEN
         console.log("Load Resume");
         /*Razon Social*/
@@ -193,17 +190,16 @@ function oneClientes(id_advance) {
         $("#resumenInputgiro1").html(val.rs_giro).change();
 
         /*Datos del representante legal*/
-        $("#resumenInputNombre").html(val.firstname + " " + val.secondname).change();
+        $("#resumenInputNombre")
+          .html(val.firstname + " " + val.secondname)
+          .change();
         $("#resumenInputRfc").html(val.rfc).change();
         $("#resumenInputCurp").html(val.curp).change();
         $("#resumenInputDireccion").html(val.direccion).change();
         $("#resumenInputTelefono").html(val.telefono).change();
         $("#resumenInputEmail").html(val.email).change();
-        
 
-        
-        //End: RESUMEN        
-
+        //End: RESUMEN
       });
       //--->
 
@@ -224,29 +220,29 @@ function oneClientes(id_advance) {
 
 //---> user new
 function newClientes() {
-  var settings = {
-    async: true,
+  let settings = {
+    async:       true,
     crossDomain: true,
-    url: url_clientes_new,
-    method: "POST",
+    url:         url_clientes_new,
+    method:      "POST",
     headers: {
-      "xr8-api-key": "ewf45r4435trge",
-      "content-type": "application/x-www-form-urlencoded",
-      "cache-control": "no-cache",
+              "xr8-api-key": "ewf45r4435trge",
+              "content-type": "application/x-www-form-urlencoded",
+              "cache-control": "no-cache",
     },
     data: {
-      fecha1: $("#exampleInputFecha1").val(),
-      rfc1: $("#exampleInputRfc1").val(),
-      pais1: $("#exampleInputPais1").val(),
-      giro1: $("#exampleInputgiro1").val(),
-      first: $("#exampleInputNombre").val(),
-      second: $("#exampleInputApellido").val(),
-      email: $("#exampleInputEmail").val(),
-      tel: $("#exampleInputTelefono").val(),
-      rfc: $("#exampleInputRfc").val(),
-      curp: $("#exampleInputCurp").val(),
-      direccion: $("#exampleInputDireccion").val(),
-    },
+      fecha1:    $("#exampleInputFecha1").val(),
+      rfc1:      $("#exampleInputRfc1").val(),
+      pais1:     $("#exampleInputPais1").val(),
+      giro1:     $("#exampleInputgiro1").val(),
+      first:     $("#exampleInputNombre").val(),
+      second:    $("#exampleInputApellido").val(),
+      email:     $("#exampleInputEmail").val(),
+      tel:       $("#exampleInputTelefono").val(),
+      rfc:       $("#exampleInputRfc").val(),
+      curp:      $("#exampleInputCurp").val(),
+      direccion: $("#exampleInputDireccion").val()
+    }
   };
 
   //--->
@@ -256,8 +252,7 @@ function newClientes() {
       //--->
       console.info("Run: reload alluser");
 
-      allClientes();
-      $("#exampleModal").modal("hide");
+
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       //--->
@@ -267,6 +262,8 @@ function newClientes() {
     .always(function () {
       //--->
       console.info("Run: allways alluser");
+      allClientes();
+      $("#createModal").modal("hide");
     });
 }
 

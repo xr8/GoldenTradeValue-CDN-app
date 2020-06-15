@@ -1,4 +1,4 @@
-console.log("Load Js Login");
+console.log("Load Js GTV");
 
 /*==============================================
                 API URLS                  
@@ -36,7 +36,7 @@ console.log("Load Js Login");
             url_user_update = url_api + "user/updatedata";
             url_user_delete = url_api + "user/deletedata";
 
-        //1.- url_clientes
+        //2.- url_clientes
             url_clientes_one    = url_api + "clientes/readerdata";          
             url_clientes_all    = url_api + "clientes/readerdata";
 
@@ -44,17 +44,29 @@ console.log("Load Js Login");
             url_clientes_update = url_api + "clientes/updatedata";
             url_clientes_delete = url_api + "clientes/deletedata";
 
-        //1.- url_clientes
+        //3.- url_clientes
             url_proveedores_one    = url_api + "proveedores/readerdata";          
             url_proveedores_all    = url_api + "proveedores/readerdata";
 
             url_proveedores_new    = url_api + "proveedores/createdata";
             url_proveedores_update = url_api + "proveedores/updatedata";
             url_proveedores_delete = url_api + "proveedores/deletedata";
-        //--->
-        console.info('Run:')
-        function apiConecction(){
+        
+            //4.- url_clientes
+        url_caja_one         = url_api + "caja/readerdata";          
+        url_caja_all         = url_api + "caja/readerdata";
 
+        url_caja_new         = url_api + "caja/createdata";
+        url_caja_update      = url_api + "caja/updatedata";
+        url_caja_delete      = url_api + "caja/deletedata";    
+
+        url_saldo_read       = url_api + "cajasaldo/readerdata?aMiEgqwaxoVhBqo8yJze=";      
+        url_saldo_create     = url_api + "cajasaldo/createdata";
+
+        //--->
+        
+        function apiConecction(){
+            console.info('Run: API Conecction');
             $.getJSON(url_api_api,function(data) {
                 //--->
                 $.each(data, function(i, val) {
@@ -66,7 +78,6 @@ console.log("Load Js Login");
                     xhrError(jqXHR, textStatus , errorThrown);
                     }).always(function() {
                         //--->
-                        console.info('Run:')
                         });
         }
         
