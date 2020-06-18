@@ -12,8 +12,8 @@ $(document).ready(function () {
   calendario();
 
   $("#reloadCaja").click(function () {
-    console.log("Run click allcaja")
-    allCaja()
+    console.log("Run click allcaja");
+    allCaja();
   });
   //---> End:  All Caja
 
@@ -23,7 +23,7 @@ $(document).ready(function () {
   //---> New User
 
   newSaldoinicial();
-  console.info(123)
+  console.info(123);
 });
 
 //---> Bein: Saldo Inicial
@@ -111,7 +111,6 @@ function allCaja(fechaId) {
 
       //---> EACH
       $.each(data, function (i, val) {
-
         if (val.Error == "104") {
           //----> IF
           //----->BUTTON
@@ -136,46 +135,93 @@ function allCaja(fechaId) {
           }
 
           if (val.tipo == "entrada") {
-            
             var colortr = "table-secondary";
-            var saldotr = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.saldo);
-            var tiporegistro = "entrada calcular calculaActivas " + i + "target";
-
+            var saldotr = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(val.saldo);
+            var tiporegistro =
+              "entrada calcular calculaActivas " + i + "target";
           } else if (val.tipo == "salida") {
-          
             var colortr = "table-danger";
-            var saldotr = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.saldo);
+            var saldotr = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(val.saldo);
             var tiporegistro = "salida calcular calculaActivas " + i + "target";
-
           } else if (val.tipo == "inicial") {
-
             var colortr = "table-primary alert-link";
-            var saldotr = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.tipo);
+            var saldotr = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(val.tipo);
             var tiporegistro = "inicial calculaActivas " + i + "target";
-
           }
 
-          $("#saldoinicial").val(new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.saldo));
+          $("#saldoinicial").val(
+            new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(val.saldo)
+          );
           //---->
           $("#allCaja")
             .fadeIn(3000)
             .append(
-              '<tr class="text-center ' + colortr + " " + tiporegistro + ' " id="' + val.id_advance +'">' +
-                '<th scope="row"><input name="idX" type="checkbox" class="idAcheckbox" id="' + val.id_advance + '"></th>' +
-                '<td class="text-capitalize text-left" id="' + id_ori_adv + '">' + id_ori_adv + "</td>" +
-                '<td class="text-capitalize">' + val.fecha + "</td>" +
-                '<td class="text-capitalize">' + val.tipo  + "</td>" +
-                '<td class="text-lowercase"> <span class="alert-link entradaMonto">' +new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.entrada) + "</span></td>" +
-                '<td class="text-capitalize"><span class="alert-link salidaMonto">' + new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.salida) + "</span></td>" +
-                '<td class="text-lowercase"> <span class="alert-link saldoMonto">'  + new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(val.saldo) + "</span></td>" +
-                '<td class="text-lowercase">'            + val.nocompra        + "</td>" +
-                '<td class="text-capitalize text-left">' + val.concepto        + "</td>" +
-                '<td class="text-capitalize">'           + val.totalbilletes   + "</td>" +
-                '<td class="text-capitalize">'           + val.notas           + "</td>" +
+              '<tr class="text-center ' +
+                colortr +
+                " " +
+                tiporegistro +
+                ' " id="' +
+                val.id_advance +
+                '">' +
+                '<th scope="row"><input name="idX" type="checkbox" class="idAcheckbox" id="' +
+                val.id_advance +
+                '"></th>' +
+                '<td class="text-capitalize text-left" id="' +
+                id_ori_adv +
+                '">' +
+                id_ori_adv +
+                "</td>" +
+                '<td class="text-capitalize">' +
+                val.fecha +
+                "</td>" +
+                '<td class="text-capitalize">' +
+                val.tipo +
+                "</td>" +
+                '<td class="text-lowercase"> <span class="alert-link entradaMonto">' +
+                new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(val.entrada) +
+                "</span></td>" +
+                '<td class="text-capitalize"><span class="alert-link salidaMonto">' +
+                new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(val.salida) +
+                "</span></td>" +
+                '<td class="text-lowercase"> <span class="alert-link saldoMonto">' +
+                new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(val.saldo) +
+                "</span></td>" +
+                '<td class="text-lowercase">' +
+                val.nocompra +
+                "</td>" +
+                '<td class="text-capitalize text-left">' +
+                val.concepto +
+                "</td>" +
+                '<td class="text-capitalize">' +
+                val.totalbilletes +
+                "</td>" +
+                '<td class="text-capitalize">' +
+                val.notas +
+                "</td>" +
                 "</tr>"
             );
           //---->
-              
 
           //----> ELSE
         }
@@ -187,16 +233,12 @@ function allCaja(fechaId) {
       xhrError(jqXHR, textStatus, errorThrown);
     })
     .always(function () {
-      calcCeldauno()
+      calcCeldauno();
 
-      subTotales()
-      calcTotal()
+      subTotales();
+      calcTotal();
 
-        calcAllceldas()
-
-
-
-      
+      calcAllceldas();
     });
 }
 //---> End: All Caja
@@ -229,183 +271,180 @@ function calc() {
     */
   });
 }
-function calcTotal(){
+function calcTotal() {
+  saldoInicial = $("#allCaja .inicial .saldoMonto").html();
+  saldoInicial = saldoInicial.replace(/[^\d\.]*/g, "");
+  saldoInicial = parseInt(saldoInicial);
 
-  saldoInicial = $("#allCaja .inicial .saldoMonto").html()
-  saldoInicial =  saldoInicial.replace(/[^\d\.]*/g,'');
-  saldoInicial =  parseInt(saldoInicial);
-  
   //---->
 
   subtotalEntrada = calcEntrada();
-  subtotalEntrada = subtotalEntrada.replace(/[^\d\.]*/g,'');
+  subtotalEntrada = subtotalEntrada.replace(/[^\d\.]*/g, "");
   subtotalEntrada = parseInt(subtotalEntrada);
 
   //---->
 
-  subtotalSalida  = calcSalida();
-  subtotalSalida = subtotalSalida.replace(/[^\d\.]*/g,'');
+  subtotalSalida = calcSalida();
+  subtotalSalida = subtotalSalida.replace(/[^\d\.]*/g, "");
   subtotalSalida = parseInt(subtotalSalida);
- 
+
   //---->
 
-  total = subtotalEntrada- subtotalSalida + saldoInicial; 
-  total        = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(total); 
- 
- 
+  total = subtotalEntrada - subtotalSalida + saldoInicial;
+  total = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(total);
+
   $("#allCaja").append(
     '<tr class="table-dark text-dark">' +
-    '<th scope="row"></th><td></td><td></td>' +
-    '<td class="text-capitalize text-left"><span class="alert-link">Total </span></td>' +
-    '<td></td>' +
-    '<td></td>' + 
-    '<td class="text-capitalize text-center"><span class="alert-link">' + total   + '</span></td>' + 
-    '<td></td><td></td><td></td><td></td>' +
-    '</tr>'
+      '<th scope="row"></th><td></td><td></td>' +
+      '<td class="text-capitalize text-left"><span class="alert-link">Total </span></td>' +
+      "<td></td>" +
+      "<td></td>" +
+      '<td class="text-capitalize text-center"><span class="alert-link">' +
+      total +
+      "</span></td>" +
+      "<td></td><td></td><td></td><td></td>" +
+      "</tr>"
   );
 }
-function subTotales(){
-
-  console.info("Run: subTotales")
+function subTotales() {
+  console.info("Run: subTotales");
 
   subtotalEntrada = calcEntrada();
-  subtotalSalida  = calcSalida();
-  subtotalSaldo   = calcSaldo();
+  subtotalSalida = calcSalida();
+  subtotalSaldo = calcSaldo();
 
   $("#allCaja").append(
     '<tr class="table-dark text-center text-dark">' +
-    '<th scope="row"></th><td></td><td></td><td></td>' +
-    '<td class="text-capitalize"><span class="alert-link">Entrada  </span></td>' +
-    '<td class="text-capitalize"><span class="alert-link">Salida   </span></td>' + 
-    '<td class="text-capitalize"><span class="alert-link">Saldo    </span></td>' + 
-    '<td></td><td></td><td></td><td></td>' +
-    '</tr>'+    
-    '<tr class="table-dark text-dark">' +
-    '<th scope="row"></th><td></td><td></td>'+
-    '<td class="text-capitalize text-left"><span class="alert-link">Subtotal </span></td>' +
-    '<td class="text-capitalize text-center"><span class="alert-link">' + subtotalEntrada + '</span></td>' +
-    '<td class="text-capitalize text-center"><span class="alert-link">' + subtotalSalida  + '</span></td>' + 
-    '<td class="text-capitalize text-center"><span class="alert-link">' + subtotalSaldo   + '</span></td>' + 
-    '<td></td><td></td><td></td><td></td>' +
-    '</tr>'
+      '<th scope="row"></th><td></td><td></td><td></td>' +
+      '<td class="text-capitalize"><span class="alert-link">Entrada  </span></td>' +
+      '<td class="text-capitalize"><span class="alert-link">Salida   </span></td>' +
+      '<td class="text-capitalize"><span class="alert-link">Saldo    </span></td>' +
+      "<td></td><td></td><td></td><td></td>" +
+      "</tr>" +
+      '<tr class="table-dark text-dark">' +
+      '<th scope="row"></th><td></td><td></td>' +
+      '<td class="text-capitalize text-left"><span class="alert-link">Subtotal </span></td>' +
+      '<td class="text-capitalize text-center"><span class="alert-link">' +
+      subtotalEntrada +
+      "</span></td>" +
+      '<td class="text-capitalize text-center"><span class="alert-link">' +
+      subtotalSalida +
+      "</span></td>" +
+      '<td class="text-capitalize text-center"><span class="alert-link">' +
+      subtotalSaldo +
+      "</span></td>" +
+      "<td></td><td></td><td></td><td></td>" +
+      "</tr>"
   );
-
 }
-
-function calcEntrada(){
-
+function calcEntrada() {
   var sumaEntrada = 0;
 
-$("#allCaja .entrada .entradaMonto").each(function(key){
-    montoEntrada = $(this).html()
-    montoEntrada = montoEntrada.replace(/[^\d\.]*/g,'')
+  $("#allCaja .entrada .entradaMonto").each(function (key) {
+    montoEntrada = $(this).html();
+    montoEntrada = montoEntrada.replace(/[^\d\.]*/g, "");
     montoEntrada = parseInt(montoEntrada);
-    
+
     sumaEntrada += montoEntrada;
-
-});
+  });
   return new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(sumaEntrada);
-  
+    style: "currency",
+    currency: "USD",
+  }).format(sumaEntrada);
 }
-function calcSalida(){
+function calcSalida() {
+  var sumaSalida = 0;
 
-  var sumaSalida= 0;
-
-$("#allCaja .salida .salidaMonto").each(function(key){
-    montoEntrada = $(this).html()
-    montoEntrada = montoEntrada.replace(/[^\d\.]*/g,'')
+  $("#allCaja .salida .salidaMonto").each(function (key) {
+    montoEntrada = $(this).html();
+    montoEntrada = montoEntrada.replace(/[^\d\.]*/g, "");
     montoEntrada = parseInt(montoEntrada);
-    
+
     sumaSalida += montoEntrada;
-});
+  });
   return new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(sumaSalida);
+    style: "currency",
+    currency: "USD",
+  }).format(sumaSalida);
 }
-function calcSaldo(){
-
-
-montoEntrada = $(".inicial .saldoMonto").html()
-montoEntrada = montoEntrada.replace(/[^\d\.]*/g,'')
-montoEntrada = parseInt(montoEntrada);
-
+function calcSaldo() {
+  montoEntrada = $(".inicial .saldoMonto").html();
+  montoEntrada = montoEntrada.replace(/[^\d\.]*/g, "");
+  montoEntrada = parseInt(montoEntrada);
 
   return new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(montoEntrada);
-                    
+    style: "currency",
+    currency: "USD",
+  }).format(montoEntrada);
 }
-
-function calcCeldauno(){
+function calcCeldauno() {
   //-----> x[0]
-  entradaMonto = $("#allCaja .calcular .entradaMonto").each(function(key){});
-  entradaMonto =  parseInt(entradaMonto[0].textContent.replace(/[^\d\.]*/g,''))
+  entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
+  entradaMonto = parseInt(entradaMonto[0].textContent.replace(/[^\d\.]*/g, ""));
 
   //-----> x[0]
-  salidaMonto = $("#allCaja .calcular .salidaMonto").each(function(key){});
-  salidaMonto =  parseInt(salidaMonto[0].textContent.replace(/[^\d\.]*/g,''))
+  salidaMonto = $("#allCaja .calcular .salidaMonto").each(function (key) {});
+  salidaMonto = parseInt(salidaMonto[0].textContent.replace(/[^\d\.]*/g, ""));
 
   //-----> y[0]
-  saldoInicial = $("#allCaja .inicial .saldoMonto").html()
-  saldoInicial = parseInt(saldoInicial.replace(/[^\d\.]*/g,''))
+  saldoInicial = $("#allCaja .inicial .saldoMonto").html();
+  saldoInicial = parseInt(saldoInicial.replace(/[^\d\.]*/g, ""));
 
-  if(entradaMonto > 0){
-      saldoUno = entradaMonto + saldoInicial;
-  }else if(entradaMonto > 0){
-      saldoUno = salidaMonto - saldoInicial;   
+  if (entradaMonto > 0) {
+    saldoUno = entradaMonto + saldoInicial;
+  } else if (entradaMonto > 0) {
+    saldoUno = salidaMonto - saldoInicial;
   }
 
-  $("#allCaja .1target .saldoMonto").html(new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(saldoUno))
+  $("#allCaja .1target .saldoMonto").html(
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(saldoUno)
+  );
 }
+function calcAllceldas() {
+  entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
+  salidaMonto = $("#allCaja .calcular .salidaMonto").each(function (key) {});
+  saldoMonto = $("#allCaja .calcular .saldoMonto").each(function (key) {});
 
-function calcAllceldas(){
-  
-entradaMonto = $("#allCaja .calcular .entradaMonto").each(function(key){});
-salidaMonto  = $("#allCaja .calcular .salidaMonto").each(function(key){});
-saldoMonto   = $("#allCaja .calcular .saldoMonto").each(function(key){});
+  imas = entradaMonto.length + 1;
 
-imas = entradaMonto.length + 1;
-
-for(var i=0;i<entradaMonto.length;i++){
+  for (var i = 0; i < entradaMonto.length; i++) {
     /**********************************
      *      o$ + 1E = 1$
-     **********************************/   
-    
+     **********************************/
+
     x = i + 1;
     y = i + 2;
-    
-    if(x>i){
-      entradaX = parseInt(entradaMonto[x].textContent.replace(/[^\d\.]*/g,''));
-      salidaX  = parseInt(salidaMonto[x].textContent.replace(/[^\d\.]*/g,''));
-      
-    }else{
-      entradaX =0
-      salidaX  = 0
+
+    if (x > i) {
+      entradaX = parseInt(entradaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
+      salidaX = parseInt(salidaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
+    } else {
+      entradaX = 0;
+      salidaX = 0;
     }
 
-    
-    saldoX   = parseInt(saldoMonto[i].textContent.replace(/[^\d\.]*/g,''));
-   
-    
+    saldoX = parseInt(saldoMonto[i].textContent.replace(/[^\d\.]*/g, ""));
 
-    if(entradaX > 0){
-        resultadoX = saldoX + entradaX;
-    }else{
-        resultadoX = saldoX - salidaX;
+    if (entradaX > 0) {
+      resultadoX = saldoX + entradaX;
+    } else {
+      resultadoX = saldoX - salidaX;
     }
 
     //alert("entrada" + entradaX + "salida" + salidaX + "resultado" + resultadoX)
-    resultadoX = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(resultadoX)
+    resultadoX = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(resultadoX);
     //alert("#allCaja ." + y + "target .saldoMonto")
-    $("#allCaja ." + y + "target .saldoMonto").html(resultadoX)
-
-}
-
+    $("#allCaja ." + y + "target .saldoMonto").html(resultadoX);
+  }
 }
 //----> End: Calcs
 
@@ -413,7 +452,7 @@ function calendario() {
   console.info("Run: Calendario");
 
   $("#start").change(function () {
-    alert($(this).val());
+    console.log($(this).val());
   });
 }
 
@@ -428,7 +467,7 @@ function newCaja() {
   $("#caja-billetes").val("No #000");
   $("#caja-notas").val("Notas de la transacción");
 
-  $("#caja-monto")
+  $("#caja-monto");
   $("#caja-nocompra").click(function () {
     $(this).val(" ");
   });
@@ -447,8 +486,6 @@ function newCaja() {
 
   //----> Begin: click save caja
   $("#b-new-caja").click(function () {
-  
-
     if ($("#caja-tipo").val() == "entrada") {
       entrada = $("#caja-monto").val();
       salida = 0;
@@ -459,7 +496,7 @@ function newCaja() {
       salida = null;
       entrada = null;
     }
-      /*
+    /*
       console.debug("saldo actual:" + $("#saldoActualinput").val());    
       console.debug("fecha:"        + $("#nuevoFecha").html());
       console.debug("entrada:"      + entrada);
@@ -537,14 +574,19 @@ function newCaja() {
 function newSaldoinicial() {
   console.info("Run: newSaldoinicial");
 
-  $("#saldoInicial").val("$00.00")
-  $("#totalbilletesInicial").val("$00.00")
-  $("#notasInicial").val("Notas")
+  $("#saldoInicial").val("$00.00");
+  $("#totalbilletesInicial").val("$00.00");
+  $("#notasInicial").val("Notas");
 
-  $("#saldoInicial").click(function () {$(this).val(" ");});
-  $("#totalbilletesInicial").click(function () {$(this).val(" ");});
-  $("#notasInicial").click(function () {$(this).val(" ");});
-
+  $("#saldoInicial").click(function () {
+    $(this).val(" ");
+  });
+  $("#totalbilletesInicial").click(function () {
+    $(this).val(" ");
+  });
+  $("#notasInicial").click(function () {
+    $(this).val(" ");
+  });
 
   $("#saldoInicial").change(function () {
     $("#saldoincialformat").html(
