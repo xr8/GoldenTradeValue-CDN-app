@@ -59,6 +59,8 @@ console.log("Load Js GTV");
         url_caja_new         = url_api + "caja/createdata";
         url_caja_update      = url_api + "caja/updatedata";
         url_caja_delete      = url_api + "caja/deletedata";    
+        
+        url_caja_utility     =  url_api + "caja/utilitydata?type=";
 
         url_saldo_read       = url_api + "cajasaldo/readerdata?aMiEgqwaxoVhBqo8yJze=";      
         url_saldo_create     = url_api + "cajasaldo/createdata";

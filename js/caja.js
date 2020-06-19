@@ -39,6 +39,10 @@ nuevaFechainput()
 
 inoutNuevodisabled()
 
+//-----> begin:  funcion utility
+utilityUltimafecha()
+
+
 });
 
 /***************************************************************************** 
@@ -342,7 +346,6 @@ function newSaldoinicial() {
 }
 //---> New saldo inicial
 
-
 //----> Begin: click save caja
 function newRegistrocaja(){
 
@@ -412,8 +415,6 @@ function newRegistrocaja(){
 
         fechaIid = $("#start").val()
         allCaja(fechaIid);
-        saldoInicial();
-
       })
       .fail(function (jqXHR, textStatus, errorThrown) {
         //--->
@@ -423,54 +424,59 @@ function newRegistrocaja(){
       .always(function () {
         //--->
         console.info("Run: allways alluser");
-
+        utilityUltimafecha()
         inoutNuevodisabled()
+
       });
     //---->
   });
 }   
 function nuevaFechainput(){
   $("#caja-nuevoFecha").change(function(){
-      fecha = $(this).val();
-      fecha = fecha.split("-");
+
+      fecha    = $("#ultimafecha").val();
+      fecha    = fecha.split("-");  
+      fechadia = fecha[2];
+
+      //---->
+
+      var d = new Date();
+      var diaHoy = d.getDate();
       
-      let fechadia = fecha[2];
-      fechasInputs(fechadia)
+      //---->
+
+      fechaUi    = $(this).val();
+      fechaUi    = fechaUi.split("-");  
+      diaUi      = fechaUi[2];
+
+      //_--------------------------------------------->
+
+    //ultimo reistro
+    fechainferior  = fechadia
+    // dia hoy
+    fechaSuperior  = diaHoy
+    // ui
+    fechaUi        = diaUi
+
+      fechasInputs(fechainferior,fechaSuperior,fechaUi)
   
     })
 }
-
 //----->
-function fechasInputs(fechadia){
-    
-  var d = new Date();
-  var diaHoy = d.getDate();
-  
-  var diaLimite = diaHoy - 3;
+function fechasInputs(fechainferior,fechaSuperior,fechaUi){
 
-  //alert("Select day" + fechadia)
-  //alert("js day"+diaHoy);
-  
-  /*fechadia >= diaHoy
-    select      js   
-      
-      && fechadia >= diaLimite
-
-  */
-
-  if(fechadia > diaHoy){
-      alert("El registro con fechas futuras no esta permitido")
-      inoutNuevodisabled()
-  }else if(fechadia <= diaLimite){
-    alert("Solo se permite ingresar nuevos registros  del dia actual de ayer y antier")
-    $inoutNuevodisabled()
-  }else{
+  if(fechainferior > fechaUi){
+    alert("El registro con fecha menores al ultimo registro no son validas y no esta permitido")
+    inoutNuevodisabled()
+}else  if(fechaSuperior < fechaUi){
+    alert("El registro con fecha mayor al dia de hoy no son validas y no esta permitido")
+    inoutNuevodisabled()
+}else{
     inoutNuevoenabled()
-  }
+}
 
 
 }
-
 function inoutNuevodisabled(){
   /*
   tipo
@@ -496,7 +502,6 @@ function inoutNuevodisabled(){
   $("#caja-billetes").click(function (){$(this).val(" ")});
      $("#caja-notas").click(function (){$(this).val(" ")});
 }
-
 function inoutNuevoenabled(){
   $("#caja-tipo").attr('disabled',false);
   $("#caja-monto").attr('disabled',false);
@@ -506,7 +511,6 @@ function inoutNuevoenabled(){
   $("#caja-billetes").attr('disabled',false);
   $("#caja-notas").attr('disabled',false);  
 }
-
 function bottonCajaNuevo(){
   $("#caja-create").click(function(){
     $("#b-new-caja").attr('disabled',false)
@@ -515,8 +519,6 @@ function bottonCajaNuevo(){
 }
 
  //----> 
-
-
 
   function calcTotal()  {
     saldoInicial = $("#allCaja .inicial .saldoMonto").html();
@@ -587,8 +589,6 @@ function bottonCajaNuevo(){
         "</tr>"
     );
   }
-
-  
   function calcEntrada() {
     var sumaEntrada = 0;
   
@@ -699,3 +699,42 @@ function bottonCajaNuevo(){
     }
   }
   
+
+/***************************************************************************** 
+ *                                                                           *
+ *                                                                           *
+ *                                Utility Data                               *
+ *                                                                           *
+ *                                                                           *
+ *****************************************************************************/  
+function utilityUltimafecha(){
+  console.info('utility Ultima fecha')
+  urlX = url_caja_utility + "ultimafecha";
+
+  var settings = {
+    url:urlX,
+    method: "GET",
+    timeout: 0,
+    headers: {
+      Authorization: "Basic cm9vdDphZG1pbg==",
+    },
+  };
+
+  $.ajax(settings)
+    .done(function (data) {
+      $("#ultimafecha").empty();
+      //---> EACH
+      $.each(data, function (i, val) {
+        $("#ultimafecha").val(val.fecha);
+      });
+      //---> EACH
+
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+
+      xhrError(jqXHR, textStatus, errorThrown);
+    })
+    .always(function () {
+
+    })
+}
