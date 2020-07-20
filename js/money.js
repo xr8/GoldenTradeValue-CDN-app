@@ -4,7 +4,7 @@ console.log("Load Js GTV");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = false;
+    var local = true;
     
     if (local == true) {
         console.log('Run: on the server localhost');
@@ -64,7 +64,8 @@ console.log("Load Js GTV");
 
         url_saldo_read       = url_api + "cajasaldo/readerdata?aMiEgqwaxoVhBqo8yJze=";      
         url_saldo_create     = url_api + "cajasaldo/createdata";
-
+        
+        urlBuscadorAutocomplete = url_api + "caja/utilitydata?type=buscar";
         //--->
         
         function apiConecction(){

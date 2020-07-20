@@ -1,33 +1,30 @@
-console.log("Load Js Usuarios");
+console.log("Load Js  Clientes");
 apiConecction();
-
 $(document).ready(function () {
-  console.info("2 Run -> Data");
-
-  //---> Load User
-  console.info("Run: Load User");
+    //---> Load User
+  console.info("Run: Load Cliente");
   allClientes();
 
   //---> New User
-  console.info("Run: New User");
+  console.info("Run: New Cliente");
   $("#b-nuew-user").click(function () {
     newClientes();
   });
 
   //---> Update User
-  console.info("Run: Update User");
+  console.info("Run: Update Cliente");
   $("#btnUpdateUser").click(function (event) {
     updateClientes();
   });
 
   //---> Delete User
-  console.info("Run: Delete User");
+  console.info("Run: Delete Cliente");
   $("#btnDeleteUser").click(function (event) {
     deleteClientes();
   });
 
   //---> ResumenUser
-  console.info("Run: Resume User");
+  console.info("Run: Resume Cliente");
   $("#user-resume").click(function () {});
 });
 

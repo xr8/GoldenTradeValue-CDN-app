@@ -1,9 +1,10 @@
-apiConecction();
 $(document).ready(function () {
   
-  //---> Begin: All Caja
+  //---> Begin: All Caja  
   fechaIid = $("#start").val();
   allCaja(fechaIid);
+  
+  autoComplete();
 
   //-----> Begin: Reload  All Caja
   $("#reloadCaja").click(function () {
@@ -11,14 +12,14 @@ $(document).ready(function () {
     fechaIid = $("#start").val();
     allCaja(fechaIid);
   });
-
+  
   //-----> Begin: Reload  All Caja
   $("#start").change(function(){
     console.log("Run change fecha");
     fechaIid = $(this).val()
     allCaja(fechaIid);
   });
-
+  
   //-----> begin:  nuevo saldo
   newSaldoinicial();
 
@@ -33,9 +34,9 @@ $(document).ready(function () {
  copyTicketData()
  cerrarCaja()
 
-
  utilityUltimafecha()
  
+ apiConecction();
 });
 
 /***************************************************************************** 
@@ -59,6 +60,9 @@ $(document).ready(function () {
  //---> Bein: All Caja
 function allCaja(fechaId) {
   console.info("Run: All Caja");
+  
+  console.info("Disable button save");
+  $("#b-new-caja").attr('disabled','disabled');
 
   $("#rMestabla").fadeOut(3000);
 
@@ -78,6 +82,7 @@ function allCaja(fechaId) {
       $("#allCaja").empty();
       //---> EACH
       $.each(data, function (i, val) {
+
         if (val.Error == "104") {
           //----> IF
           /*
@@ -90,7 +95,7 @@ function allCaja(fechaId) {
           $("#saldoinicial-create").show(300);
           //----->ALERT
           $("#sMesalert").show(300);
-          $("#rMesalert").show(300);
+          //$("#rMesalert").show(300);
           
           //----> IF
         } else {
@@ -136,8 +141,8 @@ function allCaja(fechaId) {
           );
           //---->
           $("#allCaja")
-            .fadeIn(3000)
-            .append(
+          .fadeIn(3000)
+          .append(
               '<tr class="text-center ' + colortr + " " + tiporegistro + ' " id="' + val.id_advance + '"          >' +
                 '<th scope="row"><input name="idX" type="checkbox" class="idAcheckbox" id="' + val.id_advance + '"></th>' +
                 '<td class="text-capitalize text-left" id="' + id_ori_adv + '"                                    >' + id_ori_adv + "</td>" +
@@ -149,12 +154,13 @@ function allCaja(fechaId) {
                 '<td class="text-lowercase"                                                                       >' + val.nocompra + "</td>" +
                 '<td class="text-capitalize text-left"                                                            >' + val.concepto + "</td>" +
               '</tr>'
-            );
+          );
           //---->
 /*'<td class="text-capitalize"                                                                      >' + val.totalbilletes + "</td>" +
                 '<td class="text-capitalize"                                                                      >' + val.notas + "</td>" + */
           //----> ELSE
         }
+        
       });
       //---> EACH
     })
@@ -164,22 +170,16 @@ function allCaja(fechaId) {
     })
     .always(function () {
       //
-      /*
-
-
-      
-
       //setTimeout(function(){ calcCeldauno() }, 3000);
-      */
 
      calcCeldauno();
      //
 
      subTotales();
      calcTotal();
+
      setTimeout(function(){ calcAllceldas() }, 3000);
      
-
     });
 }
   //---> Bein: 
@@ -322,30 +322,41 @@ function allCaja(fechaId) {
         "</tr>"
     );
   }
+  
   //---> Bein: 
   function calcAllceldas() {
+  //----->
     console.log("Run: calcAllceldas")
-    entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
-    salidaMonto = $("#allCaja .calcular .salidaMonto").each(function (key) {});
-    saldoMonto = $("#allCaja .calcular .saldoMonto").each(function (key) {});
 
-    imas = entradaMonto.length + 1;
+    entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
+    salidaMonto  = $("#allCaja .calcular  .salidaMonto").each(function (key) {});
+    saldoMonto   = $("#allCaja .calcular   .saldoMonto").each(function (key) {});
+    imas         = entradaMonto.length + 1;
 
     for (var i = 0; i < entradaMonto.length; i++) {
-      /**********************************
-       *      o$ + 1E = 1$
-       **********************************/
+    //----->
 
-      x = i + 1;
-      y = i + 2;
+    /**********************************
+     *      o$ + 1E = 1$
+     **********************************/
 
-      if (x > i) {
-        entradaX = parseInt(entradaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
-        salidaX = parseInt(salidaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
-      } else {
-        entradaX = 0;
-        salidaX = 0;
-      }
+    x = i + 1;
+    y = i + 2;
+    
+      if(x > i){
+
+        //----->
+        if(x == entradaMonto.length){
+        } else {
+          entradaX = parseInt(entradaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
+          salidaX = parseInt(salidaMonto[x].textContent.replace(/[^\d\.]*/g, ""));
+        }
+        //----->        
+
+        }else{
+          entradaX = 0;
+          salidaX  = 0;
+        }
 
       saldoX = parseInt(saldoMonto[i].textContent.replace(/[^\d\.]*/g, ""));
 
@@ -356,13 +367,15 @@ function allCaja(fechaId) {
       }
 
       //alert("entrada" + entradaX + "salida" + salidaX + "resultado" + resultadoX)
-      resultadoX = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(resultadoX);
+      resultadoX = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(resultadoX);
+
       //alert("#allCaja ." + y + "target .saldoMonto")
       $("#allCaja ." + y + "target .saldoMonto").html(resultadoX);
+
+    //----->    
     }
+
+  //----->
   }
   //--------------------------------------------------------------------------->
 
@@ -436,12 +449,8 @@ function allCaja(fechaId) {
     $.ajax(settings)
       .done(function (data) {
         console.log(data);
-
-
         //----->TABLE
         //$("#rMestabla").show(300);
-
-
         //----->ALERT
         $("#sMesalert,#rMesalert").hide(300);
         //----->Modal
@@ -579,7 +588,7 @@ $("#caja-monto").val("").attr('disabled','disabled');
 $("#caja-nocompra").val("").attr('disabled','disabled');
 
 $("#caja-billetes").val("").val("No #000").attr('disabled','disabled');
-$("#b-new-caja").val("").attr('disabled','disabled');
+$("#b-new-caja").attr('disabled','disabled');
 
 $("#caja-nombre,#caja-concepto,#caja-notas").click(function () {$(this).val("");});
 
@@ -628,6 +637,7 @@ $("#b-new-caja").click(function () {
 function newRegistrocaja(){
 
   $("#b-new-caja").click(function () {
+    $("#b-new-caja").attr('disabled','disabled');
     $("#ticket-print").addClass("d-none")
     console.info("on po click")
 
@@ -791,106 +801,104 @@ function nuevaFechainput(){
   
     })
 }
-  function fechasInputs(fechainferior, fechaSuperior, fechaUi) {
-    if (fechainferior > fechaUi) {
-      
-      alert("El registro con fecha menores al ultimo registro no son validas y no esta permitido");
-      inputNuevodisabled();
 
-    } else if (fechaSuperior < fechaUi) {
-      
-      alert("El registro con fecha mayor al dia de hoy no son validas y no esta permitido");
-      inputNuevodisabled();
-
-    } else {
-
-      inputNuevoenabled();
-
-    }
-  }
-
-  function inputNuevoenabled(){
-    $("#caja-tipo").attr('disabled',false);
-    $("#caja-monto").attr('disabled',false);
-    $("#caja-nocompra").attr('disabled',false);
-    $("#caja-nombre").attr('disabled',false);
-    $("#caja-concepto").attr('disabled',false);
-    $("#caja-billetes").attr('disabled',false);
-    $("#caja-notas").attr('disabled',false);  
-  }
-
-  function utilityUltimafecha(){
-    console.info('utility Ultima fecha')
-    urlX = url_caja_utility + "ultimafecha";
-  
-    var settings = {
-      url:urlX,
-      method: "GET",
-      timeout: 0,
-      headers: {
-        Authorization: "Basic cm9vdDphZG1pbg==",
-      },
-    };
-  
-    $.ajax(settings)
-      .done(function (data) {
-        $("#ultimafecha").empty();
-        //---> EACH
-        $.each(data, function (i, val) {
-          $("#ultimafecha").val(val.fecha);
-        });
-        //---> EACH
-  
-      })
-      .fail(function (jqXHR, textStatus, errorThrown) {
-  
-        xhrError(jqXHR, textStatus, errorThrown);
-      })
-      .always(function () {
-  
-      })
-  }  
-
-
-
-  jQuery(document).ready(function($) {
+function fechasInputs(fechainferior, fechaSuperior, fechaUi) {
+  if (fechainferior > fechaUi) {
     
-    // Set the Options for "Bloodhound" suggestion engine
-    let engine = new Bloodhound({
-      remote: {
-        url: url_caja_utility + 'buscar&term=%QUERY%',
-        wildcard: '%QUERY%'
-      },
-      datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace
-        });
+    alert("El registro con fecha menores al ultimo registro no son validas y no esta permitido");
+    inputNuevodisabled();
 
-        $(".search-input").typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 3
-        }, {
-            // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
-            name: 'usersList',          
-            source: engine.ttAdapter(),
-            // the key from the array we want to display (name,id,email,etc...)
-            display: function (data) {return data.nombrecompuesto},
-            templates: {
-                empty:  ['<a class="list-group-item">Buscar Usuario, Clientes o Provedores...</a>'],
-                header: ['<div class="input-group input-results-dropdown">'],
-                suggestion: function (data) {return '<a class="text-capitalize list-group-item">'  + data.firstname + ' ' +data.secondname + '</a>'}
-            },
-            close: function (){alert(123)}
-        });
+  } else if (fechaSuperior < fechaUi) {
     
-    $(".search-input").change(function () {
-    $("#result").val(" ").val($(this).val())
+    alert("El registro con fecha mayor al dia de hoy no son validas y no esta permitido");
+    inputNuevodisabled();
+
+  } else {
+
+    inputNuevoenabled();
+
+  }
+}
+
+function inputNuevoenabled(){
+  $("#caja-tipo").attr('disabled',false);
+  $("#caja-monto").attr('disabled',false);
+  $("#caja-nocompra").attr('disabled',false);
+  $("#caja-nombre").attr('disabled',false);
+  $("#caja-concepto").attr('disabled',false);
+  $("#caja-billetes").attr('disabled',false);
+  $("#caja-notas").attr('disabled',false);  
+}
+
+function utilityUltimafecha(){
+  console.info('utility Ultima fecha')
+  urlX = url_caja_utility + "ultimafecha";
+
+  var settings = {
+    url:urlX,
+    method: "GET",
+    timeout: 0,
+    headers: {
+      Authorization: "Basic cm9vdDphZG1pbg==",
+    },
+  };
+
+  $.ajax(settings)
+    .done(function (data) {
+      $("#ultimafecha").empty();
+      //---> EACH
+      $.each(data, function (i, val) {
+        $("#ultimafecha").val(val.fecha);
+      });
+      //---> EACH
+
     })
-    
+    .fail(function (jqXHR, textStatus, errorThrown) {
 
-  });
+      xhrError(jqXHR, textStatus, errorThrown);
+    })
+    .always(function () {
 
+    })
+}  
+
+jQuery(document).ready(function($) {
   
+  // Set the Options for "Bloodhound" suggestion engine
+  let engine = new Bloodhound({
+    remote: {
+      url: url_caja_utility + 'buscar&term=%QUERY%',
+      wildcard: '%QUERY%'
+    },
+    datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+      });
+
+      $(".search-input").typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 3
+      }, {
+          // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
+          name: 'usersList',          
+          source: engine.ttAdapter(),
+          // the key from the array we want to display (name,id,email,etc...)
+          display: function (data) {return data.nombrecompuesto},
+          templates: {
+              empty:  ['<a class="list-group-item">Buscar Usuario, Clientes o Provedores...</a>'],
+              header: ['<div class="input-group input-results-dropdown">'],
+              suggestion: function (data) {return '<a class="text-capitalize list-group-item">'  + data.firstname + ' ' +data.secondname + '</a>'}
+          },
+          close: function (){alert(123)}
+      });
+  
+  $(".search-input").change(function () {
+  $("#result").val(" ").val($(this).val())
+  })
+  
+
+})
+
 /*
 |->CAJA.JS
 |----- monedas()
@@ -1191,3 +1199,39 @@ function nuevaFechainput(){
     $("#ticket-print").addClass("d-none")
   }   
 //--------------------------------------------------------------------------->
+
+function autoComplete() {
+  console.info("Run: Aautocomplete");
+  //--->
+  $("#buscador").autocomplete({
+    minLength: 4,
+    delay: 100,
+    source: function (req, add) {
+      // XMLHttpRequest --->
+      $.getJSON(urlBuscadorAutocomplete, req, function (data) {
+        var suggestions = [];
+        $.each(data, function (i, val) {
+          if(val.Buscador == "Error"){
+            suggestions.push({
+              id: "Error 101",
+              value: "Busqueda fallida",
+            });
+          }else{
+
+            suggestions.push({
+              id: val.id_advance,
+              value: val.firstname + " " + val.secondname,
+            });
+
+          }
+
+        });
+        add(suggestions);
+      });
+    },
+    select: function (event, ui) {
+      $("#result").val(" ").val(ui.item.id);
+    },
+  });
+  //--->
+}
