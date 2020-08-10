@@ -4,7 +4,7 @@ console.log("Load Js GTV");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = true;
+    var local = false;
     
     if (local == true) {
         console.log('Run: on the server localhost');
