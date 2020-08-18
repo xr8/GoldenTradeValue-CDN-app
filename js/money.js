@@ -55,6 +55,7 @@ console.log("Load Js GTV");
             //4.- url_clientes
         url_caja_one         = url_api + "caja/readerdata";          
         url_caja_all         = url_api + "caja/readerdata";
+        url_caja_cancelados  = url_api + "caja/utilitydata?type=cancelados&id_advance=&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09&date=";
 
         url_caja_new         = url_api + "caja/createdata";
         url_caja_update      = url_api + "caja/updatedata";
