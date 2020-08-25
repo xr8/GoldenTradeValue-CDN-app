@@ -24,7 +24,15 @@ $(document).ready(function(){
 
 		//---> New User
 		console.info('Run: New User');
+		
+		$("#b-nuew-user").attr("disabled","disabed");
+
+		$("#user-new").click(function(){
+			$("#b-nuew-user").attr("disabled",false);
+		});
+
 	    $("#b-nuew-user").click(function(){
+			$("#b-nuew-user").attr("disabled","disabed");
 	        newUser();
 	    	});
 

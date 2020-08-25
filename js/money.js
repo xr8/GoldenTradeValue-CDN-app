@@ -4,7 +4,7 @@ console.log("Load Js GTV");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local = false;
+    var local =  true;
     
     if (local == true) {
         console.log('Run: on the server localhost');
@@ -53,7 +53,7 @@ console.log("Load Js GTV");
             url_proveedores_delete = url_api + "proveedores/deletedata";
         
             //4.- url_clientes
-        url_caja_one         = url_api + "caja/readerdata";          
+        url_caja_one         = url_api + "caja/readerdata?a181a603769c1f98ad927e7367c7aa51=68934a3e9455fa72420237eb05902327&date=&id_advance=";          
         url_caja_all         = url_api + "caja/readerdata";
         url_caja_cancelados  = url_api + "caja/utilitydata?type=cancelados&id_advance=&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09&a181a603769c1f98ad927e7367c7aa51=b326b5062b2f0e69046810717534cb09&date=";
 
@@ -123,6 +123,13 @@ function isEmpty(val){
 /*==============================================
                 Var Empty                 
 ==============================================*/ 
+
+function checkBoxOne(){
+    var $checks = $('input[type="checkbox"]');
+    $checks.click(function() {
+       $checks.not(this).prop("checked", false);
+    });
+}
 
 /*!
   Copyright (c) 20

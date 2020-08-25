@@ -9,8 +9,20 @@ $(document).ready(function () {
   allClientes();
 
   //---> New User
+  /*
+  user-create
+    b-nuew-user
+  */
   console.info("Run: New User");
+  $("#b-nuew-user").attr("disabled","disabed");
+
+  $("#user-create").click(function(){
+    $("#b-nuew-user").attr("disabled",false);
+  });
+
+
   $("#b-nuew-user").click(function () {
+    $("#b-nuew-user").attr("disabled","disabed");
     newClientes();
   });
 

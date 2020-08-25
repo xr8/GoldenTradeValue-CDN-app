@@ -215,8 +215,6 @@ function newRegistrocaja(){
        // printDiv()
       })
     
-    
-    
     }).fail(function (jqXHR, textStatus, errorThrown) {
       
       //--->
@@ -242,10 +240,6 @@ function newRegistrocaja(){
       //---->
         
   }
-
-  
-
-
 
   /***************************************************************************** 
    *                                                                           *
@@ -362,7 +356,13 @@ function newRegistrocaja(){
             
             if(val.id < 10){
                 id_xxx =  '000'+val.id
-            }
+                }else if(val.id >= 10 && val.id <= 99){
+                    id_xxx =  '00'+val.id
+                    }else if(val.id >= 100 && val.id <= 999){
+                        id_xxx =  '0'+val.id
+                        }else if(val.id >= 1000){
+                            id_xxx =  val.id
+                            }
 
             $("#allCaja")
             .fadeIn(3000)
@@ -403,8 +403,7 @@ function newRegistrocaja(){
             calcCeldauno();
             subTotales();
             calcTotal();
-            btnCancelar();
-       
+            
         }else if(data.length >= 2){
        
             // alert(2)
@@ -412,11 +411,13 @@ function newRegistrocaja(){
             subTotales();
             calcTotal();
             calcAllceldas();
-            btnCancelar();
        
         }
+        
+        checkBoxOne()
 
       })
+      
     //--->
   }
 
@@ -511,7 +512,13 @@ function newRegistrocaja(){
             
             if(val.id < 10){
                 id_xxx =  '000'+val.id
-            }
+                }else if(val.id >= 10 && val.id <= 99){
+                    id_xxx =  '00'+val.id
+                    }else if(val.id >= 100 && val.id <= 999){
+                        id_xxx =  '0'+val.id
+                        }else if(val.id >= 1000){
+                            id_xxx =  val.id
+                            }
 
             $("#allCancelados")
             .fadeIn(3000)
@@ -569,8 +576,6 @@ function newRegistrocaja(){
     //--->
   }  
 
-
-
 //--------------------------------------------------------------------------->
     //---> Begin: 
     /*
@@ -578,32 +583,31 @@ function newRegistrocaja(){
     */
     function calcCeldauno() {
         console.info("Run calc Celdauno");
-        //-----> x[0]
-        let entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
-        entradaMonto = entradaMonto[0].textContent.replace("$", "").replace(",", "");
-        entradaMonto = parseFloat(entradaMonto);
-  
-        //-----> x[0]
-        let salidaMonto = $("#allCaja .calcular .salidaMonto").each(function (key) {});
-        salidaMonto = salidaMonto[0].textContent.replace("$", "").replace(",", "");
-        salidaMonto = parseFloat(salidaMonto);
-        
         //-----> y[0]
         let saldoInicial = $("#allCaja .inicial .saldoMonto").html();
         saldoInicial = saldoInicial.replace("$", "").replace(",", "");
-        saldoInicial = parseFloat(saldoInicial); 
         
-  
-        if (entradaMonto != 0) {
-          
-          saldoUno = (entradaMonto) + (saldoInicial);
-        } else {
-            
-          saldoUno = (salidaMonto) - (saldoInicial);
-        }
+        if(saldoInicial.lenght > 0){
+          saldoInicial = parseFloat(saldoInicial); 
+          //-----> x[0]
+          let entradaMonto = $("#allCaja .calcular .entradaMonto").each(function (key) {});
+          entradaMonto = entradaMonto[0].textContent.replace("$", "").replace(",", "");
+          entradaMonto = parseFloat(entradaMonto);
     
-        $("#allCaja .1target .saldoMonto").html(new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(saldoUno));
-        
+          //-----> x[0]
+          let salidaMonto = $("#allCaja .calcular .salidaMonto").each(function (key) {});
+          salidaMonto = salidaMonto[0].textContent.replace("$", "").replace(",", "");
+          salidaMonto = parseFloat(salidaMonto);
+    
+          if (entradaMonto != 0) {            
+            saldoUno = (entradaMonto) + (saldoInicial);
+            } else {
+              saldoUno = (salidaMonto) - (saldoInicial);
+              }
+      
+          $("#allCaja .1target .saldoMonto").html(new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",}).format(saldoUno));
+        }
+
       }
 //--------------------------------------------------------------------------->
 
@@ -626,9 +630,9 @@ function newRegistrocaja(){
         '<tr class="table-dark text-center text-dark">' +
         '<th scope="row"></th><td></td><td></td><td></td><td></td>' +
         '<td></td>' +
-        '<td class="text-capitalize"><span class="alert-link">Entrada  </span></td>' +
-        '<td class="text-capitalize"><span class="alert-link">Salida   </span></td>' +
-        '<td class="text-capitalize"><span class="alert-link">Saldo    </span></td>' +
+        '<td class="text-capitalize"><span class="alert-link">Entradas      </span></td>' +
+        '<td class="text-capitalize"><span class="alert-link">Salidas       </span></td>' +
+        '<td class="text-capitalize"><span class="alert-link">Saldo Inicial </span></td>' +
         '</tr>' +
         '<tr class="table-dark text-dark">' +
         '<th scope="row"></th><td></td><td></td>' +
@@ -800,30 +804,22 @@ function calcAllceldas() {
 
 
   function btnCancelar(){
-      
-    var $checks = $('input[type="checkbox"]');
-    $checks.click(function() {
-       $checks.not(this).prop("checked", false);
-    });
-
-    $("#btnCancelar").click(function () {
-        let idCancelar = $(".idAcheckbox:checked").attr("id"); 
-
+        var x = $("#btnCancelar").click(function () {
         var r = confirm("Deseas cancelar esta operacion !");
         if (r == true) {
-            cancelarOperacion(idCancelar)
+            cancelarOperacion();
         } else {
-        
-            fechaIid = $("#start").val();
-            allCaja(fechaIid);
+
         }  
-
     })
+    x = " ";
+/*
 
-
+*/
   }    
-  function cancelarOperacion(idCancelar){
-                  
+
+  function cancelarOperacion(){
+         
     var settings = {
         "url": url_caja_delete ,
         "method": "POST",
@@ -833,7 +829,7 @@ function calcAllceldas() {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
-          "id_advance": idCancelar
+          "id_advance": $(".idAcheckbox:checked").attr("id")
         }
       };
       

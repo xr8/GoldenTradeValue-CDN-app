@@ -7,7 +7,18 @@ $(document).ready(function () {
 
   //---> New User
   console.info("Run: New Cliente");
+/*
+#user-create  btn nuevo
+#b-nuew-user
+*/
+  $("#b-nuew-user").attr("disabled","disabed");
+
+  $("#user-create").click(function(){
+    $("#b-nuew-user").attr("disabled",false);
+  });
+
   $("#b-nuew-user").click(function () {
+    $("#b-nuew-user").attr("disabled","disabed");
     newClientes();
   });
 
