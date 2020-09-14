@@ -35,6 +35,7 @@ console.log("Load Js GTV");
             url_user_new    = url_api + "user/createdata";
             url_user_update = url_api + "user/updatedata";
             url_user_delete = url_api + "user/deletedata";
+            url_user_find = url_api + "user/finddata?user=";
 
         //2.- url_clientes
             url_clientes_one    = url_api + "clientes/readerdata";          
@@ -130,6 +131,20 @@ function checkBoxOne(){
        $checks.not(this).prop("checked", false);
     });
 }
+
+function empty(e) {
+    switch (e) {
+      case "":
+      case 0:
+      case "0":
+      case null:
+      case false:
+      case typeof(e) == "undefined":
+        return true;
+      default:
+        return false;
+    }
+  }
 
 /*!
   Copyright (c) 20
