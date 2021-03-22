@@ -128,8 +128,9 @@ function fechasInputs(diaHoy,mesHoy,fecha,annoFecha,mesFecha,diaFecha,fechaUi,an
 function validarInput(){
     console.log("validar Inputs")  
     
-    $("#caja-monto").change(function () {
-
+    $("#caja-monto").on('click', function() {
+    
+      /*
         if($("#caja-concepto").val() == ""){
                 
             alert("El campo Concepto es requerido para continuar")
@@ -148,7 +149,8 @@ function validarInput(){
                 }else{
                     $("#b-new-caja,#cajaCerrar").show().attr("disabled", false);
                 }        
-        
+        */
+       $("#b-new-caja,#cajaCerrar").show().attr("disabled", false);
      })
       
 
@@ -166,6 +168,7 @@ function newRegistrocaja(){
     cajaNotas       = $("#caja-notas").val()
     cajaTipo        = $("#caja-tipo").val()
     cajaMonto       = $("#caja-monto").val()
+    cajaFolio       = $("#caja-folio").val()
   
     console.log("run ticket copy");
 
@@ -186,9 +189,10 @@ function newRegistrocaja(){
         cajaConcepto   : cajaConcepto,
         cajaNotas      : cajaNotas,
         cajaTipo       : cajaTipo,
-        cajaMonto      : cajaMonto,
         cajaSave       : saveApicaja,
-        idOperacion    : idOperacion
+        idOperacion    : idOperacion,
+        cajaMonto      : cajaMonto,
+        cajaFolio      : cajaFolio,                
       }
     };
   

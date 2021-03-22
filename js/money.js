@@ -4,14 +4,14 @@ console.log("Load Js GTV");
                 API URLS                  
 ==============================================*/    
     //url_base
-    var local =  false;
+    var local =  true;
     
     if (local == true) {
         console.log('Run: on the server localhost');
-        var hostlocal = "localhost";
-        url_base  = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-APP/index.php/";
-        url_api   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-API/index.php/";
-        url_cdn   = "//" + hostlocal + "/server/DevOps/GoldenTradeValue/GoldenTradeValue-CDN/app/";
+        var hostlocal = "localhost/server/DevOps/GoldenTradeValue/";
+        url_base  = "//" + hostlocal + "GoldenTradeValue-APP/index.php/";
+        url_api   = "//" + hostlocal + "GoldenTradeValue-API/index.php/";
+        url_cdn   = "//" + hostlocal + "GoldenTradeValue-APP/";
         }else{
             console.log('Run: on the server web');
             var hostweb   = "gtvsa.com";
@@ -27,6 +27,7 @@ console.log("Load Js GTV");
     //*********************************************************************************//  
         //0.- url_api
             url_api_api  = url_api + "";
+            url_api_search = url_api + "search/querys?";
 
         //1.- url_user
             url_user_one    = url_api + "user/readerdata";          
@@ -68,15 +69,29 @@ console.log("Load Js GTV");
         url_saldo_create     = url_api + "cajasaldo/createdata";
         
         urlBuscadorAutocomplete = url_api + "caja/utilitydata?type=buscar";
+
+        //5.- url_metales
+        urlMetales_index= url_api + "compra/readerdata";
+        urlMetales_metales_create = url_api + "metales/createdata";
+        urlMetales_metales_reader = url_api + "metales/readerdata?type=";
+        
+        //6.- url_metalesentrega
+        urlMetales_metalesentrega_create = url_api + "metalesentrega/createdata";
+        urlMetales_metalesentrega_reader_emtrega = url_api + "metalesentrega/readerdata?type=entregas&id=";
+
+        
+        
+        
         //--->
         
+
         function apiConecction(){
-            console.info('Run: API Conecction');
+            
             $.getJSON(url_api_api,function(data) {
-                //--->
-                $.each(data, function(i, val) {
-                    })              
-                //--->
+                console.info('Api Connection : Success');
+                console.info('API Token      : ' + data['Api Connection']);
+                console.info('API Time       : '  + data['Api Time']);
+                //--->[]
                 }).fail(function(jqXHR, textStatus , errorThrown) {
                     //--->
                     console.info('Run:')
