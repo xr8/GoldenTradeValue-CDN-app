@@ -1,292 +1,353 @@
-console.info("Run: File Metales");
+console.log("%cLoad File : %cdetalles", "color: cyan", "color: yellow");
+//--------------------------------------------------------------->
+//BEGIN
 
-//--------------------------------------------------------------------------->
-$(function(){
-/*############################################################*/
-    
-    //--------------------->
-    /*
-    */
+$(function() {
+/*############################################################*/ 
     apiConecction()
-    //--------------------->
+        //--------------------->
+        loadXhr()
+        //--------------------->
 
+        //--------------------->
+        allModal()
+        allBtn()
 
-    //--------------------->
-    /*
-    */
-    loadingMetalesReader()
-    //--------------------->
+                
+            checkOnlyOne()
 
-    btnEntrega()
+            finoChange()
+            fino_eu_Change()
 
-    clickEntrega()
-    
-    clickGenerarEntrega()
-    
-    changeFino()
+            plusEntrada()
+            btnDeleteEntregas()
+
+            
+        //--------------------->
+
 /*############################################################*/
 })
-//--------------------------------------------------------------------------->
 
-
-function btnEntrega(){
-      $(document).on('click', 'input[type="checkbox"]', function() {      
-        x = $('input[type="checkbox"]').not(this).prop('checked', false);     
-      
-        if( $('input[type="checkbox"]').is(':checked') ) {
-          $("#btnNewEntrega").attr( "disabled", false )
-        }else{
-          $("#btnNewEntrega").attr( "disabled", true)
-        }
-      })
+function allModal(){
+    console.log("%cRun: allModal\n\n A)clickModalSaldo\n B)clickModalCierre\n C)clickModalEntrega\n D)clickModalEntregaUnica%c\n", "line-height: 0.8;", "line-height: 1.7;")
+    clickModalSaldo()
+    clickModalCierre()
+    clickModalEntrega()        
+    clickModalEntregaUnica()
+    clickModalEntregaMultiple()    
 }
 
-function clickEntrega(){
-    
-    $("#btnNewEntrega").click(function() {
-        btnId = $('input[type="checkbox"]').val();
-        $("#metalesPrecio").empty().append($(".precio_id." + btnId).text())
-        $("#metalesPrecioInput").empty().val($(".precio_id." + btnId).text())
-        
-        loadingMetalesOne(btnId)
-        })
+function allBtn(){
+    console.log("%cRun: allBtn\n\nA)btnSaldo\nB)btnCierre\nC)btnEntrega\nD)btnEntregaUnica\n%c", "line-height: 0.8;", "line-height: 1.7;")
+    btnSaldo()
+    btnCierre()
+    btnEntrega()
+    btnEntregaUnica()
+    btnEntregaMultiple()
 }
+//--------------------------------------------------------------->
+/*solo un checkbox se puede seleccionar*/
+function checkOnlyOne(){
+    $(document).on('click', 'input[type="checkbox"]', function() {
+        x = $('input[type="checkbox"]').not(this).prop('checked', false);
 
-function clickGenerarEntrega(){
-    $("#generarEntrega").click(function() {
-        saveEntrega()
-    })  
-}
+        let y = $(this).val();
 
-/*****************************
-*       FUNCTION XHR
-*****************************/
-//BEGIN:--------------------->
-function loadingMetalesReader(){
-    //--->
-    console.info("Run: metales loadingMetales");
-      
-      $("#loadingMetales").fadeOut().empty().fadeIn()
-      
-      let jqxhr = $.getJSON(urlMetales_metales_reader + "cierres",function (data) {
-        console.log("Run: Cierres")
-      })
-      .done(function(data) {
-          //--->
-          $.each(data, function (i, val) {
- 
-            clientes_id = parseInt(val.id);
-
-            //x >1,=1,<9,=9   x = 1...9                      0009
-            if( clientes_id       == 1  || clientes_id   <= 9){
-              detail_cliente_id = "000" + clientes_id;           
-            //x >= 10 and x x == 99 x = 10...99     0099
-            }else if(clientes_id  == 10  || clientes_id  <= 99){
-              detail_cliente_id = "00" + clientes_id;
-            //x >= 100 and x x == 999 x = 100...999 0999
-            }else if(clientes_id  == 100 || clientes_id  <= 999){
-              detail_cliente_id = "0" + clientes_id;
-            //x >= 1000 x = 1000 .... °°            9999
-            }else if(clientes_id  >= 1000){
-              detail_cliente_id = clientes_id;
-            }else{detail_cliente_id = clientes_id;}
-
-            $("#loadingMetalesCierres")
-              .fadeIn(3000)
-              .append(
-                '<tr class="table-primary">' +
-                '    <th scope="row"><input type="checkbox" value="' + val.id_advance + '" class="btnId" name="id_advance"></th>' +
-                '    <td>' +    detail_cliente_id        + '</td>' +
-                '    <td>' + val.detail_fecha + '</td>' +
-                '    <td class="font-weight-bold text-uppercase">' + val.firstname + ' ' + val.secondname + '</td>' +
-
-                '    <td>Cerrado</td>' +
-                '    <td>' + val.detail_metal  + '</td>' +
-
-                '    <td>' + val.detail_grs + ' grs</td>' +
-                '    <td  class="precio_id '  + val.id_advance + '" >' + val.detail_precio+ '</td>' +
-                '    <td> 0 grs</td>' +
-                '</tr>     '   
-              );
-  
-          })
-          //--->
-      })        
-      .fail(function (data,jqXHR, textStatus, errorThrown) {
-        //--->
-        console.info("Run: all user loading error");
-        xhrError(jqXHR, textStatus, errorThrown);
-      })
-      .always(function (data) {
-        //--->
-        console.info("Run: all user always");
-      })
-    //--->  
-  }
-function loadingMetalesOne(btnId){
-    //--->
-    console.info("Run: metales loadingMetales");
-      
-      $("#loadingMetales").fadeOut().empty().fadeIn()
-      
-      let jqxhr = $.getJSON(urlMetales_metales_reader + "one" + "&id=" + btnId,function (data) {
-        console.log("Run: Cierres")
-      })
-      .done(function(data) {
-          //--->
-          $.each(data, function (i, val) {
-            /*
-                [
-                {
-                    "id": "24",
-                    "id_advance": "34bdc627bdf488d0e703",
-                    "time": "2021-03-19 03:03:39",
-                    "detail_type": "clientes",
-                    "detail_id_advance": "C-zr8h0iji96crde4",
-                    "firstname": "jorge",
-                    "secondname": "garibaldo",
-                    "detail_fecha": "2021-03-20 03:54:59",
-                    "detail_status": "Abierto",
-                    "detail_tipo": "compra",
-                    "detail_metal": "oro",
-                    "detail_grs": "82.60",
-                    "detail_precio": "1244.34",
-                    "detail_saldo": "0.00"
-                }
-]            
-            */
-            $("#metalesFolio").empty().append(val.id);
-            $("#metalesIdadvance").empty().val(val.id_advance);
-            $("#metalesFecha").empty().append(val.detail_fecha);
-            $("#metalesNombre").empty().append(val.firstname + " " + val.secondname);
-            $("#metalesStatus").empty().append(val.detail_status);
-  
-          })
-          //--->
-      })        
-      .fail(function (data,jqXHR, textStatus, errorThrown) {
-        //--->
-        console.info("Run: all user loading error");
-        xhrError(jqXHR, textStatus, errorThrown);
-      })
-      .always(function (data) {
-        //--->
-        console.info("Run: all user always");
-      })
-    //--->  
-}
-function saveEntrega(){
-        let btnId        = $("input[name='id_advance']:checked").val()
-        let generarFecha = $("#generarFecha").val()
-        let generarVale  = $("#generarVale").val()
-        let generarNoext = $("#generarNoext").val()
-        let generarGrsaf = $("#generarGrsaf").val()
-        let generarBarra = $("#generarBarra").val()
-        let generarLey   = $("#generarLey").val()
-        let generarFino  = $("#generarFino").val() 
-        let metalesPrecioInput = $("#metalesPrecioInput").val() 
-        
-        //BEGIN: Entrega --------------------->
-        /* 
-        FECHA | N. VALE | NO. EXT | GRS A/F | BARRA | LEY | FINO | 
-          *                                     *      *     *
-        */
-
-        //END: Entrega --------------------->
-
-        $('#entregaModal').modal('hide')
-        
-        let settings = {
-            "url"    : urlMetales_metalesentrega_create,
-            "method" : "POST",
-            "timeout": 0,
-            "headers": {
-              "Authorization": "Basic cm9vdDphZG1pbg==",
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            "data": {
-                "metales_id_advance" : btnId,
-                "entregas_fecha"     : generarFecha,
-                "entregas_no_vale"   : generarVale,
-                "entregas_no_ext"    : generarNoext,
-                "entregas_grs_af"    : generarGrsaf,
-                "entregas_barra"     : generarBarra,
-                "entregas_ley"       : generarLey,
-                "entregas_fino"      : generarFino,
-                "metalesPrecioInput" : metalesPrecioInput
+        if (parseFloat($("#" + y + " .pesoactual").html()) <= 0) {
+            $("#btnModalEntrega").attr("disabled", true)
+        } else {
+            //--------------------->
+            if ($('input[type="checkbox"]').is(':checked')) {
+                $("#btnModalEntrega").attr("disabled", false)
+                $("#cierreEntrega").val(y);
+            } else {
+                $("#btnModalEntrega").attr("disabled", true)
             }
-          };
-          
-          let jqxhr1 = $.ajax(settings).done(function (response) {
-            console.log("Run: Cierres")
-          })
-          .done(function(data) {
-              $.each(data, function (i, val) {})
-          })        
-          .fail(function (data,jqXHR, textStatus, errorThrown) {
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-          })
-          .always(function (data) {
-            loadingMetalesEntrega(btnId)
-            console.info("Run: all user always");
-          })
-          
+            //--------------------->
+        }
+    })
 }
-function loadingMetalesEntrega(btnId){
-    //--->
-    console.info("Run: metales loadingMetales");
-      
-      $("#loadingMetales").fadeOut().empty().fadeIn()
-      
-      let jqxhr = $.getJSON(urlMetales_metalesentrega_reader_emtrega  + btnId,function (data) {
-        console.log("Run: Cierres")
-      })
-      .done(function(data) {
-          //--->
-          $.each(data, function (i, val) {
- 
+/*tools */
 
 
-            $("#loadingMetalesCierres")
-              .fadeIn(3000)
-              .append(
+//END
+//--------------------------------------------------------------->
+
+//--------------------------------------------------------------->
+
+
+//--------------------------------------------------------------->
+
+//--------------------------------------------------------------->    
+function finoChange(){
+    //A)
+    $("#input_fino,#input_finopza").val("")
+    $("#input_barra,#input_ley").on('click',function(){
+
+        if($("#input_barra").val()){
+            $(this).val("0")
+            $("#input_fino").val("0")
+        }
+        if($("#input_ley").val()){
+            $(this).val("0")
+            $("#input_fino").val("0")
+        }
+        /*
+        Fino/Pza
+        importe
+        pagos
+        total
+        saldo
+        */
+       $("#input_finopza,#input_importe,#input_pagos,#input_total,#input_saldo").val("")
+    })
+
+    /*
+    B) 
+        result fino  -> ba#rra * ley /24 para oro
+        result salldo -> total + saldo - pagos = saldo
+    */
+    $("#input_barra,#input_ley").on('change',function() {
+        /*
+        id="input_barra"
+        id="input_ley"
+        id="input_fino"
+        Formula
+        input_barra * input_ley / 24
+        */   
+        inputCalcularImporte()
+        inputCalcularSaldo()
+    })
+
+    /*
+    C) 
+    * Cierres
+    * input_finopza
+    * input_fino
+    */
+    $("#input_finopza").on('click',function() {
+        $(this).val("")
+        /*
+        Fino/Pza
+        importe
+        pagos
+        total
+        saldo
+        */
+        $("#input_importe,#input_pagos,#input_total,#input_saldo").val("")
+
+        
+    })
+
+    $("#input_finopza").on('change',function() {
+        
+        if($("#input_barra").val() >= 0 || $("#input_ley").val() >= 0 || $("#input_barra").val() == "" || $("#input_ley").val() == "" ){
+            console.log(1)
+        }else{
+            console.log(2)
+        }
+
+        //$("#input_barra,#input_ley").val(0)
+        //$("#input_fino").val($(this).val())
+
+            inputCalcularImporteFP()
+            $("#input_pagos").val(0)
+
+            inputCalcularSaldo()
+    })
+
+    /*
+    D) 
+    * Pagos
+    */        
+    $("#input_pagos").on('click',function() {
+        $(this).val(0)
+        inputCalcularSaldo()
+    })
+    $("#input_pagos").on('change',function() {
+        inputCalcularSaldo()
+    })    
+    
+}
+
+function inputCalcularImporte(){
+    /*
+       id="input_barra"
+       id="input_ley"
+       id="input_fino"
+       Formula
+       input_barra * input_ley / 24
+   */  
    
-              );
-  
-          })
-          //--->
-      })        
-      .fail(function (data,jqXHR, textStatus, errorThrown) {
-        //--->
-        console.info("Run: all user loading error");
-        xhrError(jqXHR, textStatus, errorThrown);
-      })
-      .always(function (data) {
-        //--->
-        console.info("Run: all user always");
-      })
-    //--->  
-  }
-//END:----------------------->
+       //----->
+       let input_barra = parseFloat($("#input_barra").val())
+       let input_ley   = parseFloat($("#input_ley").val())
+   
+       if(input_barra > 0 && input_ley > 0){
+           let input_fino = input_barra * input_ley / 24;
+           $("#input_fino,#input_finopza").val(input_fino.toFixed(2))
+           
+           let xyz = $("#metales_precio").html();
+           xyz = xyz.split(" ");
+           
+           let i_f = input_fino.toFixed(2) * xyz[1];
+               i_f = i_f.toFixed(2);
+   
+               //Result
+               $("#input_fino").attr("title",input_barra + "*" + input_ley + "/24=" + input_fino);
+               $("#input_importe,#input_total").val(i_f)
+               $("#input_pagos").val(0)
+       }
+       //----->    
+       //return result;
+}
+function inputCalcularSaldo(){
+    
+    /*SALDO ORIGINAL*/
+    let saldo = $("#metales_saldo").html()
+        saldo = saldo.split(" ")
+        saldo = parseFloat(saldo[1])
+        saldo = saldo.toFixed(2);
 
-function changeFino(){
+    /*TOTAL*/        
+    let total = parseFloat($("#input_total").val()); 
+        total = total.toFixed(2)
+    
+    /*SALDO ACTUAL*/
+    let saldo_actual =  $("#metales_saldo_actual").html()
+        saldo_actual = saldo_actual.split(" ")
+        saldo_actual = parseFloat(saldo_actual[1])
+        saldo_actual = saldo_actual.toFixed(2);        
+
+        if($("#input_pagos").val() == ""){
+
+            //---------------->
+            if($("#input_total").val() > 0){
+                console.log("RUN X:1")
+                $("#input_pagos").val(0)
+                let pagos = 0;
+
+                //saldo+total-pago
+                let input_saldo = parseFloat(saldo_actual) + parseFloat(total) - pagos;
+                input_saldo = input_saldo.toFixed(2)
+                
+                $("#input_saldo").attr("title",saldo_actual + "+" + total + "-" + pagos)
+
+                /*saldo input*/
+                $("#input_saldo").val(input_saldo)
+                console.log("Run  saldo = saldo actual + total - pago")
+
+            }else{console.log("RUN X:1.2")}
+            //---------------->
+
+        }else{
+            
+            //---------------->
+            console.log("RUN X:2")
+            let pagos = parseFloat($("#input_pagos").val()); 
+            pagos = pagos.toFixed(2);
+
+            let input_saldo = parseFloat(saldo_actual) + parseFloat(total) - parseFloat(pagos);
+            input_saldo = input_saldo.toFixed(2)
+            
+            $("#input_saldo").attr("title",saldo_actual + "+" + total + "-" + pagos)
+            
+            /*saldo input*/
+            $("#input_saldo").val(input_saldo)
+            console.log("Run  saldo = saldo + total - pago")
+
+            //---------------->
+
+        }
+
+}
+//--------------------------------------------------------------->
+
+//--------------------------------------------------------------->
+function zerocien(x) {
+    //x >1,=1,<9,=9   x = 1...9                      0009
+    if (x == 1 || x <= 9) {
+        y = "000" + x;
+        //x >= 10 and x x == 99 x = 10...99     0099
+    } else if (x == 10 || x <= 99) {
+        y = "00" + x;
+        //x >= 100 and x x == 999 x = 100...999 0999
+    } else if (x == 100 || x <= 999) {
+        y = "0" + x;
+        //x >= 1000 x = 1000 .... °°            9999
+    } else if (x >= 1000) {
+        y = x;
+    } else { y = x; }
+
+    return y;
+}
+function zeronull(x) {
+    //x >1,=1,<9,=9   x = 1...9                      0009
+    if (x == null || x==0) {
+        y = "sin informacion";
+    }
+
+    return y;
+}
+
+
+function btnDeleteEntregas(){
+    console.log("Run: btnDeleteEntregas")
+    $(".btnDeleteEntregas").on('click',function(){
+        let xxx = $(this).attr("class"); 
+        let yyy = xxx.split(" "); 
+            $("."+yyy[2]).remove();
+    })
+}
+//--------------------------------------------------------------->
+
+//--------------------------------------------------------------->
+function inputSaldo(x){
+/*
+input_total
+input_pagos
+*/
+
+    /*input saldo  + Saldo print - pagos*/
+    let input_saldo = $("#metales_saldo").html();
+        input_saldo = input_saldo.split(" ");
+
+
+        
+    let input_pagos = $("#input_pagos").val();            
+
+    //Result
+    //$("#input_saldo").val(parseFloat(x) + parseFloat(input_saldo[1]) - parseFloat(input_pagos))
+}
+function changeFino() {
 
     $("#generarBarra,#generarLey").change(function() {
-      
-      if(isEmpty($("#generarBarra").val())){
-        //alert(1)  
-      }else if(isEmpty($("#generarLey").val())){
-        //alert(2)
-      }else{
-          let a = parseFloat($("#generarBarra").val());
-          let b = parseFloat($("#generarLey").val());
-          let c = parseInt(24);
 
-          let detail_fino =  (a*b)/c;
-          $("#generarFino").val(detail_fino.toFixed(2));
+        if (isEmpty($("#generarBarra").val())) {
+            //alert(1)  
+        } else if (isEmpty($("#generarLey").val())) {
+            //alert(2)
+        } else {
+            let a = parseFloat($("#generarBarra").val());
+            let b = parseFloat($("#generarLey").val());
+            let c = parseInt(24);
 
-      }
-      
+            let detail_fino = (a * b) / c;
+            $("#generarFino").val(detail_fino.toFixed(2));
+            
+
+        }
+
     });
-  }
+}
+//--------------------------------------------------------------->
+function makeid(length) {
+    var result           = [];
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result.push(characters.charAt(Math.floor(Math.random() * 
+ charactersLength)));
+   }
+   return result.join('');
+}

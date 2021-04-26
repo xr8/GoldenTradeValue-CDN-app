@@ -103,6 +103,7 @@ function cierresNuevosModal(){
       loadingMetales()
     })    
 
+           
 }
 function searchAll(){
     $("#btnNuevoCierres").on('click',function() { 
@@ -160,44 +161,63 @@ function loadingMetales(){
     
     $("#loadingMetales").fadeOut().empty().fadeIn()
     
-    let jqxhr = $.getJSON(urlMetales_index,function (data) {
+    let jqxhr = $.ajax(url_metales_reader_1,function (data) {
       console.log("Run: Cierres")
     })
     .done(function(data) {
         //--->
         $.each(data, function (i, val) {
           /**
-           *    "metales_id": "10",
-    "metales_id_advance": "306a4d781c00f025d46b",
-    "metales_time": "2021-03-18 23:03:15",
-    "detail_fecha": "0000-00-00 00:00:00",
-    "detail_status": "4",
-    "detail_tipo": "5",
-    "detail_grs": "7.00",
-    "detail_precio": "8.00",
-    "detail_saldo": "9.00",
-    "detail_id_advance": "2",
-    "detail_total_operaciones": "4",
-    "Time_minify": "2021-03-18"
+           *
+            Time_minify: "2021-04-23"
+            detail_cliente: {clientes_rfc: "rdgrj831228", clientes_telefono: "5515067867", clientes_apellido: "garibaldo",…}
+            clientes_activo: "true"
+            clientes_apellido: "garibaldo"
+            clientes_curp: "curp"
+            clientes_direccion: "c 26 n 84 col edo de mexico cd neza estado de mexico cp 57210"
+            clientes_email: "biohizard@gmail.com"
+            clientes_id: "1"
+            clientes_id_advance: "C-zr8h0iji96crde4"
+            clientes_nombre: "jorge"
+            clientes_rfc: "rdgrj831228"
+            clientes_telefono: "5515067867"
+            clientes_time: "2019-08-26 17:37:55"
+            detail_fecha: "2021-04-22 00:00:00"
+            detail_grs: "-1.27"
+            detail_id_advance: "C-zr8h0iji96crde4"
+            detail_precio: "1244.34"
+            detail_status: "abierto"
+            detail_tipo: "compra"
+            detail_total_operaciones: "1"
+            metales_id: "10"
+            metales_id_advance: "a79c7a16f9e59cd03281"
+            metales_time: "2021-04-23 16:03:28"
            */
           /*###################*/
+          
+          /*
+          detail_cliente
+            clientes_rfc
+            */
+ 
+          
           clientes_id = parseInt(val.detail_cliente['clientes_id']);
 
           //x >1,=1,<9,=9   x = 1...9                      0009
           if( clientes_id       == 1  || clientes_id   <= 9){
-            detail_cliente_id = "000" + val.detail_cliente['clientes_id'];           
+            detail_cliente_id = "000" + val.detail_cliente['clientes_id']           
           //x >= 10 and x x == 99 x = 10...99     0099
           }else if(clientes_id  == 10  || clientes_id  <= 99){
-            detail_cliente_id = "00" + val.detail_cliente['clientes_id'];
+            detail_cliente_id = "00" +val.detail_cliente['clientes_id'];
           //x >= 100 and x x == 999 x = 100...999 0999
           }else if(clientes_id  == 100 || clientes_id  <= 999){
-            detail_cliente_id = "0" + val.detail_cliente['clientes_id'];
+            detail_cliente_id = "0" + val.detail_cliente['clientes_id']
           //x >= 1000 x = 1000 .... °°            9999
           }else if(clientes_id  >= 1000){
-            detail_cliente_id = val.detail_cliente['clientes_id'];
-          }else{detail_cliente_id = val.detail_cliente['clientes_id'];}
+            detail_cliente_id =val.detail_cliente['clientes_id'];
+          }else{detail_cliente_id = val.detail_cliente['clientes_id']}
           /*###################*/
-
+          
           $("#loadingMetales")
             .fadeIn(3000)
             .append(
@@ -209,7 +229,6 @@ function loadingMetales(){
                   '<td> ' + val.detail_total_operaciones + '</td>' +
                 '</tr>'   
             );
-
         })
         //--->
 
@@ -269,7 +288,7 @@ function saveData(){
 
 
   let settings = {
-    "url"    : urlMetales_metales_create,
+    "url"    : url_metales_create,
     "method" : "POST",
     "timeout": 0,
     "headers": {
@@ -308,6 +327,23 @@ function saveData(){
   })
 
 }
+function saveDataGenerar(){
+    /*
+        id="generar_c_fecha"
+        id="generar_c_tipo"
+        id="generar_c_metal"
+        id="generar_c_grs"
+        id="generar_c_precio"
+    */
+        let generar_c_fecha  = $("#generar_c_fecha").val();
+        let generar_c_tipo   = $("#generar_c_tipo").val();
+        let generar_c_metal  = $("#generar_c_metal").val();
+        let generar_c_grs    = $("#generar_c_grs").val();
+        let generar_c_precio = $("#generar_c_precio").val();
+
+        console.log("Data: " + generar_c_fecha + generar_c_tipo + generar_c_metal + generar_c_grs + generar_c_precio )
+}
+
 function autoComplete(){
   //--->
   $("#FormControlCliente").autocomplete({
