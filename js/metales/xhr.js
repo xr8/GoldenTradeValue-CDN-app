@@ -18,7 +18,21 @@
             $.each(data, function(i, val) {
                 if(val.Error){
                     $(".saldoActual").html(0)
-                }else{$(".saldoActual").html(val.detail_saldo_actual)}
+                }else{
+                    /*
+                        detail_saldo: "0.00"
+                        detail_saldo_actual: "1135.00"
+                        firstname: "jorge"
+                        saldo: "1"
+                        secondname: "garibaldo"
+                    */
+                        alert(val.firstname)
+                        $(".saldoActual").html(val.detail_saldo_actual)
+                    
+                    $("#xhrCliente").html(val.firstname + " " + val.secondname)
+                    $("#xhrSaldo").html(val.detail_saldo_actual)
+
+                }
                 
             })
             //--->
@@ -46,13 +60,26 @@
         .done(function(data) {
             //--->
             $.each(data, function(i, val) {
+
+
+
                 if(val.saldo == 0){
                     $("#btnModalSaldo").show()
                     $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").hide()
 
+                    $("#xhrCliente").hide()
+                    $("#xhrSaldotxt").hide()
                 }else{
                     $("#btnModalSaldo").hide()
                     $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").show()
+
+                    $(".saldoActual").html(val.detail_saldo_actual)
+            
+                    $("#xhrCliente").html(val.firstname + " " + val.secondname)
+                    $("#xhrSaldo").html(val.detail_saldo_actual)
+                    $("#xhrCliente").show()
+                    $("#xhrSaldotxt").show()
+    
                 }
 
                 })
@@ -486,18 +513,18 @@ function saveEntrega() {
 
     let save_total      = $("#input_total").val();
     let save_saldo      = $("#input_saldo").val();
-    /*
-save_id_advance: Un6jmxDklzUwyJBGbw9r
-save_nolext: 
-save_grsaf: 
-save_barra: 0
-save_ley : 0
-save_fino: 53.35
-save_finopza: 53.35
-save_pagos: 0
-save_total: 66954.25
-save_saldo: 116916.22    
-    */
+            /*
+        save_id_advance: Un6jmxDklzUwyJBGbw9r
+        save_nolext: 
+        save_grsaf: 
+        save_barra: 0
+        save_ley : 0
+        save_fino: 53.35
+        save_finopza: 53.35
+        save_pagos: 0
+        save_total: 66954.25
+        save_saldo: 116916.22    
+            */
     //BEGIN: Entrega --------------------->
     /* 
     FECHA | N. VALE | NO. EXT | GRS A/F | BARRA | LEY | FINO | 
@@ -546,7 +573,7 @@ save_saldo: 116916.22
             xhrError(jqXHR, textStatus, errorThrown);
         })
         .always(function(data) {
-            clearInput()
+            clearUnicaInput()
             refreshXhr()            
             console.info("Run: all user always");
         })
@@ -601,7 +628,7 @@ function saveDataGenerar(){
                 xhrError(jqXHR, textStatus, errorThrown);
             })
             .always(function(data) {
-                clearInput()
+                clearUnicaInput()
                 refreshXhr()      
                 console.info("Run: all user always");
             }) 
@@ -651,7 +678,7 @@ function saveSaldoGenerar() {
                 xhrError(jqXHR, textStatus, errorThrown);
             })
             .always(function(data) {
-                clearInput()
+                clearUnicaInput()
                 refreshXhr()      
                 console.info("Run: all user always");
             }) 
@@ -732,7 +759,7 @@ function saveEntregaUnica(){
 function loadXhr(){
     console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
     loadingMetalesSaldo()
-    loadingSaldoActual()
+    //loadingSaldoActual()
     //--------------------->
     /*Loading XHR Cierresz*/
     loadingMetalesReader()
