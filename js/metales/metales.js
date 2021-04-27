@@ -161,7 +161,7 @@ function loadingMetales(){
     
     $("#loadingMetales").fadeOut().empty().fadeIn()
     
-    let jqxhr = $.ajax(url_metales_reader_1,function (data) {
+    let jqxhr = $.ajax(urlMetalesdetallesR,function (data) {
       console.log("Run: Cierres")
     })
     .done(function(data) {
