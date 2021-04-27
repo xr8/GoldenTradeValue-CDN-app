@@ -6,7 +6,7 @@ console.log("%cLoad File : %centregamultiple", "color: cyan", "color: yellow");
 function clickModalEntregaMultiple(){
     $("#btnentregasMultipleModal").on('click',function() {
         let typeX = "multiple"
-        loadingVale(typeX)        
+        loadingVale(typeX)
     })
 }
 

@@ -513,6 +513,8 @@ function saveEntrega() {
 
     let save_total      = $("#input_total").val();
     let save_saldo      = $("#input_saldo").val();
+
+    let input_emnvaleE1 = $("#input_emnvaleE1").val();
             /*
         save_id_advance: Un6jmxDklzUwyJBGbw9r
         save_nolext: 
@@ -558,7 +560,8 @@ function saveEntrega() {
             "save_pagos"      : save_pagos,
             "save_total"      : save_total,
             "save_saldo"      : save_saldo,
-            "save_id_advance_user" : $("#id_advance_x").val()
+            "save_id_advance_user" : $("#id_advance_x").val(),
+            "save_vale"       : input_emnvaleE1
         }
     };
 
@@ -855,8 +858,8 @@ function loadingVale(typeX) {
     
     if(typeX == "unica"){
          x_id="input_eunvale"
-    }else{
-         x_id="input_emnvale"
+    }else if(typeX == "nueva"){
+         x_id="input_emnvaleE1"
     }
 
     let jqxhr = $.getJSON(urlValeR + "/?type=actual", function(data) {

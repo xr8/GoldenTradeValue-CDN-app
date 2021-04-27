@@ -303,10 +303,10 @@ function btnDeleteEntregas(){
 
 //--------------------------------------------------------------->
 function inputSaldo(x){
-/*
-input_total
-input_pagos
-*/
+    /*
+    input_total
+    input_pagos
+    */
 
     /*input saldo  + Saldo print - pagos*/
     let input_saldo = $("#metales_saldo").html();
