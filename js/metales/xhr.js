@@ -463,6 +463,7 @@ function loadingMetalesEntrega(btnId) {
 }
 //metalesdetalles/readerdata/?type=saldo&id=C-zr8h0iji96crde
 //BEGIN:--------------------->  
+/*Entrega Unica*/
 function saveEntrega() {
     console.log("BTN SAVE");
     /*
@@ -689,8 +690,12 @@ function saveSaldoGenerar() {
 
     //--->
 }
+
+//BEGIN:---------------------> 
+/*Entrega Unica*/
 function saveEntregaUnica(){
     console.log("BTN SAVE");
+    /*
     let id_advance          = "00000000000000000000";
     let save_id_advance     = $("#id_advance_x").val();
 
@@ -709,6 +714,20 @@ function saveEntregaUnica(){
     let save_pagos      = $("#input_eu_pagos").val();
     let save_total      = $("#input_eu_total").val();
     let save_saldo      = $("#input_eu_saldo").val();
+    */
+    let eu_id_advance_x = $("#id_advance_x").val();
+    let eu_nvale   = $("#input_eu_nvale").val();
+    let eu_nolext  = $("#input_eu_nolext").val();
+    let eu_grsaf   = $("#input_eu_grsaf").val();
+    let eu_grs     = $("#input_eu_grs").val();
+    let eu_ley     = $("#input_eu_ley").val();
+    let eu_fino    = $("#input_eu_fino").val();
+    let eu_precio  = $("#input_eu_precio").val();
+    let eu_finopza = $("#input_eu_finopza").val();
+    let eu_importe = $("#input_eu_importe").val();
+    let eu_pagos   = $("#input_eu_pagos").val();
+    let eu_total   = $("#input_eu_total").val();
+    let eu_saldo   = $("#input_eu_saldo").val();
 
     $('#entregaUnicaModal').modal('hide')
 
@@ -721,19 +740,19 @@ function saveEntregaUnica(){
             "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
-            "id_advance"          : id_advance,
-            "save_id_advance"     : save_id_advance ,
-            "save_nolext" : save_nolext,
-            "save_grsaf" : save_grsaf,
-            "save_precio" : save_precio,
-            "save_barra" : save_barra,
-            "save_ley" : save_ley,
-            "save_fino" : save_fino,
-            "save_finopza" : save_finopza,
-            "save_importe" : save_importe,
-            "save_pagos" : save_pagos,
-            "save_total" : save_total,
-            "save_saldo" : save_saldo
+            "eu_id_advance_x" : eu_id_advance_x,
+            "eu_nvale"        : eu_nvale ,
+            "eu_nolext"       : eu_nolext ,
+            "eu_grsaf"        : eu_grsaf ,
+            "eu_grs"          : eu_grs ,
+            "eu_ley"          : eu_ley ,
+            "eu_fino"         : eu_fino ,
+            "eu_precio"       : eu_precio ,
+            "eu_finopza"      : eu_finopza ,
+            "eu_importe"      : eu_importe ,
+            "eu_pagos"        : eu_pagos ,
+            "eu_tota"         : eu_total ,
+            "eu_saldo"        : eu_saldo  
         }
     };
 
@@ -857,7 +876,7 @@ function loadingVale(typeX) {
     console.log("%cXHR: %cloadinngVale", "color: red", "color: green");
     
     if(typeX == "unica"){
-         x_id="input_eunvale"
+         x_id="input_eu_nvale"
     }else if(typeX == "nueva"){
          x_id="input_emnvaleE1"
     }

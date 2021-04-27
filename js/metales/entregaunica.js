@@ -3,6 +3,10 @@ console.log("%cLoad File : %centregaunica","color: cyan", "color: yellow");
 /********************************/
 /*          ENTREGA UNICA       */
 /********************************/
+/*
+*   btnModalEntregaUnica
+*   btnGenerarEntregaUnica
+*/
 function clickModalEntregaUnica(){
     $("#btnModalEntregaUnica").on('click',function() {
         
@@ -38,7 +42,6 @@ function clearUnicaInput(){
 
     $("#input_eunvale,#input_eu_nolext,#input_eu_grsaf,#metales_eu_precio,#input_eu_barra,#input_eu_ley,#input_eu_fino,#input_eu_finopza,#input_eu_importe,#input_eu_pagos,#input_eu_total,#input_eu_saldo").val("")
 }
-
 function fino_eu_Change(){
     console.log("Run: fino_eu_Change")
     //A)input_eu_barra - input_eu_ley - input_eu_fino

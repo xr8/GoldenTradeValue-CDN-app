@@ -2,7 +2,7 @@
                 API URLS                  
 ==============================================*/
 //url_base
-var local = true;
+var local = false;
 if (local == true) {
     var txtServe  = "on the server localhost";
     var hostlocal = "localhost/server/DevOps/GoldenTradeValue/";
@@ -87,6 +87,7 @@ urlMetalsD  = url_api;
 //6.- url_metalesentrega
 //metalesdetalles/readerdata/?type=cierres&id=C-zr8h0iji96crde4
 //-------------------------------------------------------------->
+//entrega unica
 urlMetalesdetallesC = url_api + "metalesdetalles/createdata";
 urlMetalesdetallesR = url_api + "metalesdetalles/readerdata";
 urlMetalesdetallesU = url_api;
