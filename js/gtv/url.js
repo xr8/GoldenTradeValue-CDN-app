@@ -2,7 +2,7 @@
                 API URLS                  
 ==============================================*/
 //url_base
-var local = false;
+var local = true;
 if (local == true) {
     var txtServe  = "on the server localhost";
     var hostlocal = "localhost/server/DevOps/GoldenTradeValue/";
@@ -48,13 +48,16 @@ url_user_find = url_api + "user/finddata?user=";
 //2.- url_clientes
 url_clientes_one = url_api + "clientes/readerdata";
 url_clientes_all = url_api + "clientes/readerdata";
-url_clientes_new = url_api + "clientes/createdata";
-url_clientes_update = url_api + "clientes/updatedata";
+
+
 url_clientes_delete = url_api + "clientes/deletedata";
 //clientes/readerdata?id_advance=C-zr8h0iji96crde4&a181a603769c1f98ad927e7367c7aa51=68934a3e9455fa72420237eb05902327
-urlClienteC = url_api
+url_clientes_new = url_api ;
+url_clientes_update = url_api + "clientes/updatedata";
+
+urlClienteC = url_api + "clientes/createdata"
 urlClienteR = url_api + "clientes/readerdata";
-urlClienteU = url_api;
+urlClienteU = url_api + "clientes/updatedata";
 urlClienteD = url_api;
 
 //3.- url_clientes
