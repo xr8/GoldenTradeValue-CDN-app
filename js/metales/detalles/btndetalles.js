@@ -114,7 +114,7 @@ function saveCierreSimple() {
         "method": "POST",
         "timeout": 0,
         "headers": {
-            "Authorization": "Basic cm9vdDphZG1pbg==",
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
             "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
