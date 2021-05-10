@@ -22,7 +22,7 @@ $(function() {
             plusEntrada()
             btnDeleteEntregas()
 
-            
+
         //--------------------->
 
 /*############################################################*/
@@ -35,7 +35,11 @@ function allModal(){
     clickModalEntrega()        
     clickModalEntregaUnica()
     clickModalEntregaMultiple()    
+
+    clickModalCierreS()
+    clickModalCierreSdos()
 }
+
 
 function allBtn(){
     console.log("%cRun: allBtn\n\nA)btnSaldo\nB)btnCierre\nC)btnEntrega\nD)btnEntregaUnica\n%c", "line-height: 0.8;", "line-height: 1.7;")
@@ -44,6 +48,8 @@ function allBtn(){
     btnEntrega()
     btnEntregaUnica()
     btnEntregaMultiple()
+
+    btnCierreS()
 }
 //--------------------------------------------------------------->
 /*solo un checkbox se puede seleccionar*/
@@ -351,3 +357,4 @@ function makeid(length) {
    }
    return result.join('');
 }
+

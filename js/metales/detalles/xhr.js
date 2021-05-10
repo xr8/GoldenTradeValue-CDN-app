@@ -134,14 +134,14 @@ function loadingMetalesReader() {
                                 .append(
                                     '<tr class="cierresItem ' + colorCierres + '" id="' + val.m_id_advance + '">' +
                                     '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                                    '    <td>' + val.m_id + '</td>' +
-                                    '    <td>' + val.m_time + '</td>' +
-                                    '    <td>' + val.m_detail_tipo + '</td>' +
-                                    '    <td>' + val.m_detail_status + '</td>' +
-                                    '    <td>' + val.m_detail_metal + '</td>' +
-                                    '    <td>$ ' + val.m_detail_precio + '</td>' +
-                                    '    <td>' + val.m_detail_grs_original + ' Grs </td>' +
-                                    '    <td class="pesoactual">' + val.m_detail_grs + ' Grs </td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_id + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_time + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_tipo + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_status + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_metal + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +' precio">$ ' + val.m_detail_precio + '</td>' +
+                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_grs_original + ' Grs </td>' +
+                                    '    <td class="'+ val.m_id_advance  +' pesoactual">' + val.m_detail_grs + ' Grs </td>' +
                                     '</tr>     '
                                 );
                 }
@@ -193,8 +193,8 @@ function loadingMetalesReaderEntregas() {
                         .fadeIn(3000)
                         .append(
                             '<tr class="' + val.m_id_advance + '">' +
-                            '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.id + '</td>' +
+                            '    <th scope="row"><input type="checkbox" class="checkEntregas" name="' + val.id_advance_metales + '"></th>' +
+                            '    <td>' + val.id_metales + '</td>' +
                             '    <td>' + val.entregas_fecha + '</td>' +
                             '    <td>' + zerocien(val.entregas_no_vale) + '</td>' +
                             '    <td>' + zeronull(val.entregas_no_ext) + '</td>' +
@@ -266,11 +266,11 @@ function loadingMetalesReaderCierres() {
                         .append(
                             '<tr>' +
                             '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.id + '</td>' +
+                            '    <td>' + val.m_id + '</td>' +
                             '    <td>' + val.entregas_fecha + '</td>' +
                             '    <td>' + val.cierres_fino + ' Grs</td>' +
+                            '    <td> $ ' + val.detail_precio + '</td>' +
                             '    <td> $ ' + val.cierres_precio + '</td>' +
-                            '    <td> $ ' + val.cierres_importe + '</td>' +
                             '</tr>     '
                         );
                 })
@@ -323,7 +323,7 @@ function loadingMetalesReaderPagos() {
                         .append(
                             '<tr class=' + val.m_id_advance + '">' +
                             '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.id + '</td>' +
+                            '    <td>' + val.m_id + '</td>' +
                             '    <td>' + val.entregas_fecha + '</td>' +
                             '    <td> $ ' + val.pagos_total + '</td>' +
                             '    <td> $ ' + val.pagos_pagos + '</td>' +
@@ -425,6 +425,88 @@ function loadingMetalesOne(btnId) {
         })
         //--->  
 }
+
+
+//BEGIN:--------------------->
+function loadingMetalesOne2(btnId) {
+    //--->
+    console.log("%cXHR: %cmetales/detalles loadingMetalesOne", "color: red", "color: green");
+
+
+    let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=one&id=" + btnId, function(data) {
+            console.log("Run: Cierres")
+        })
+        .done(function(data) {
+            //--->
+            $.each(data, function(i, val) {
+                /*
+                detail_fecha: "2021-04-22 00:00:00"
+                detail_grs: "82.60"
+                detail_grs_original: "82.60"
+                detail_id_advance: "C-zr8h0iji96crde4"
+                detail_metal: "oro"
+                detail_precio: "1244.34"
+                detail_status: "abierto"
+                detail_tipo: "compra"
+                detail_type: "clientes"
+                email: "biohizard@gmail.com"
+                firstname: "jorge"
+                id: "10"
+                id_advance: "a79c7a16f9e59cd03281"
+                saldo_saldo: "102782.48"
+                saldo_saldo_actual: "102782.48"
+                secondname: "garibaldo"
+                time: "2021-04-23 16:03:28"
+                */
+
+                /*
+                    ID Cierre 10
+                    Tipo  compra
+                    Fecha 2021-04-22 00:00:00
+                */
+
+                $("#metales_id").empty().append(val.id);
+                $("#input_id_advance").empty().val(val.id_advance);
+                $("#metalesAccion").empty().append(val.detail_tipo);
+                $("#metalesFecha").empty().append(val.detail_fecha);
+                
+                /*
+                    Precio $ 1244.34
+                    Metal  000
+                    Status abierto                
+                */
+                $("#metales_precio").empty().append("$ " + val.detail_precio);
+                $("#metalesTipo").empty().append(val.detail_metal);
+                $("#metalesStatus").empty().append(val.detail_status);
+
+                    
+                    
+
+                    $("#metales_peso").empty().append(val.detail_grs_original + " Grs.");
+                    $("#metales_peso_actual").empty().append(val.entregas_fino + " Grs.");
+                    
+                    $("#metales_saldo").empty().append("$ " + val.saldo_saldo);
+                    $("#metales_saldo_actual").empty().append("$ " + val.saldo_saldo_actual);
+            })
+            //--->_actual
+            $(".ge-show-load2").fadeOut().addClass("d-none")
+            $(".ge-show2").fadeIn().removeClass("d-none")
+            $(".ge_hiden2").removeClass("d-none").fadeIn()
+
+
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            //--->
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+            //--->
+            console.info("Run: all user always");
+        })
+        //--->  
+}
+
 
 //BEGIN:--------------------->  
 function loadingMetalesEntrega(btnId) {
@@ -561,7 +643,8 @@ function saveEntrega() {
             "save_pagos"      : save_pagos,
             "save_total"      : save_total,
             "save_saldo"      : save_saldo,
-            "save_id_advance_user" : $("#id_advance_x").val(),
+            "save_id_advance"         : $('input[type="checkbox"]:checked').val(),
+            "save_id_advance_user"    : $("#id_advance_x").val(),
             "save_vale"       : input_emnvaleE1
         }
     };
@@ -603,7 +686,7 @@ function saveDataGenerar(){
         $('#cierreModal').modal('hide')
     
         let settings = {
-            "url": urlMetalsC + '?type=generarcierre',
+            "url": urlMetalesC + '?type=generarcierre',
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -879,8 +962,12 @@ function loadingVale(typeX) {
          x_id="input_eu_nvale"
     }else if(typeX == "nueva"){
          x_id="input_emnvaleE1"
-    }
-
+    }else if(typeX == "cierresimple"){
+        x_id="save_vale_cs"
+    }else if(typeX == "save_cierredos"){
+        x_id="save_cierredos"
+   }
+   
     let jqxhr = $.getJSON(urlValeR + "/?type=actual", function(data) {
         })
         .done(function(data) {

@@ -2,7 +2,8 @@
                 API URLS                  
 ==============================================*/
 //url_base
-var local = true;
+if(location.host == "localhost"){var local = true;}else{var local = false;}
+
 if (local == true) {
     var txtServe  = "on the server localhost";
     var hostlocal = "localhost/server/DevOps/GoldenTradeValue/";
@@ -18,15 +19,32 @@ if (local == true) {
 }
 //--->
 function apiConecction() {
-    $.getJSON(url_api_api, function(data) {
-        console.log("%c            Api Connection            ",                   "color: red; text-transform: uppercase,text-decoration: underline");
-        console.log("%cApi Connection : %cSuccess",                   "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");
-        console.log("%cAPI Token      : %c" + data['Api Connection'], "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");
-        console.log("%cAPI Time       : %c" + data['Api Time'],       "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");  
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            xhrError(jqXHR, textStatus, errorThrown);
-            }).always(function() {
-                });
+    //---->
+    let settings = {
+        async:       true,
+        crossDomain: true,
+        timeout:     0,      
+        method:      "POST",
+        url:         url_api_api,      
+        headers: {
+            "Authorization": "Basic cm9vdDphZG1pbg==",
+            "xr8-api-key"  : "ewf45r4435trge",
+            "content-type" : "application/x-www-form-urlencoded",
+            "cache-control": "no-cache"
+        },
+        data: {}
+        }
+        let jqxhr1=$.ajax(settings).done(function(data){    
+            console.log("%c            Api Connection            ",       "color: red; text-transform: uppercase,text-decoration: underline");
+            console.log("%cApi Connection : %cSuccess",                   "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");
+            console.log("%cAPI Token      : %c" + data['Api Connection'], "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");
+            console.log("%cAPI Time       : %c" + data['Api Time'],       "color: red; text-transform: uppercase", "color: green; text-transform: lowercase");  
+            $.each(data, function(i, val) {})
+            }).fail(function(data, jqXHR, textStatus, errorThrown) {
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            }).always(function(data) {})                
+    //---->
 }
 //--->  
 console.log("%c Run APP: " + txtServe + " ", "color:green; text-decoration: underline");
@@ -81,11 +99,13 @@ urlBuscadorAutocomplete = url_api + "caja/utilitydata?type=buscar";
 //5.- url_metales
 /*
 * urlMetalsC sirve para generar cierre nuevo basico
+metales/readedata?type=only_one
 */
-urlMetalsC  = url_api + "metales/createdata";
-urlMetalsR  = url_api + "metales/readerdata";
-urlMetalsU  = url_api; 
-urlMetalsD  = url_api; 
+
+urlMetalesC  = url_api + "metales/createdata";
+urlMetalesR  = url_api + "metales/readedata";
+urlMetalesU  = url_api; 
+urlMetalesD  = url_api; 
 
 //6.- url_metalesentrega
 //metalesdetalles/readerdata/?type=cierres&id=C-zr8h0iji96crde4
