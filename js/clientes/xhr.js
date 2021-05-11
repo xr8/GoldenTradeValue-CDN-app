@@ -15,7 +15,7 @@ let settings = {
       method:      "POST",
       url:         urlClienteC,      
       headers: {
-                "Authorization": "Basic cm9vdDphZG1pbg==",
+                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
                 "xr8-api-key"  : "ewf45r4435trge",
                 "content-type" : "application/x-www-form-urlencoded",
                 "cache-control": "no-cache",
@@ -61,7 +61,7 @@ let settings={
     timeout:     0,      
     method:      "POST",
     "headers": {
-                "Authorization": "Basic cm9vdDphZG1pbg==",
+                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
                 "xr8-api-key"  : "ewf45r4435trge",
                 "content-type" : "application/x-www-form-urlencoded",
                 "cache-control": "no-cache",
@@ -136,7 +136,7 @@ function readeClientesOne(id_advance) {
                      id_advance       +
                      "&a181a603769c1f98ad927e7367c7aa51=68934a3e9455fa72420237eb05902327",
         headers: {
-                  "Authorization": "Basic cm9vdDphZG1pbg==",
+                  /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
                   "xr8-api-key"  : "ewf45r4435trge",
                   "content-type" : "application/x-www-form-urlencoded",
                   "cache-control": "no-cache",
@@ -197,7 +197,7 @@ var settings = {
     timeout:     0,      
     method:      "POST",
     "headers": {
-                "Authorization": "Basic cm9vdDphZG1pbg==",
+                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
                 "xr8-api-key"  : "ewf45r4435trge",
                 "content-type" : "application/x-www-form-urlencoded",
                 "cache-control": "no-cache",

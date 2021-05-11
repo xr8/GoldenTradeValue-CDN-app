@@ -60,19 +60,30 @@ function checkOnlyOne(){
         let y = $(this).val();
 
         if (parseFloat($("#" + y + " .pesoactual").html()) <= 0) {
-            $("#btnModalEntrega").attr("disabled", true)
+            $("#btnModalCierreSimple").attr("disabled", true)
+            alert(3)
         } else {
             //--------------------->
             if ($('input[type="checkbox"]').is(':checked')) {
-                $("#btnModalEntrega").attr("disabled", false)
+                alert(1)
+
+                $("#btnModalCierreSimple").attr("disabled", false)
+                $("#btnModalCierreSimple").removeClass('btn-secondary').addClass('btn-primary');
+
                 $("#cierreEntrega").val(y);
             } else {
-                $("#btnModalEntrega").attr("disabled", true)
+                alert(2)
+
+                $("#btnModalCierreSimple").attr("disabled", true)
+                $("#btnModalCierreSimple").removeClass('btn-primary').addClass('btn-secondary');
+
             }
             //--------------------->
         }
     })
 }
+
+
 /*tools */
 
 

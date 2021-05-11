@@ -48,301 +48,6 @@
         })
         //--->  
 }
- function loadingMetalesSaldo() {
-    //--->
-    console.log("%cXHR: %cmetales/detalles loadingMetalesSaldo", "color: red", "color: green");
-    $("#loadingMetalesCierres").fadeIn().empty()
-
-    let id_advance = $("#id_advance_x").val();
-
-    let jqxhr = $.getJSON(urlSaldoR + "/?type=saldo&id=" + id_advance, function(data) {
-        })
-        .done(function(data) {
-            //--->
-            $.each(data, function(i, val) {
-
-
-
-                if(val.saldo == 0){
-                    $("#btnModalSaldo").show()
-                    $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").hide()
-
-                    $("#xhrCliente").hide()
-                    $("#xhrSaldotxt").hide()
-                }else{
-                    $("#btnModalSaldo").hide()
-                    $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").show()
-
-                    $(".saldoActual").html(val.detail_saldo_actual)
-            
-                    $("#xhrCliente").html(val.firstname + " " + val.secondname)
-                    $("#xhrSaldo").html(val.detail_saldo_actual)
-                    $("#xhrCliente").show()
-                    $("#xhrSaldotxt").show()
-    
-                }
-
-                })
-                //--->
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
-//BEGIN:--------------------->
-function loadingMetalesReader() {
-    //--->
-    console.log("%cXHR: %cmetales/detalles loadingMetalesReader", "color: red", "color: green");
-    $("#loadingMetalesCierres").fadeIn().empty()
-
-    let id_advance = $("#id_advance_x").val();
-
-    let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierres&id=" + id_advance, function(data) {
-        })
-        .done(function(data) {
-            //--->
-            $.each(data, function(i, val) {
-                if(val.Caja == "Error"){
-
-                }else{
-
-                    let m_id = zerocien(parseInt())
-                    let mc_id = zerocien(parseInt(val.mc_id))
-
-
-                    if (parseFloat(val.m_detail_grs) == 0) {
-                        colorCierres = "table-danger";
-                    } else if (parseFloat(val.m_detail_grs_original) == parseFloat(val.m_detail_grs)) {
-                        colorCierres = "table-primary";
-                    } else if (parseFloat(val.m_detail_grs) > 0) {
-                        colorCierres = "table-success";
-                    }else{
-                        colorCierres = "";
-                    }
-
-                    $("#cliente_nombre")
-                        .fadeIn(3000)
-                        .html(val.c_firstname + ' ' + val.c_secondname);
-                            //#	ID Cierre	Fecha	Tipo	Status	Metal	Precio	Grs	Saldo
-                            $("#loadingMetalesCierres")
-                                .fadeIn(3000)
-                                .append(
-                                    '<tr class="cierresItem ' + colorCierres + '" id="' + val.m_id_advance + '">' +
-                                    '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_id + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_time + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_tipo + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_status + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_metal + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +' precio">$ ' + val.m_detail_precio + '</td>' +
-                                    '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_grs_original + ' Grs </td>' +
-                                    '    <td class="'+ val.m_id_advance  +' pesoactual">' + val.m_detail_grs + ' Grs </td>' +
-                                    '</tr>     '
-                                );
-                }
-
-                })
-                //--->
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
-
-//BEGIN:--------------------->
-function loadingMetalesReaderEntregas() {
-    //--->
-    /*
-        entregas_barra: "1"
-        entregas_fecha: "2021-04-01"
-        entregas_fino: "1.00"
-        entregas_grs_af: "1"
-        entregas_ley: "1.00"
-        entregas_no_ext: "2"
-        entregas_no_vale: "1"
-        id: "182"
-        id_advance: "55ad68fb8e8a6c8482e0"
-        metales_detail_id_advance: "C-zr8h0iji96crde4"
-        metales_detail_type: "clientes"
-        time: "2021-04-25 16:44:43"
-    */
-    console.log("%cXHR: %cmetales/detalles loadingMetalesReaderEntregas", "color: red", "color: green");
-    $("#loadingMetalesEntregas").fadeIn().empty()
-
-    let id_advance = $("#id_advance_x").val();
-
-    let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=entregas&id=" + id_advance, function(data) {
-        })
-        .done(function(data) {
-            //--->
-            $.each(data, function(i, val) {
-                if(val.Error == 104){
-
-                }else{
-                    $("#loadingMetalesEntregas")
-                        .fadeIn(3000)
-                        .append(
-                            '<tr class="' + val.m_id_advance + '">' +
-                            '    <th scope="row"><input type="checkbox" class="checkEntregas" name="' + val.id_advance_metales + '"></th>' +
-                            '    <td>' + val.id_metales + '</td>' +
-                            '    <td>' + val.entregas_fecha + '</td>' +
-                            '    <td>' + zerocien(val.entregas_no_vale) + '</td>' +
-                            '    <td>' + zeronull(val.entregas_no_ext) + '</td>' +
-                            '    <td>' + val.entregas_grs_af + '</td>' +
-                            '    <td>' + val.entregas_barra + ' Grs</td>' +
-                            '    <td>' + val.entregas_ley + '</td>' +
-                            '    <td>' + val.entregas_fino + ' Grs</td>' +
-                            '</tr>     '
-                        );
-                }
-
-                })
-                //--->
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
-
-//BEGIN:--------------------->
-function loadingMetalesReaderCierres() {
-    //--->
-    /*
-
-    */
-    console.log("%cXHR: %cmetales/detalles loadingMetalesReaderCierre", "color: red", "color: green");
-    $("#loadingMetalesCierresdos").fadeIn().empty()
-
-    let id_advance = $("#id_advance_x").val();
-
-    let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierresdos&id=" + id_advance, function(data) {
-        })
-        .done(function(data) {
-            //--->
-            $.each(data, function(i, val) {
-
-                    /*
-            $.each(data, function(i, val) {
-
-                    /*
-                      let m_id= zerocien(parseInt(val.m_id))
-                      let mc_id= zerocien(parseInt(val.mc_id))
-                      $("#cliente_nombre")
-                      .fadeIn(3000)
-                      .html(val.c_firstname + ' ' + val.c_secondname );
-                      */
-                    /**
-                      entregas_barra: "0"
-                    entregas_fecha: "2021-03-24"
-                    entregas_fino: "0.00"
-                    entregas_grs_af: null
-                    entregas_no_ext: null
-                    entregas_no_vale: null
-                    id: "49"
-                    id_advance: "dEadpz2RCkcKiGGXsAJq"
-                    m_id: "48"
-                    m_id_advance: "Un6jmxDklzUwyJBGbw9r"
-                    metales_detail_id_advance: "C-zr8h0iji96crde4"
-                    metales_id_advance: "Un6jmxDklzUwyJBGbw9r"
-                    time: "2021-03-24 00:08:32"
-                    */
-                    $("#loadingMetalesCierresdos")
-                        .fadeIn(3000)
-                        .append(
-                            '<tr>' +
-                            '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.m_id + '</td>' +
-                            '    <td>' + val.entregas_fecha + '</td>' +
-                            '    <td>' + val.cierres_fino + ' Grs</td>' +
-                            '    <td> $ ' + val.detail_precio + '</td>' +
-                            '    <td> $ ' + val.cierres_precio + '</td>' +
-                            '</tr>     '
-                        );
-                })
-                //--->
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
-
-//BEGIN:--------------------->
-function loadingMetalesReaderPagos() {
-    //--->
-    /*
-
-    */
-    console.log("%cXHR: %cmetales/detalles loadingMetalesReaderPagos", "color: red", "color: green");
-    $("#loadingMetalesPagos").fadeIn().empty()
-
-    let id_advance = $("#id_advance_x").val();
-
-    let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=pagos&id=" + id_advance, function(data) {
-        })
-        .done(function(data) {
-            //--->
-            $.each(data, function(i, val) {
-
-                    /*
-                      {
-                        "id": "49",
-                        "id_advance": "dEadpz2RCkcKiGGXsAJq",
-                        "time": "2021-03-24 00:08:32",
-                        "metales_id_advance": "Un6jmxDklzUwyJBGbw9r",
-                        "metales_detail_id_advance": "C-zr8h0iji96crde4",
-                        "pagos_total": "66954.25",
-                        "pagos_pagos": "66954.25",
-                        "pagos_saldos": "116916.22",
-                        "pagos_observaciones": null,
-                        "m_id": "2",
-                        "m_id_advance": "Un6jmxDklzUwyJBGbw9r"
-                      },
-                      */
-                    $("#loadingMetalesPagos")
-                        .fadeIn(3000)
-                        .append(
-                            '<tr class=' + val.m_id_advance + '">' +
-                            '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.m_id + '</td>' +
-                            '    <td>' + val.entregas_fecha + '</td>' +
-                            '    <td> $ ' + val.pagos_total + '</td>' +
-                            '    <td> $ ' + val.pagos_pagos + '</td>' +
-                            '    <td> $ ' + val.pagos_saldos + '</td>' +
-                            '    <td>' + zeronull(val.pagos_observaciones) + '</td>' +
-                            '</tr>'
-                        );
-                })
-                //--->
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
 
 //BEGIN:--------------------->
 function loadingMetalesOne(btnId) {
@@ -426,7 +131,6 @@ function loadingMetalesOne(btnId) {
         //--->  
 }
 
-
 //BEGIN:--------------------->
 function loadingMetalesOne2(btnId) {
     //--->
@@ -506,7 +210,6 @@ function loadingMetalesOne2(btnId) {
         })
         //--->  
 }
-
 
 //BEGIN:--------------------->  
 function loadingMetalesEntrega(btnId) {
@@ -627,7 +330,7 @@ function saveEntrega() {
         "method": "POST",
         "timeout": 0,
         "headers": {
-            "Authorization": "Basic cm9vdDphZG1pbg==",
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
             "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
@@ -666,61 +369,7 @@ function saveEntrega() {
         })
 
 }
-function saveDataGenerar(){
-    /*
-        id="generar_c_fecha"
-        id="generar_c_tipo"
-        id="generar_c_metal"
-        id="generar_c_grs"
-        id="generar_c_precio"
-    */
-        let id_advance      = $("#id_advance").val();
-        let save_id_advance = $("#id_advance_x").val();
-        
-        let generar_c_fecha  = $("#generar_c_fecha").val();
-        let generar_c_tipo   = $("#generar_c_tipo").val();
-        let generar_c_metal  = $("#generar_c_metal").val();
-        let generar_c_grs    = $("#generar_c_grs").val();
-        let generar_c_precio = $("#generar_c_precio").val();
 
-        $('#cierreModal').modal('hide')
-    
-        let settings = {
-            "url": urlMetalesC + '?type=generarcierre',
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Authorization": "Basic cm9vdDphZG1pbg==",
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            "data": {
-                "id_advance"       : id_advance,
-                "save_id_advance"  : save_id_advance,
-                "generar_c_fecha"  : generar_c_fecha,
-                "generar_c_tipo"   : generar_c_tipo,
-                "generar_c_metal"  : generar_c_metal,
-                "generar_c_grs"    : generar_c_grs,
-                "generar_c_precio" : generar_c_precio
-            }
-        };
-    
-        let jqxhr1 = $.ajax(settings).done(function(response) {
-                console.log("Run: Cierres")
-            })
-            .done(function(data) {
-                $.each(data, function(i, val) {})
-            })
-            .fail(function(data, jqXHR, textStatus, errorThrown) {
-                console.info("Run: all user loading error");
-                xhrError(jqXHR, textStatus, errorThrown);
-            })
-            .always(function(data) {
-                clearUnicaInput()
-                refreshXhr()      
-                console.info("Run: all user always");
-            }) 
-
-}
 //Genera saldo base
 function saveSaldoGenerar() {
     //--->
@@ -744,7 +393,7 @@ function saveSaldoGenerar() {
             "method": "POST",
             "timeout": 0,
             "headers": {
-                "Authorization": "Basic cm9vdDphZG1pbg==",
+                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             "data": {
@@ -819,7 +468,7 @@ function saveEntregaUnica(){
         "method": "POST",
         "timeout": 0,
         "headers": {
-            "Authorization": "Basic cm9vdDphZG1pbg==",
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
             "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
@@ -861,36 +510,7 @@ function saveEntregaUnica(){
 *                         FUNCTION XHR                          *
 *****************************************************************/
 
-function loadXhr(){
-    console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
-    loadingMetalesSaldo()
-    //loadingSaldoActual()
-    //--------------------->
-    /*Loading XHR Cierresz*/
-    loadingMetalesReader()
-    /*Loading XHR Entregas*/
-        loadingMetalesReaderEntregas()
-    /*Loading XHR Cierresz Dos*/
-        loadingMetalesReaderCierres()
-    /*Loading XHR Pagos*/
-        loadingMetalesReaderPagos()
-//--------------------->
-}
 
-function refreshXhr(){
-    console.log("%cXHR: %cmetales/detalles refreshXhr", "color: red", "color: green");
-    loadingMetalesSaldo();
-    //--------------------->
-    /*Loading XHR Cierresz*/
-        loadingMetalesReader()
-    /*Loading XHR Entregas*/
-        loadingMetalesReaderEntregas()
-    /*Loading XHR Cierresz Dos*/
-        loadingMetalesReaderCierres()
-    /*Loading XHR Pagos*/
-        loadingMetalesReaderPagos()
-//--------------------->
-}
 
 //END
 //-------
@@ -917,7 +537,7 @@ let settings = {
     "method" : "POST",
     "timeout": 0,
     "headers": {
-        "Authorization": "Basic cm9vdDphZG1pbg==",
+        /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
         "Content-Type" : "application/x-www-form-urlencoded"
     },
     "data"   : {       
@@ -953,41 +573,497 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 //----------------------------->                
 }
 
-//BEGIN:--------------------->
-function loadingVale(typeX) {
-    //--->
-    console.log("%cXHR: %cloadinngVale", "color: red", "color: green");
-    
-    if(typeX == "unica"){
-         x_id="input_eu_nvale"
-    }else if(typeX == "nueva"){
-         x_id="input_emnvaleE1"
-    }else if(typeX == "cierresimple"){
-        x_id="save_vale_cs"
-    }else if(typeX == "save_cierredos"){
-        x_id="save_cierredos"
-   }
-   
-    let jqxhr = $.getJSON(urlValeR + "/?type=actual", function(data) {
-        })
-        .done(function(data) {
-            $.each(data, function(i, val) {
 
-                if(val.detail_id_advance == null){
+
+/*****************************************************************
+ *                              BEGIN                            *
+ *                            Save Btn                           *
+ *****************************************************************/
+ //BEGIN---------------------------------------------------------->
+    
+    //BEGIN:---------------------> generar cierre
+    function saveDataGenerar(){
+        /*
+            id="generar_c_fecha"
+            id="generar_c_tipo"
+            id="generar_c_metal"
+            id="generar_c_grs"
+            id="generar_c_precio"
+        */
+            let id_advance      = $("#id_advance").val();
+            let save_id_advance = $("#id_advance_x").val();
+            
+            let generar_c_fecha  = $("#generar_c_fecha").val();
+            let generar_c_tipo   = $("#generar_c_tipo").val();
+            let generar_c_metal  = $("#generar_c_metal").val();
+            let generar_c_grs    = $("#generar_c_grs").val();
+            let generar_c_precio = $("#generar_c_precio").val();
+
+            $('#cierreModal').modal('hide')
+        
+            let settings = {
+                "url": urlMetalesC + '?type=generarcierre',
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "data": {
+                    "id_advance"       : id_advance,
+                    "save_id_advance"  : save_id_advance,
+                    "generar_c_fecha"  : generar_c_fecha,
+                    "generar_c_tipo"   : generar_c_tipo,
+                    "generar_c_metal"  : generar_c_metal,
+                    "generar_c_grs"    : generar_c_grs,
+                    "generar_c_precio" : generar_c_precio
+                }
+            };
+        
+            let jqxhr1 = $.ajax(settings).done(function(response) {
+                    console.log("Run: Cierres")
+                })
+                .done(function(data) {
+                    $.each(data, function(i, val) {})
+                })
+                .fail(function(data, jqXHR, textStatus, errorThrown) {
+                    console.info("Run: all user loading error");
+                    xhrError(jqXHR, textStatus, errorThrown);
+                })
+                .always(function(data) {
+                    clearUnicaInput()
+                    refreshXhr()      
+                    console.info("Run: all user always");
+                }) 
+
+    }
+
+    //BEGIN:---------------------> cierre simple
+    function saveCierreSimple() {
+        console.log("BTN SAVE");
+
+        let input_cs_fino          = $("#input_cs_fino").val()
+        let input_cs_precio        = $("#input_cs_precio").val()
+        let input_cs_importe       = $("#input_cs_importe").val()
+        let input_cs_total         = $("#input_cs_total").val()
+        let input_cs_pagos         = $("#input_cs_pagos").val()
+        let input_cs_saldo         = $("#input_cs_saldo").val()
+        let input_cs_observaciones = $("#input_cs_observaciones").val()
+        let save_vale              = $("#save_vale_cs").val()
+        let settings = {
+            "url": urlMetalesdetallesC + '?type=cierreSimple',
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "save_id_advance"         : $('input[type="checkbox"]:checked').val(),
+                "save_id_advance_user"    : $("#id_advance_x").val(),
+                "input_cs_fino" : input_cs_fino,
+                "input_cs_precio" : input_cs_precio,
+                "input_cs_importe" : input_cs_importe,
+                "input_cs_total" : input_cs_total,
+                "input_cs_pagos" : input_cs_pagos,
+                "input_cs_saldo" : input_cs_saldo,
+                "input_cs_observaciones" : input_cs_observaciones,
+                "save_vale"              : save_vale  
+            }
+        };
+
+        let jqxhr1 = $.ajax(settings).done(function(response) {
+                console.log("Run: Cierres")
+            })
+            .done(function(data) {
+                $.each(data, function(i, val) {})
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+                btnDisables()
+                refreshXhr()
+                console.info("Run: all user always");
+            })
+
+    }
+
+//END------------------------------------------------------------>
+/*****************************************************************
+ *                               End                             *
+ *                            Save Btn                           *
+ *****************************************************************/
+
+/*****************************************************************
+ *                              BEGIN                            *
+ *                              TABS                             *
+ *****************************************************************/
+ //BEGIN---------------------------------------------------------->
+
+    //BEGIN:---------------------> tabs Cierres
+    function loadingMetalesReader() {
+        //--->
+        console.log("%cXHR: %cmetales/detalles loadingMetalesReader", "color: red", "color: green");
+        $("#loadingMetalesCierres").fadeIn().empty()
+
+        let id_advance = $("#id_advance_x").val();
+
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierres&id=" + id_advance, function(data) {
+            })
+            .done(function(data) {
+                //--->
+                $.each(data, function(i, val) {
+                    if(val.Code == 104){
+
+                        $("#loadingMetalesCierres")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr><th>Sin Cierres</th></tr>'
+                            );
 
                     }else{
 
+                        let m_id = zerocien(parseInt())
+                        let mc_id = zerocien(parseInt(val.mc_id))
+                        
+                        if (parseFloat(val.m_detail_grs) == 0) {
+                            checkbox =  '    <th scope="row"></th>';
+                        } else {
+                            checkbox = '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>';
                         }
-                $("#"+x_id).val(parseInt(val.id)+1)
+
+
+                        if (parseFloat(val.m_detail_grs) == 0) {
+                            colorCierres = "table-danger";
+                        } else if (parseFloat(val.m_detail_grs_original) == parseFloat(val.m_detail_grs)) {
+                            colorCierres = "table-primary";
+                        } else if (parseFloat(val.m_detail_grs) > 0) {
+                            colorCierres = "table-success";
+                        }else{
+                            colorCierres = "";
+                        }
+
+                        //Compra de Metales cliente $saldo
+                        $("#cliente_nombre")
+                            .fadeIn(3000)
+                            .html(val.c_firstname + ' ' + val.c_secondname)
+
+                        //#	ID Cierre	Fecha	Tipo	Status	Metal	Precio	Peso Original	Peso Actual
+                        
+                        $("#loadingMetalesCierres")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr class="cierresItem ' + colorCierres + '" id="' + val.m_id_advance + '">' +
+                                checkbox +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_id + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_time + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_tipo + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_status + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_metal + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +' precio">$ ' + val.m_detail_precio + '</td>' +
+                                '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_grs_original + ' Grs </td>' +
+                                '    <td class="'+ val.m_id_advance  +' pesoactual">' + val.m_detail_grs + ' Grs </td>' +
+                                '</tr>     '
+                            )
+                    }
+
+                    })
+                    //--->
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+            })
+            //--->  
+    }
+    //BEGIN:---------------------> tabs Cierres
+    function loadingMetalesReaderEntregas() {
+        //--->
+        console.log("%cXHR: %cmetales/detalles loadingMetalesReaderEntregas", "color: red", "color: green");
+        $("#loadingMetalesEntregas").fadeIn().empty()
+
+        let id_advance = $("#id_advance_x").val();
+
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=entregas&id=" + id_advance, function(data) {
+            })
+            .done(function(data) {
+                //--->
+                $.each(data, function(i, val) {
+                    if(val.Code == 104){
+
+                        $("#loadingMetalesEntregas")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr><th>Sin Entregas</th></tr>'
+                            )
+
+                    }else{
+                        $("#loadingMetalesEntregas")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr class="' + val.m_id_advance + '">' +
+                                '    <th scope="row"><input type="checkbox" class="checkEntregas" name="' + val.id_advance_metales + '"></th>' +
+                                '    <td>' + val.id_metales + '</td>' +
+                                '    <td>' + val.entregas_fecha + '</td>' +
+                                '    <td>' + zerocien(val.entregas_no_vale) + '</td>' +
+                                '    <td>' + zeronull(val.entregas_no_ext) + '</td>' +
+                                '    <td>' + val.entregas_grs_af + '</td>' +
+                                '    <td>' + val.entregas_barra + ' Grs</td>' +
+                                '    <td>' + val.entregas_ley + '</td>' +
+                                '    <td>' + val.entregas_fino + ' Grs</td>' +
+                                '</tr>     '
+                        )
+                    }
+
+                    })
+                    //--->
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+            })
+            //--->  
+    }
+    //BEGIN:---------------------> tabs cierres dos
+    function loadingMetalesReaderCierres() {
+        //--->
+        console.log("%cXHR: %cmetales/detalles loadingMetalesReaderCierre", "color: red", "color: green");
+        $("#loadingMetalesCierresdos").fadeIn().empty()
+
+        let id_advance = $("#id_advance_x").val();
+
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierresdos&id=" + id_advance, function(data) {
+            })
+            .done(function(data) {
+                //--->
+                $.each(data, function(i, val) {
+                    if(val.Code == 104){
+
+                        $("#loadingMetalesCierresdos")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr><th>Sin Cierres Dos</th></tr>'
+                            )
+
+                    }else{
+
+                        $("#loadingMetalesCierresdos")
+                        .fadeIn(3000)
+                        .append(
+                            '<tr>' +
+                            '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
+                            '    <td>' + val.m_id + '</td>' +
+                            '    <td>' + val.entregas_fecha + '</td>' +
+                            '    <td>' + val.cierres_fino + ' Grs</td>' +
+                            '    <td> $ ' + val.detail_precio + '</td>' +
+                            '    <td> $ ' + val.cierres_precio + '</td>' +
+                            '</tr>     '
+                        )
+
+                    }
 
                 })
-        })
-        .fail(function(data, jqXHR, textStatus, errorThrown) {
-            //--->
-            console.info("Run: all user loading error");
-            xhrError(jqXHR, textStatus, errorThrown);
-        })
-        .always(function(data) {
-        })
-        //--->  
-}
+                //--->
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+            })
+            //--->  
+    }
+    //BEGIN:---------------------> tabs pagos
+    function loadingMetalesReaderPagos() {
+        //--->
+        console.log("%cXHR: %cmetales/detalles loadingMetalesReaderPagos", "color: red", "color: green");
+        $("#loadingMetalesPagos").fadeIn().empty()
+
+        let id_advance = $("#id_advance_x").val();
+
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=pagos&id=" + id_advance, function(data) {
+            })
+            .done(function(data) {
+                //--->
+                $.each(data, function(i, val) {
+
+                    if(val.Code == 104){
+
+                        $("#loadingMetalesPagos")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr><th>Sin Pagos</th></tr>'
+                            )
+
+                    }else{
+                        $("#loadingMetalesPagos")
+                            .fadeIn(3000)
+                            .append(
+                                '<tr class=' + val.m_id_advance + '">' +
+                                '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
+                                '    <td>' + val.m_id + '</td>' +
+                                '    <td>' + val.entregas_fecha + '</td>' +
+                                '    <td> $ ' + val.pagos_total + '</td>' +
+                                '    <td> $ ' + val.pagos_pagos + '</td>' +
+                                '    <td> $ ' + val.pagos_saldos + '</td>' +
+                                '    <td>'    + val.pagos_observaciones + '</td>' +
+                                '</tr>'
+                            )
+                    }
+
+                    })
+                    //--->
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+            })
+            //--->  
+    }
+    //BEGIN:---------------------> saldo
+    function loadingMetalesSaldo() {
+        //--->
+        console.log("%cXHR: %cmetales/detalles loadingMetalesSaldo", "color: red", "color: green");
+        $("#loadingMetalesCierres").fadeIn().empty()
+
+        let id_advance = $("#id_advance_x").val();
+
+        let jqxhr = $.getJSON(urlSaldoR + "/?type=saldo&id=" + id_advance, function(data) {
+            })
+            .done(function(data) {
+                //--->
+                $.each(data, function(i, val) {
+
+                    if(val.saldo == 0){
+                        $("#btnModalSaldo").show()
+                        $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").hide()
+
+                        $("#xhrCliente").hide()
+                        $("#xhrSaldotxt").hide()
+                    }else{
+                        $("#btnModalSaldo").hide()
+                        $("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").show()
+
+                        $(".saldoActual").html(val.detail_saldo_actual)
+                
+                        $("#xhrCliente").html(val.firstname + " " + val.secondname)
+                        $("#xhrSaldo").html(val.detail_saldo_actual)
+                        $("#xhrCliente").show()
+                        $("#xhrSaldotxt").show()
+        
+                    }
+
+                    })
+                    //--->
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+            })
+            //--->  
+    }
+
+//END------------------------------------------------------------>
+/*****************************************************************
+ *                               End                             *
+ *                              TABS                             *
+ *****************************************************************/
+
+/*****************************************************************
+ *                              BEGIN                            *
+ *                           Load Tabs                           *
+ *****************************************************************/
+ //BEGIN---------------------------------------------------------->
+
+    //BEGIN:--------------------->
+    function loadingVale(typeX) {
+        //--->
+        console.log("%cXHR: %cloadinngVale", "color: red", "color: green");
+        
+        if(typeX == "unica"){
+            x_id="input_eu_nvale"
+        }else if(typeX == "nueva"){
+            x_id="input_emnvaleE1"
+        }else if(typeX == "cierresimple"){
+            x_id="save_vale_cs"
+        }else if(typeX == "save_cierredos"){
+            x_id="save_cierredos"
+    }
+    
+        let jqxhr = $.getJSON(urlValeR + "/?type=actual", function(data) {
+            })
+            .done(function(data) {
+                $.each(data, function(i, val) {
+
+                    if(val.detail_id_advance == null){
+
+                        }else{
+
+                            }
+                    $("#"+x_id).val(parseInt(val.id)+1)
+
+                    })
+            })
+            .fail(function(data, jqXHR, textStatus, errorThrown) {
+                //--->
+                console.info("Run: all user loading error");
+                xhrError(jqXHR, textStatus, errorThrown);
+            })
+            .always(function(data) {
+                $("#input_cs_precio").val($('.'+$('input[type="checkbox"]').val()+'.precio').html())
+            })
+            //--->  
+    }
+
+    //BEGIN:--------------------->
+    function loadXhr(){
+        console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
+        
+        //loadingSaldoActual()
+            
+        loadingMetalesReader()
+        loadingMetalesReaderEntregas()
+        loadingMetalesReaderCierres()
+        loadingMetalesReaderPagos()
+
+        loadingMetalesSaldo()
+
+    //--------------------->
+    }
+
+    //BEGIN:--------------------->
+    function refreshXhr(){
+        console.log("%cXHR: %cmetales/detalles refreshXhr", "color: red", "color: green");
+        loadingMetalesSaldo();
+        //--------------------->
+        /*Loading XHR Cierresz*/
+            loadingMetalesReader()
+        /*Loading XHR Entregas*/
+            loadingMetalesReaderEntregas()
+        /*Loading XHR Cierresz Dos*/
+            loadingMetalesReaderCierres()
+        /*Loading XHR Pagos*/
+            loadingMetalesReaderPagos()
+    //--------------------->
+    }
+
+//END------------------------------------------------------------>
+/*****************************************************************
+ *                               End                             *
+ *                           Load Tabs                           *
+ *****************************************************************/

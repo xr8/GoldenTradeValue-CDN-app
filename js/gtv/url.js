@@ -17,6 +17,7 @@ if (local == true) {
         url_api  = "//api." + hostweb + "/";
         url_cdn  = "//cdn." + hostweb + "/";
 }
+console.log("%c Run JS: " + txtServe, "color:green; text-decoration: underline");
 //--->
 function apiConecction() {
     //---->
@@ -27,7 +28,7 @@ function apiConecction() {
         method:      "POST",
         url:         url_api_api,      
         headers: {
-            "Authorization": "Basic cm9vdDphZG1pbg==",
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
             "xr8-api-key"  : "ewf45r4435trge",
             "content-type" : "application/x-www-form-urlencoded",
             "cache-control": "no-cache"
@@ -54,7 +55,7 @@ console.log("%c Run APP: " + txtServe + " ", "color:green; text-decoration: unde
 //                                                                                 //
 //*********************************************************************************//  
 //0.- url_api
-url_api_api = url_api + "";
+url_api_api = url_api + "?run=API&host="+location.host;
 url_api_search = url_api + "search/querys?";
 //1.- url_user
 url_user_one = url_api + "user/readerdata";
