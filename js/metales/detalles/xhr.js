@@ -89,28 +89,28 @@ function loadingMetalesOne(btnId) {
                     Fecha 2021-04-22 00:00:00
                 */
 
-                $("#metales_id").empty().append(val.id);
-                $("#input_id_advance").empty().val(val.id_advance);
-                $("#metalesAccion").empty().append(val.detail_tipo);
-                $("#metalesFecha").empty().append(val.detail_fecha);
+                $(".en-txt #metales_id").empty().html(val.id);
+                $(".en-txt #input_id_advance").empty().val(val.id_advance);
+                $(".en-txt #metalesAccion").empty().append(val.detail_tipo);
+                $(".en-txt #metalesFecha").empty().append(val.detail_fecha);
                 
                 /*
                     Precio $ 1244.34
                     Metal  000
                     Status abierto                
                 */
-                $("#metales_precio").empty().append("$ " + val.detail_precio);
-                $("#metalesTipo").empty().append(val.detail_metal);
-                $("#metalesStatus").empty().append(val.detail_status);
+                $(".en-txt #metales_precio").empty().append("$ " + val.detail_precio);
+                $(".en-txt #metalesTipo").empty().append(val.detail_metal);
+                $(".en-txt #metalesStatus").empty().append(val.detail_status);
 
                     
                     
 
-                    $("#metales_peso").empty().append(val.detail_grs_original + " Grs.");
-                    $("#metales_peso_actual").empty().append(val.detail_grs + " Grs.");
+                    $(".en-txt #metales_peso").empty().append(val.detail_grs_original + " Grs.");
+                    $(".en-txt #metales_peso_actual").empty().append(val.detail_grs + " Grs.");
                     
-                    $("#metales_saldo").empty().append("$ " + val.saldo_saldo);
-                    $("#metales_saldo_actual").empty().append("$ " + val.saldo_saldo_actual);
+                    $(".en-txt #metales_saldo").empty().append("$ " + val.saldo_saldo);
+                    $(".en-txt #metales_saldo_actual").empty().append("$ " + val.saldo_saldo_actual);
             })
             //--->_actual
             $(".ge-show-load").fadeOut().addClass("d-none")
@@ -527,7 +527,7 @@ function saveEntregaUnica(){
 * cierre previamente creado en ets caso se genera un cierre*
 * automatico                                               *
 ************************************************************/
-function saveMultipleEntrega(emfecha,emnvale,emnoext,emAntesf,emGrs,emLey,emFinos){
+function saveMultipleEntrega(idEntrega,emFinos,emPrecio,emImporte,emTotal,emPagos,emSaldo,emObservaciones){
 //----------------------------->
 console.log("%cXHR: %cmetales/detalles loadingSaldoActual", "color: red", "color: green");
 let id_advance = $("#id_advance_x").val();
@@ -540,15 +540,16 @@ let settings = {
         /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
         "Content-Type" : "application/x-www-form-urlencoded"
     },
-    "data"   : {       
-        "id_advance" :id_advance,
-        "emfecha"    : emfecha,
-        "emnvale"    : emnvale,
-        "emnoext"    : emnoext,
-        "emAntesf"   : emAntesf,
-        "emGrs"      : emGrs,
-        "emLey"      : emLey,
-        "emFinos"    : emFinos 
+    "data":{       
+        "id_advance"      : id_advance,
+        "idEntrega"       : idEntrega,
+        "emFinos"         : emFinos,
+        "emPrecio"        : emPrecio,
+        "emImporte"       : emImporte,
+        "emTotal"         : emTotal,
+        "emPagos"         : emPagos,
+        "emSaldo"         : emSaldo,
+        "emObservaciones" : emObservaciones
     }
 }
 let jqxhr1 = $.ajax(settings).done(function(response) {    
@@ -572,8 +573,6 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
                 })
 //----------------------------->                
 }
-
-
 
 /*****************************************************************
  *                              BEGIN                            *
@@ -710,11 +709,12 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierres&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsCierres&type=cierres&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
                 $.each(data, function(i, val) {
+                    
                     if(val.Code == 104){
 
                         $("#loadingMetalesCierres")
@@ -789,11 +789,12 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=entregas&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsEntrgas&type=entregas&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
                 $.each(data, function(i, val) {
+                    $("")
                     if(val.Code == 104){
 
                         $("#loadingMetalesEntregas")
@@ -840,7 +841,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=cierresdos&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsCierresDos&type=cierresdos&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -890,7 +891,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?type=pagos&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsPagos&type=pagos&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -940,7 +941,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlSaldoR + "/?type=saldo&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlSaldoR + "/?name=Saldo&type=saldo&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -1004,8 +1005,8 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
         }else if(typeX == "save_cierredos"){
             x_id="save_cierredos"
     }
-    
-        let jqxhr = $.getJSON(urlValeR + "/?type=actual", function(data) {
+
+        let jqxhr = $.getJSON(urlValeR + "/?name=novale&type=actual", function(data) {
             })
             .done(function(data) {
                 $.each(data, function(i, val) {
@@ -1025,7 +1026,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
                 xhrError(jqXHR, textStatus, errorThrown);
             })
             .always(function(data) {
-                $("#input_cs_precio").val($('.'+$('input[type="checkbox"]').val()+'.precio').html())
+//                $("#input_cs_precio").val($('.'+$('input[type="checkbox"]').val()+'.precio').html())
             })
             //--->  
     }
