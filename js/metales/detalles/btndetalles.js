@@ -28,6 +28,12 @@ function btnCierre(){
 function clickModalPagos(){
     $("#btnModalPagos").on('click',function() {
         console.info("Run: Click Btn cierre 123321")
+
+        $("#generarSaldo").val($("#xhrSaldo").html())
+
+
+        btnPagosSaldo()
+        
     })
 }
 /* BTN -> click  sava Generar Cierre*/
@@ -36,6 +42,17 @@ function btnPagos(){
         console.log("Btn generar cierre")
         $('#pagosModal').modal('hide')
         saveTabsPagos()
+    }) 
+}
+
+function btnPagosSaldo(){
+    $("#generarPago").on('change',function() { 
+        let generarPagoTotal = $("#generarPagoTotal").val()
+        let generarPago      = $("#generarPago").val()
+        let xhrSaldo         = $("#xhrSaldo").html()
+
+        let saldoNuevo = parseFloat(xhrSaldo) + parseFloat(generarPagoTotal) - parseFloat(generarPago);
+        alert(saldoNuevo)
     }) 
 }
 /********************************/
