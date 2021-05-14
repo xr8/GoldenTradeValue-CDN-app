@@ -575,7 +575,8 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 }
 
 /*****************************************************************
- *                              BEGIN                            *
+ *                            - BEGIN -                          *
+ *                              TABS                             *
  *                            Save Btn                           *
  *****************************************************************/
  //BEGIN---------------------------------------------------------->
@@ -594,7 +595,6 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
             
             let generar_c_fecha  = $("#generar_c_fecha").val();
             let generar_c_tipo   = $("#generar_c_tipo").val();
-            let generar_c_metal  = $("#generar_c_metal").val();
             let generar_c_grs    = $("#generar_c_grs").val();
             let generar_c_precio = $("#generar_c_precio").val();
 
@@ -613,7 +613,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
                     "save_id_advance"  : save_id_advance,
                     "generar_c_fecha"  : generar_c_fecha,
                     "generar_c_tipo"   : generar_c_tipo,
-                    "generar_c_metal"  : generar_c_metal,
+                    //"generar_c_metal"  : generar_c_metal,
                     "generar_c_grs"    : generar_c_grs,
                     "generar_c_precio" : generar_c_precio
                 }
@@ -637,20 +637,20 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
     }
 
-    //BEGIN:---------------------> cierre simple
-    function saveCierreSimple() {
+ //END---------------------------------------------------------->
+
+    //BEGIN:---------------------> pagos
+    function saveTabsPagos(){
         console.log("BTN SAVE");
 
-        let input_cs_fino          = $("#input_cs_fino").val()
-        let input_cs_precio        = $("#input_cs_precio").val()
-        let input_cs_importe       = $("#input_cs_importe").val()
-        let input_cs_total         = $("#input_cs_total").val()
-        let input_cs_pagos         = $("#input_cs_pagos").val()
-        let input_cs_saldo         = $("#input_cs_saldo").val()
-        let input_cs_observaciones = $("#input_cs_observaciones").val()
-        let save_vale              = $("#save_vale_cs").val()
+        let generarPagoTotal     = $("#generarPagoTotal").val()
+        let generarPago          = $("#generarPago").val()
+        let generarTipoPago      = $("#generarTipoPago").val()
+        let generarSaldo         = $("#generarSaldo").val()
+        let generarObservaciones = $("#generarObservaciones").val()
+        
         let settings = {
-            "url": urlMetalesdetallesC + '?type=cierreSimple',
+            "url": urlMetalesdetallesC + '?type=saveTabsPago',
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -660,14 +660,11 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
             "data": {
                 "save_id_advance"         : $('input[type="checkbox"]:checked').val(),
                 "save_id_advance_user"    : $("#id_advance_x").val(),
-                "input_cs_fino" : input_cs_fino,
-                "input_cs_precio" : input_cs_precio,
-                "input_cs_importe" : input_cs_importe,
-                "input_cs_total" : input_cs_total,
-                "input_cs_pagos" : input_cs_pagos,
-                "input_cs_saldo" : input_cs_saldo,
-                "input_cs_observaciones" : input_cs_observaciones,
-                "save_vale"              : save_vale  
+                "generarPagoTotal"        : generarPagoTotal     ,
+                "generarPago"             : generarPago          ,
+                "generarTipoPago"         : generarTipoPago      ,
+                "generarSaldo"            : generarSaldo         ,
+                "generarObservaciones"    : generarObservaciones 
             }
         };
 
@@ -682,7 +679,7 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
                 xhrError(jqXHR, textStatus, errorThrown);
             })
             .always(function(data) {
-                btnDisables()
+                //btnDisables()
                 refreshXhr()
                 console.info("Run: all user always");
             })
@@ -691,7 +688,8 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
 
 //END------------------------------------------------------------>
 /*****************************************************************
- *                               End                             *
+ *                            - BEGIN -                          *
+ *                              TABS                             *
  *                            Save Btn                           *
  *****************************************************************/
 
@@ -761,7 +759,6 @@ let jqxhr1 = $.ajax(settings).done(function(response) {
                                 '    <td class="'+ val.m_id_advance  +'">' + val.m_time + '</td>' +
                                 '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_tipo + '</td>' +
                                 '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_status + '</td>' +
-                                '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_metal + '</td>' +
                                 '    <td class="'+ val.m_id_advance  +' precio">$ ' + val.m_detail_precio + '</td>' +
                                 '    <td class="'+ val.m_id_advance  +'">' + val.m_detail_grs_original + ' Grs </td>' +
                                 '    <td class="'+ val.m_id_advance  +' pesoactual">' + val.m_detail_grs + ' Grs </td>' +

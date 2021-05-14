@@ -2,6 +2,51 @@ console.log("%cLoad File : %cbtndetalles", "color: cyan", "color: yellow");
 //--------------------------------------------------------------->
 //BEGIN
 
+/********************************/
+/*    Tabs Generar Cierre       */
+/********************************/
+function clickModalCierre(){
+    $("#btnModalCierre").on('click',function() {
+        console.info("Run: Click Btn cierre 123321")
+    })
+}
+/* BTN -> click  sava Generar Cierre*/
+function btnCierre(){
+    $("#btnGenerarCierre").on('click',function() { 
+        console.log("Btn generar cierre")
+        $('#cierreModal').modal('hide')
+        saveDataGenerar()
+    }) 
+}
+/********************************/
+/*    Tabs Generar Cierre       */
+/********************************/
+
+/********************************/
+/*    Tabs Generar Pagos        */
+/********************************/
+function clickModalPagos(){
+    $("#btnModalPagos").on('click',function() {
+        console.info("Run: Click Btn cierre 123321")
+    })
+}
+/* BTN -> click  sava Generar Cierre*/
+function btnPagos(){
+    $("#btnGenerarPago").on('click',function() { 
+        console.log("Btn generar cierre")
+        $('#pagosModal').modal('hide')
+        saveTabsPagos()
+    }) 
+}
+/********************************/
+/*    Tabs Generar Pagos        */
+/********************************/
+
+
+
+
+
+
 
 /*Begin: A)*/
 // Click -> Btn saldo base*/
@@ -20,22 +65,7 @@ function btnSaldo(){
     })
 }
 
-/********************************/
-/*         Generar Cierre       */
-/********************************/
-function clickModalCierre(){
-    $("#btnModalCierre").on('click',function() {
-        console.info("Run: Click Btn cierre 123321")
-    })
-}
-/* BTN -> click  sava Generar Cierre*/
-function btnCierre(){
-    $("#btnGenerarCierre").on('click',function() { 
-        console.log("Btn generar cierre")
-        $('#cierreModal').modal('hide')
-        saveDataGenerar()
-    }) 
-}
+
 
 /********************************/
 /*   Generar Cierre Simple      */
@@ -98,5 +128,33 @@ function clickModalCierreSdos(){
     $("#btnModalCierreDos").on('click',function(){
         loadingMetalesOne2($('input[type="checkbox"]:checked.checkEntregas').attr("name"))
         loadingVale("save_cierredos")
+    })
+}
+
+/********************************/
+/*           Entrega Nueva      */
+/********************************/
+function clickModalEntregaUnica(){
+    $("#btnentregaUnica").on('click',function() {
+        
+        $(".ge-show").fadeOut().addClass("d-none")
+        $(".ge-show-load").fadeIn().removeClass("d-none")
+
+        btnId = $('input[type="checkbox"]:checked').val();
+        
+        $("#metalesPrecio").empty().append($(".precio_id." + btnId).text())
+        $("#metalesPrecioInput").empty().val($(".precio_id." + btnId).text())
+        
+        /*carga la informacion del cierre*/
+        loadingMetalesOne(btnId)
+
+        let typeX = "input_eu_nvale"
+        loadingVale(typeX)
+    })
+}
+
+function btnEntregaUnica(){
+    $("#btnGenerarEntrega").on('click',function() { 
+        saveEntrega()
     })
 }

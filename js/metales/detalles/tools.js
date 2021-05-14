@@ -20,13 +20,16 @@ function  allTools(){
 
 function allModal(){
     console.log("%cRun: allModal\n\n A)clickModalSaldo\n B)clickModalCierre\n C)clickModalEntrega\n D)clickModalEntregaUnica%c\n", "line-height: 0.8;", "line-height: 1.7;")
-    
+    clickModalCierre()
+    clickModalPagos()
+    /*
     clickModalCierre()
     clickModalCierreS()
     clickModalEntrega()
     clickModalCierreSdos()
 
-    /*
+    clickModalEntregaUnica()  
+    
     clickModalSaldo()
     clickModalEntregaUnica()
     clickModalEntregaMultiple()    
@@ -36,10 +39,15 @@ function allModal(){
 function allBtn(){
     console.log("%cRun: allBtn\n\nA)btnSaldo\nB)btnCierre\nC)btnEntrega\nD)btnEntregaUnica\n%c", "line-height: 0.8;", "line-height: 1.7;")
     btnCierre()
+    btnPagos()
+    /*
+    btnCierre()
     btnCierreS()
     btnEntrega()
     btnEntregaMultiple()
-    /*
+
+    btnEntregaUnica() 
+    
     btnSaldo()
     btnEntregaUnica()
     */
