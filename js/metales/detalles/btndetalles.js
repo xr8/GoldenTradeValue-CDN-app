@@ -25,14 +25,16 @@ function btnCierre(){
 /********************************/
 /*    Tabs Generar Pagos        */
 /********************************/
+/*
+btnModalPagos
+btnGenerarPago
+*/
 function clickModalPagos(){
     $("#btnModalPagos").on('click',function() {
         console.info("Run: Click Btn cierre 123321")
 
         $("#generarSaldo").val($("#xhrSaldo").html())
-
-
-        btnPagosSaldo()
+        //btnPagosSaldo()
         
     })
 }
@@ -40,30 +42,32 @@ function clickModalPagos(){
 function btnPagos(){
     $("#btnGenerarPago").on('click',function() { 
         console.log("Btn generar cierre")
-        $('#pagosModal').modal('hide')
         saveTabsPagos()
+        $('#pagosModal').modal('hide')
+        
+        //saveTabsPagos()
+
     }) 
 }
-
 function btnPagosSaldo(){
+    /*
+    (SA) = Saaldo anterior
+    (T)  = Total
+    (P)  =  Pago
+    (Sa) = Saldo actual
+    formula : (SA) + (T) - (P) = Sa
+    */
     $("#generarPago").on('change',function() { 
         let generarPagoTotal = $("#generarPagoTotal").val()
         let generarPago      = $("#generarPago").val()
         let xhrSaldo         = $("#xhrSaldo").html()
 
-        let saldoNuevo = parseFloat(xhrSaldo) + parseFloat(generarPagoTotal) - parseFloat(generarPago);
-        alert(saldoNuevo)
+        let saldoNuevo       = (parseFloat(xhrSaldo)) + (parseFloat(generarPagoTotal)) - (parseFloat(generarPago));
     }) 
 }
 /********************************/
 /*    Tabs Generar Pagos        */
 /********************************/
-
-
-
-
-
-
 
 /*Begin: A)*/
 // Click -> Btn saldo base*/
@@ -81,7 +85,6 @@ function btnSaldo(){
         refreshXhr()
     })
 }
-
 
 
 /********************************/
@@ -125,9 +128,11 @@ function clickModalEntrega(){
         $("#metalesPrecioInput").empty().val($(".precio_id." + btnId).text())
         
         /*carga la informacion del cierre*/
-        loadingMetalesOne(btnId)
+        //loadingMetalesOne(btnId)
 
-        let typeX = "nueva"
+        //let typeX = "nueva"
+        //loadingVale(typeX)
+        let typeX = "entrega"
         loadingVale(typeX)
     })
 }
