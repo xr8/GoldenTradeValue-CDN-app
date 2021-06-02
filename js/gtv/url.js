@@ -144,3 +144,41 @@ urlValeC = url_api + "vale/createdata";
 urlValeR = url_api + "vale/readedata";
 urlValeU = url_api;
 urlValeD = url_api;
+
+
+//-------------------------------------------------------------->
+//A.- CIERRE
+///DbTabsCierre/readedata/?name=tabsCierres&type=cierre&id=C-zr8h0iji96crde4
+//-------------------------------------------------------------->
+urlDbTabsCierreC = url_api + "DbTabsCierre/createdata";
+urlDbTabsCierreR = url_api + "DbTabsCierre/readedata";
+urlDbTabsCierreU = url_api;
+urlDbTabsCierreD = url_api;
+
+//-------------------------------------------------------------->
+//B.- PAGOS
+///DbTabsPagos/readedata/?name=tabsCierres&type=pagos&id=C-zr8h0iji96crde4
+//-------------------------------------------------------------->
+urlDbTabsPagosC = url_api + "DbTabsPagos/createdata";
+urlDbTabsPagosR = url_api + "DbTabsPagos/readedata";
+urlDbTabsPagosU = url_api;
+urlDbTabsPagosD = url_api;
+
+//-------------------------------------------------------------->
+//C.- CIERRES
+///DbTabsCierres/readedata/?name=tabsCierres&type=cierres&id=C-zr8h0iji96crde4
+//-------------------------------------------------------------->
+urlDbTabsCierresC = url_api + "DbTabsCierres/createdata";
+urlDbTabsCierresR = url_api + "DbTabsCierres/readedata";
+urlDbTabsCierresU = url_api;
+urlDbTabsCierresD = url_api;
+
+//-------------------------------------------------------------->
+//D.- ENTREGAS
+////DbTabsEntregas/readedata/?name=tabsEntregas&type=entregas&id=C-zr8h0iji96crde4
+//-------------------------------------------------------------->
+urlDbTabsEntregasC = url_api + "DbTabsEntregas/createdata";
+urlDbTabsEntregasR = url_api + "DbTabsEntregas/readedata";
+urlDbTabsEntregasU = url_api;
+urlDbTabsEntregasD = url_api;
+

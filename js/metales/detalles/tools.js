@@ -2,88 +2,170 @@
 //BEGIN
 /*****************************************************************
  *                             BEGIN                             *
- *                         FUNCTION TOOLS                          *
- *****************************************************************/
+ *                         FUNCTION TOOLS                        *
+ ****************************************************************/
  console.log("%cLoad File : %ctools", "color: cyan", "color: yellow");
 function  allTools(){
     checkOnlyOne()
+    changeOrigenGrs()
+    origenOpciones()
+    finoChange_C()
 
     finoChange()
     fino_eu_Change()
+
+    
+    
     /*
 
 
     plusEntrada()
     btnDeleteEntregas()    
     */
-}
+    $("#cierres_id_advance").val(makeid(20))
 
+}
 function allModal(){
     console.log("%cRun: allModal\n\n A)clickModalSaldo\n B)clickModalCierre\n C)clickModalEntrega\n D)clickModalEntregaUnica%c\n", "line-height: 0.8;", "line-height: 1.7;")
-    clickModalCierre()
-    clickModalPagos()
-    clickModalEntrega()
-    
-    /*
-    clickModalCierre()
-    clickModalCierreS()
-    clickModalEntrega()
-    clickModalCierreSdos()
-
-    clickModalEntregaUnica()  
-    
-    clickModalSaldo()
-    clickModalEntregaUnica()
-    clickModalEntregaMultiple()    
-    clickModalCierreSdos()
-    */
+        clickModalCierre()
+        clickModalEntrega()
+        clickModalCierres()
+        clickModalPagos()
 }
 function allBtn(){
-    console.log("%cRun: allBtn\n\nA)btnSaldo\nB)btnCierre\nC)btnEntrega\nD)btnEntregaUnica\n%c", "line-height: 0.8;", "line-height: 1.7;")
     btnCierre()
-    btnPagos()
+    //btnPagos()
     btnEntrega()
-    
-    /*
-    btnCierre()
     btnCierreS()
-    btnEntrega()
-    btnEntregaMultiple()
-
-    btnEntregaUnica() 
     
-    btnSaldo()
-    btnEntregaUnica()
-    */
 }
+/************************************************************/
+/*                           TOOLS                          */
+/************************************************************/
+
 //--------------------------------------------------------------->
-/*solo un checkbox se puede seleccionar*/
 function checkOnlyOne(){
     $(document).on('click', 'input[type="checkbox"]', function() {
-        x = $('input[type="checkbox"]').not(this).prop('checked', false);
-
+        x = $('input[type="checkbox"]').not(this).prop('checked', false)
+  
         let y = $(this).val();
+  
+        //--------------------->
+        if($('input[type="checkbox"]').is(':checked')){
+            clearCierres()
 
-        if (parseFloat($("#" + y + " .pesoactual").html()) <= 0) {
-            $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled", true)
-        } else {
-            //--------------------->
-            if ($('input[type="checkbox"]').is(':checked')) {
+            $("#btnModalCierres").attr("disabled",false)
 
-                $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled", false)
-                $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").removeClass('btn-secondary').addClass('btn-primary');
+            let checkEntregas = $('input[type="checkbox"]:checked').attr('class')
+                checkEntregas = checkEntregas.split(" ")
+            
+            switch(checkEntregas[0]){
+                case 'checkCierre':
+                    alert("cierre")
+                    break;
+                case 'checkEntregas':
+                    alert("entregas")
+                    break;
+                case 'checkECierres':   
+                    alert("cierres")
+                    break;
+                case 'checkPagos':   
+                    alert("pagos")
+                    break;
+                default:
+                    alert("default")
+                    break;
+              }
 
-                $("#cierreEntrega").val(y);
-            } else {
-
-                $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled", true)
-                $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").removeClass('btn-primary').addClass('btn-secondary');
-
-            }
-            //--------------------->
+        }else{
+            $("#btnModalCierres").attr("disabled",true)
+            alert("checked false")
         }
+        //--------------------->
     })
 }
+function clearCierres(){
+    $("#cierresTxt").html("00.00 Grs")
+
+    var $select = $('#cierres_origen,#cierres_origen_grs');
+        $select.val("null");
+        
+        $("#cierres_origen_grs").empty().append("<option value=\"null\"> - Opciones -</option>")
+
+        $("#generar_fino_pza,#generar_precio,#generar_importe").val("")
+
+        //$('input[type="checkbox"]').not(this).prop('checked', false);
+        
+        //$("#btnModalCierres").attr("disabled",true)
+}
+/************************************************************/
+/*                                                          */
+/************************************************************/
+function changeOrigenGrs(){
+    $("#cierres_origen").on('change',function() {
+        
+        switch ($(this).val()) {
+            case 'null':
+                $("#cierres_origen_grs").empty().append("<option value=\"null\"> - Opciones -</option>")
+                $("#generar_precio").val("")
+              break;
+            default:
+                $(".loading-origen-x").removeClass("d-none")
+                $(".loading-origen").addClass("d-none")
+
+                $("#cierres_origen_grs").val("")
+                loadingSelectCierre()                  
+          }
+
+    })
+}
+function origenOpciones(){
+    
+    $("#cierres_origen_grs").on('change',function() {
+        
+        let origenOpciones = $(this).val()
+        origenOpciones = origenOpciones.split(" ")
+        $("#generar_precio").val(origenOpciones[1])
+    })    
+}
+function finoChange_C(){
+    $("#generar_fino_pza").on('change',function() {
+        let cierresTxt = $("#cierresTxt").html()
+            cierresTxt = cierresTxt.split(" ")
+
+        let generar_fino_pza = $("#generar_fino_pza").val()
+
+        if(cierresTxt[0] >= generar_fino_pza){
+            
+            let generar_fino_pza = parseFloat($(this).val())
+            let generar_precio   = parseFloat($("#generar_precio").val())
+            let importe          = parseFloat(generar_fino_pza * generar_precio)
+            $("#generar_importe").val(importe)
+
+        }else{
+            alert("Fino/PZ debe de ser igual o menor al Peso Actual que esta en el paso 1")
+            $(this).val("")
+        }
+        
+    })        
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function btnDisables(){
     $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled",true).removeClass('btn-primary').addClass('btn-secondary');
@@ -237,6 +319,7 @@ function finoChange(){
     
 }
 
+
 function inputCalcularImporte(){
     /*
        id="input_barra"
@@ -361,6 +444,7 @@ function inputSaldo(x){
     //Result
     //$("#input_saldo").val(parseFloat(x) + parseFloat(input_saldo[1]) - parseFloat(input_pagos))
 }
+//--------------------------------------------------------------->
 function changeFino() {
 
     $("#generarBarra,#generarLey").change(function() {
@@ -393,4 +477,3 @@ function makeid(length) {
    }
    return result.join('');
 }
-

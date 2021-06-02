@@ -5,16 +5,14 @@
  //BEGIN---------------------------------------------------------->
 
      //BEGIN:--------------------->
-     function loadXhr(){
+    function loadXhr(){
         console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
         
         //loadingSaldoActual()
             
+        loadingTabsCierre()
+        loadingTabsEntregas()
         loadingTabsCierres()
-
-        loadingMetalesReaderEntregas()
-        loadingMetalesReaderCierres()
-
         loadingTabsPagos()
 
         loadingMetalesSaldo()
@@ -25,11 +23,9 @@
     //BEGIN:--------------------->
     function refreshXhr(){
         console.log("%cXHR: %cmetales/detalles refreshXhr", "color: red", "color: green");
+        loadingTabsCierre()
+        loadingTabsEntregas()
         loadingTabsCierres()
-
-        loadingMetalesReaderEntregas()
-        loadingMetalesReaderCierres()
-
         loadingTabsPagos()
 
         loadingMetalesSaldo()
@@ -49,14 +45,14 @@
  //BEGIN---------------------------------------------------------->
 
     //BEGIN:---------------------> tabs Cierres
-    function loadingTabsCierres(){
+    function loadingTabsCierre(){
         //--->
         console.log("%cXHR: %cmetales/detalles loadingTabsCierres", "color: red", "color: green");
         $("#loadingMetalesCierres").fadeIn().empty()
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsCierres&type=cierres&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlDbTabsCierreR + "/?name=tabsCierre&type=cierre&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -71,22 +67,21 @@
                             );
 
                     }else{
-
-                        let m_id = zerocien(parseInt())
-                        let mc_id = zerocien(parseInt(val.mc_id))
+                        let m_id  = zerocien(parseInt())
+                        let mc_id = zerocien(parseInt(val.id))
                         
-                        if (parseFloat(val.m_detail_grs) == 0) {
+                        if (parseFloat(val.detail_grs) == 0) {
                             checkbox =  '    <th scope="row"></th>';
                         } else {
-                            checkbox = '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>';
+                            checkbox = '    <th scope="row"><input type="checkbox" value="' + val.id_advance + '" class="checkCierre checkboxCierre" name="id_advance_cierre"></th>';
                         }
 
 
-                        if (parseFloat(val.m_detail_grs) == 0) {
+                        if (parseFloat(val.detail_grs) == 0) {
                             colorCierres = "table-danger";
-                        } else if (parseFloat(val.m_detail_grs_original) == parseFloat(val.m_detail_grs)) {
+                        } else if (parseFloat(val.detail_grs_original) == parseFloat(val.detail_grs)) {
                             colorCierres = "table-primary";
-                        } else if (parseFloat(val.m_detail_grs) > 0) {
+                        } else if (parseFloat(val.detail_grs) > 0) {
                             colorCierres = "table-success";
                         }else{
                             colorCierres = "";
@@ -95,23 +90,41 @@
                         //Compra de Metales cliente $saldo
                         $("#cliente_nombre")
                             .fadeIn(3000)
-                            .html(val.c_firstname + ' ' + val.c_secondname)
+                            .html(val.firstname + ' ' + val.secondname)
 
                         //#	ID Cierre	Fecha	Tipo	Status	Metal	Precio	Peso Original	Peso Actual
-                        let x_pagos = new Intl.NumberFormat("en-US").format(val.m_detail_precio)
-                        
+                        let x_pagos = new Intl.NumberFormat("en-US").format(val.detail_precio)
+                        /*
+                        "id": "232",
+                        "id_advance": "k0WlpYwV4XcPn5dquz2K",
+                        "time": "2021-05-17 04:43:16",
+                        "user_type": "clientes",
+                        "user_id_advance": "C-zr8h0iji96crde4",
+                        "detail_fecha": "2021-05-01 00:00:00",
+                        "detail_status": "abierto",
+                        "detail_tipo": "compra",
+                        "detail_metal": null,
+                        "detail_grs_original": "130.00",
+                        "detail_grs": "130.00",
+                        "detail_precio": "1150.00",
+                        "saldo_saldo": "0.00",
+                        "saldo_saldo_actual": "-150000.00",
+                        "email": "biohizard@gmail.com",
+                        "firstname": "jorge",
+                        "secondname": "garibaldo"
+                        */
                         $("#loadingMetalesCierres")
                             .fadeIn(3000)
                             .append(
-                                '<tr class="cierresItem ' + colorCierres + '" id="' + val.m_id_advance + '">' +
-                                     checkbox                                         +
-                                '    <td class="'+ val.m_id_advance  +'">'            + val.m_id                  + '</td>'      +
-                                '    <td class="'+ val.m_id_advance  +'">'            + val.m_time                + '</td>'      +
-                                '    <td class="'+ val.m_id_advance  +'">'            + val.m_detail_tipo         + '</td>'      +
-                                '    <td class="'+ val.m_id_advance  +'">'            + val.m_detail_status       + '</td>'      +
-                                '    <td class="'+ val.m_id_advance  +' precio">  $ ' + x_pagos                   + '</td>'      +
-                                '    <td class="'+ val.m_id_advance  +'">'            + val.m_detail_grs_original + ' Grs </td>' +
-                                '    <td class="'+ val.m_id_advance  +' pesoactual">' + val.m_detail_grs          + ' Grs </td>' +
+                                '<tr class="cierresItem ' + colorCierres + '" id="' + val.id_advance + '">' +
+                                     checkbox                                                +
+                                '    <td class="'+ val.id_advance  +' cierre_id">'           + val.id                  + '</td>'      +
+                                '    <td class="'+ val.id_advance  +' cierre_fecha">'        + val.detail_fecha        + '</td>'      +
+                                '    <td class="'+ val.id_advance  +' cierre_tipo">'         + val.detail_tipo         + '</td>'      +
+                                '    <td class="'+ val.id_advance  +' cierre_status">'       + val.detail_status       + '</td>'      +
+                                '    <td class="'+ val.id_advance  +' cierre_precio">  $ '   + x_pagos                 + '</td>'      +
+                                '    <td class="'+ val.id_advance  +' cierre_grs_original">' + val.detail_grs_original + ' Grs </td>' +
+                                '    <td class="'+ val.id_advance  +' cierre_pesoactual">'   + val.detail_grs          + ' Grs </td>' +
                                 '</tr>'
                             )
                     }
@@ -128,16 +141,15 @@
             })
             //--->  
     }
-
     //BEGIN:---------------------> tabs Cierres
-    function loadingMetalesReaderEntregas() {
+    function loadingTabsEntregas(){
         //--->
         console.log("%cXHR: %cmetales/detalles loadingMetalesReaderEntregas", "color: red", "color: green");
         $("#loadingMetalesEntregas").fadeIn().empty()
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsEntrgas&type=entregas&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlDbTabsEntregasR + "/?name=tabsEntregas&type=entregas&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -155,16 +167,16 @@
                         $("#loadingMetalesEntregas")
                             .fadeIn(3000)
                             .append(
-                                '<tr class="' + val.m_id_advance + '">' +
-                                '    <th scope="row"><input type="checkbox" class="checkEntregas" name="' + val.id_advance_metales + '"></th>' +
-                                '    <td>' + val.id_metales + '</td>' +
-                                '    <td>' + val.entregas_fecha + '</td>' +
+                                '<tr class="' + val.id_advance + '">' +
+                                '    <th scope="row"><input type="checkbox" class="checkEntregas checkboxEntregas ' + val.id_advance + '" name="id_advance_entregas"></th>' +
+                                '    <td>' + val.id + '</td>' +
+                                '    <td>' + val.time + '</td>' +
                                 '    <td>' + zerocien(val.entregas_no_vale) + '</td>' +
                                 '    <td>' + zeronull(val.entregas_no_ext) + '</td>' +
                                 '    <td>' + val.entregas_grs_af + '</td>' +
                                 '    <td>' + val.entregas_barra + ' Grs</td>' +
                                 '    <td>' + val.entregas_ley + '</td>' +
-                                '    <td>' + val.entregas_fino + ' Grs</td>' +
+                                '    <td class="fino ' + val.id_advance + '">' + val.entregas_fino + ' Grs</td>' +
                                 '</tr>     '
                         )
                     }
@@ -182,14 +194,14 @@
             //--->  
     }
     //BEGIN:---------------------> tabs cierres dos
-    function loadingMetalesReaderCierres() {
+    function loadingTabsCierres(){
         //--->
         console.log("%cXHR: %cmetales/detalles loadingMetalesReaderCierre", "color: red", "color: green");
         $("#loadingMetalesCierresdos").fadeIn().empty()
 
         let id_advance = $("#id_advance_x").val();
 
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsCierresDos&type=cierresdos&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlDbTabsCierresR + "/?name=tabsCierres&type=cierres&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -209,11 +221,11 @@
                         .append(
                             '<tr>' +
                             '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                            '    <td>' + val.m_id + '</td>' +
+                            '    <td>' + val.id + '</td>' +
                             '    <td>' + val.entregas_fecha + '</td>' +
                             '    <td>' + val.cierres_fino + ' Grs</td>' +
-                            '    <td> $ ' + val.detail_precio + '</td>' +
                             '    <td> $ ' + val.cierres_precio + '</td>' +
+                            '    <td> $ ' + val.cierres_importe + '</td>' +
                             '</tr>     '
                         )
 
@@ -231,16 +243,14 @@
             })
             //--->  
     }
-
     //BEGIN:---------------------> tabs pagos
-    function loadingTabsPagos() {
+    function loadingTabsPagos(){
         //--->
         console.log("%cXHR: %cmetales/detalles loadingMetalesReaderPagos", "color: red", "color: green");
         $("#loadingMetalesPagos").fadeIn().empty()
 
         let id_advance = $("#id_advance_x").val();
-
-        let jqxhr = $.getJSON(urlMetalesdetallesR + "/?name=tabsPagos&type=pagos&id=" + id_advance, function(data) {
+        let jqxhr = $.getJSON(urlDbTabsPagosR + "?name=tabsPagos&type=pagos&id=" + id_advance, function(data) {
             })
             .done(function(data) {
                 //--->
@@ -264,8 +274,8 @@
                             .fadeIn(3000)
                             .append(
                                 '<tr class=' + val.m_id_advance + '">' +
-                                '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="btnId" name="id_advance"></th>' +
-                                '    <td>   ' + val.m_id + '</td>' +
+                                '    <th scope="row"><input type="checkbox" value="' + val.m_id_advance + '" class="checkPagos" name="id_advance"></th>' +
+                                '    <td>   ' + val.id + '</td>' +
                                 '    <td>   ' + val.entregas_fecha + '</td>' +
                                 '    <td> $ ' + y_total + '</td>' +
                                 '    <td> $ ' + y_pagos + '</td>' +
@@ -287,8 +297,6 @@
             })
             //--->  
     }
-
-
     //BEGIN:---------------------> saldo
     function loadingMetalesSaldo() {
         //--->
@@ -342,13 +350,20 @@
  //BEGIN---------------------------------------------------------->
     
     //BEGIN:---------------------> generar cierre
-    function saveDataGenerar(){
+    function saveDataCierre(){
         /*
             id="generar_c_fecha"
             id="generar_c_tipo"
             id="generar_c_metal"
             id="generar_c_grs"
             id="generar_c_precio"
+
+            id_advance: U-03fb5ca7539c770b6b
+            save_id_advance: C-zr8h0iji96crde4
+            generar_c_fecha: 2021-05-10
+            generar_c_tipo: compra
+            generar_c_grs: 130
+            generar_c_precio: 1150            
         */
             let id_advance      = $("#id_advance").val();
             let save_id_advance = $("#id_advance_x").val();
@@ -361,7 +376,7 @@
             $('#cierreModal').modal('hide')
         
             let settings = {
-                "url": urlMetalesC + '?type=generarcierre',
+                "url": urlDbTabsCierreC + '?type=cierre',
                 "method": "POST",
                 "timeout": 0,
                 "headers": {
@@ -488,7 +503,7 @@ function saveEntrega() {
     $('#entregaModal').modal('hide')
 
     let settings = {
-        "url": urlMetalesdetallesC + '?type=generarcierre',
+        "url": urlDbTabsEntregasC + '?type=generarentregas',
         "method": "POST",
         "timeout": 0,
         "headers": {
@@ -533,6 +548,76 @@ function saveEntrega() {
             console.info("Run: all user always");
         })
 }
+function saveDataCierres(){
+    let p1_cierresTxt        = $("#cierresTxt").html()
+    let p1_cierre_id_advance = $("#cierre_id_advance").val()
+    let p1_cierres_id_advance = $("#cierres_id_advance").val()
+    
+    
+    //alert(p1_cierresTxt + "-" + p1_cierre_id_advance)
+
+    let p2_cierres_origen     = $("#cierres_origen").val()
+    let p2_cierres_origen_grs = $("#cierres_origen_grs").val()
+
+    //alert(p2_cierres_origen +"-" + p2_cierres_origen_grs)
+
+    let p3_generar_fino_pza   = $("#generar_fino_pza").val()
+    let p3_generar_precio     = $("#generar_precio").val()
+    let p3_generar_importe    = $("#generar_importe").val()
+
+    //alert(p3_generar_fino_pza + "-" + p3_generar_precio + "-" + p3_generar_importe)
+
+    let p4_generar_pagos         = $("#generar_pagos").val()
+    let p4_generar_TipoPago      = $("#generar_TipoPago").val()
+    let p4_generar_Observaciones = $("#generar_Observaciones").val()
+  
+    let p5_generar_saldo         = $("#xhrSaldo").html()
+
+    //alert(p4_generar_pagos)    
+    
+    let settings = {
+        "url": urlDbTabsCierresC + '?type=cierres',
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+            "save_id_advance_user"         : $("#id_advance_x").val(),
+            "save_p1_cierresTxt"           : p1_cierresTxt,
+            "save_p1_cierre_id_advance"    : p1_cierre_id_advance,
+            "save_p1_cierres_id_advance"    : p1_cierres_id_advance,
+            "save_p2_cierres_origen"       : p2_cierres_origen,
+            "save_p2_cierres_origen_grs"   : p2_cierres_origen_grs,
+            "save_p3_generar_fino_pza"     : p3_generar_fino_pza,
+            "save_p3_generar_precio"       : p3_generar_precio,
+            "save_p3_generar_importe"      : p3_generar_importe,
+            "save_p4_generar_pagos"        : p4_generar_pagos,
+            "save_p4_generar_TipoPago"     : p4_generar_TipoPago,
+            "save_p4_generar_Observaciones": p4_generar_Observaciones,
+            "save_p5_generar_saldo"        : p5_generar_saldo
+        }
+    };
+
+    let jqxhr1 = $.ajax(settings).done(function(response) {
+            console.log("Run: Cierres")
+        })
+        .done(function(data) {
+            $.each(data, function(i, val) {})
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+            clearCierres()
+            $('#cierresModal').modal('hide')
+            refreshXhr()
+            console.info("Run: all user always");
+        })
+
+}
  //BEGIN---------------------------------------------------------->
 
     //BEGIN:--------------------->
@@ -576,8 +661,6 @@ function saveEntrega() {
             })
             //--->  
     }
-
-
  //END---------------------------------------------------------->
 
     //BEGIN:---------------------> pagos
@@ -591,7 +674,7 @@ function saveEntrega() {
         let generarObservaciones = $("#generarObservaciones").val()
         
         let settings = {
-            "url": urlMetalesdetallesC + '?type=saveTabsPago',
+            "url": urlDbTabsPagosC + '?type=pagos',
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -633,3 +716,31 @@ function saveEntrega() {
  *                              TABS                             *
  *                            Save Btn                           *
  *****************************************************************/
+
+
+ function loadingSelectCierre(){
+    //--->
+    $("#cierres_origen_grs").empty().append("<option value=\"null\"> - Opciones -</option>")
+
+    let id_advance = $("#id_advance_x").val();
+    
+    let jqxhr = $.getJSON(urlDbTabsCierreR + "/?name=selectCierre&type=cierre&id=" + id_advance, function(data) {
+        })
+        .done(function(data) {
+            //--->
+            $.each(data, function(i, val) {
+                let detail_grs = $("#cierres_origen_grs").append("<option value=\"" + val.detail_grs + " " + val.detail_precio + " " + val.id_advance +"\">" + val.detail_grs + " Grs - $" + val.detail_precio + "</option>");
+            })
+            //--->
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            //--->
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+            $(".loading-origen-x").addClass("d-none")
+            $(".loading-origen").removeClass("d-none")
+        })
+        //--->  
+}
