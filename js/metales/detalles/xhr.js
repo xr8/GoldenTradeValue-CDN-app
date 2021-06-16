@@ -1,45 +1,5 @@
 /*****************************************************************
  *                              BEGIN                            *
- *                           Load Tabs                           *
- *****************************************************************/
- //BEGIN---------------------------------------------------------->
-
-     //BEGIN:--------------------->
-    function loadXhr(){
-        console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
-        
-        //loadingSaldoActual()
-            
-        loadingTabsCierre()
-        loadingTabsEntregas()
-        loadingTabsCierres()
-        loadingTabsPagos()
-
-        loadingMetalesSaldo()
-
-    //--------------------->
-    }
-
-    //BEGIN:--------------------->
-    function refreshXhr(){
-        console.log("%cXHR: %cmetales/detalles refreshXhr", "color: red", "color: green");
-        loadingTabsCierre()
-        loadingTabsEntregas()
-        loadingTabsCierres()
-        loadingTabsPagos()
-
-        loadingMetalesSaldo()
-    //--------------------->
-    }
-
-//END------------------------------------------------------------>
-/*****************************************************************
- *                               End                             *
- *                           Load Tabs                           *
- *****************************************************************/
-
-/*****************************************************************
- *                              BEGIN                            *
  *                              TABS                             *
  *****************************************************************/
  //BEGIN---------------------------------------------------------->
@@ -70,11 +30,14 @@
                         let m_id  = zerocien(parseInt())
                         let mc_id = zerocien(parseInt(val.id))
                         
+                        /*
                         if (parseFloat(val.detail_grs) == 0) {
                             checkbox =  '    <th scope="row"></th>';
                         } else {
                             checkbox = '    <th scope="row"><input type="checkbox" value="' + val.id_advance + '" class="checkCierre checkboxCierre" name="id_advance_cierre"></th>';
                         }
+                        */
+                        checkbox =  '    <th scope="row"></th>';
 
 
                         if (parseFloat(val.detail_grs) == 0) {
@@ -154,7 +117,7 @@
             .done(function(data) {
                 //--->
                 $.each(data, function(i, val) {
-                    $("")
+
                     if(val.Code == 104){
 
                         $("#loadingMetalesEntregas")
@@ -164,11 +127,20 @@
                             )
 
                     }else{
+                        
+                        if(parseInt(val.entregas_fino) == 0){
+                            var xCheck  = ''
+                            var x_color = 'bg-warning'
+                            }else{
+                                var x_color = ''
+                                var xCheck  = '<input type="checkbox" class="checkEntregas checkboxEntregas ' + val.id_advance + '" name="id_advance_entregas">'
+                            }
+
                         $("#loadingMetalesEntregas")
                             .fadeIn(3000)
                             .append(
-                                '<tr class="' + val.id_advance + '">' +
-                                '    <th scope="row"><input type="checkbox" class="checkEntregas checkboxEntregas ' + val.id_advance + '" name="id_advance_entregas"></th>' +
+                                '<tr class="' + x_color + ' ' +  val.id_advance + '">' +
+                                '    <th scope="row">' + xCheck + '</th>' +
                                 '    <td>' + val.id + '</td>' +
                                 '    <td>' + val.time + '</td>' +
                                 '    <td>' + zerocien(val.entregas_no_vale) + '</td>' +
@@ -176,7 +148,8 @@
                                 '    <td>' + val.entregas_grs_af + '</td>' +
                                 '    <td>' + val.entregas_barra + ' Grs</td>' +
                                 '    <td>' + val.entregas_ley + '</td>' +
-                                '    <td class="fino ' + val.id_advance + '">' + val.entregas_fino + ' Grs</td>' +
+                                '    <td class="finoOriginal ' + val.id_advance + '">' + val.entregas_fino_original + ' Grs</td>' +
+                                '    <td class="fino bg-success ' + val.id_advance + '">' + val.entregas_fino + ' Grs</td>' +
                                 '</tr>     '
                         )
                     }
@@ -297,45 +270,6 @@
             })
             //--->  
     }
-    //BEGIN:---------------------> saldo
-    function loadingMetalesSaldo() {
-        //--->
-        console.log("%cXHR: %cmetales/detalles loadingMetalesSaldo", "color: red", "color: green");
-        $("#loadingMetalesCierres").fadeIn().empty()
-
-        let id_advance = $("#id_advance_x").val();
-
-        let jqxhr = $.getJSON(urlSaldoR + "/?name=Saldo&type=saldo&id=" + id_advance, function(data) {
-            })
-            .done(function(data) {
-                //--->
-                $.each(data, function(i, val) {
-                    if(val.Error){
-                        console.error("%cXHR: %cmetales/detalles Error DB saldo", "color: red", "color: yellow");
-                    }else{
-                        //$("#btnModalSaldo").hide()
-                        //$("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").show()
-
-                        $(".saldoActual").html(val.detail_saldo_actual)
-                
-                        $("#xhrCliente").html(val.firstname + " " + val.secondname)
-                        $("#xhrSaldo").html(val.detail_saldo_actual)
-                        $("#xhrCliente").show()
-                        $("#xhrSaldotxt").show()
-                    }
-                })
-                    //--->
-            })
-            .fail(function(data, jqXHR, textStatus, errorThrown) {
-                //--->
-                console.info("Run: all user loading error");
-                xhrError(jqXHR, textStatus, errorThrown);
-            })
-            .always(function(data) {
-            })
-            //--->  
-    }
-
 //END------------------------------------------------------------>
 /*****************************************************************
  *                               End                             *
@@ -350,7 +284,7 @@
  //BEGIN---------------------------------------------------------->
     
     //BEGIN:---------------------> generar cierre
-    function saveDataCierre(){
+function saveDataCierre(){
         /*
             id="generar_c_fecha"
             id="generar_c_tipo"
@@ -405,16 +339,14 @@
                     xhrError(jqXHR, textStatus, errorThrown);
                 })
                 .always(function(data) {
-                    clearUnicaInput()
+                    //clearUnicaInput()
+                    clsModalCierre()
                     refreshXhr()      
                     console.info("Run: all user always");
                 }) 
 
-    }
-//metalesdetalles/readerdata/?type=saldo&id=C-zr8h0iji96crde
-//BEGIN:--------------------->  
-/*Entrega Unica*/
-function saveEntrega() {
+}
+function saveEntrega(){
     console.log("BTN SAVE");
     /*
     --->    Generar Entrega
@@ -453,11 +385,13 @@ function saveEntrega() {
     
     let save_nolext     = $("#input_nolext").val();
     let save_grsaf      = $("#input_grsaf").val();
+    let input_emnvaleE1 = $("#input_novale").val();
 
     let save_barra      = $("#input_barra").val();
     let save_ley        = $("#input_ley").val();
-
     let save_fino       = $("#input_fino").val();
+
+    /*
     let save_finopza    = $("#input_finopza").val();
 
     let save_importe    = $("#input_importe").val();
@@ -465,8 +399,8 @@ function saveEntrega() {
 
     let save_total      = $("#input_total").val();
     let save_saldo      = $("#input_saldo").val();
-
-    let input_emnvaleE1 = $("#input_novale").val();
+    */
+    
             /*
         save_id_advance: Un6jmxDklzUwyJBGbw9r
         save_nolext: 
@@ -543,7 +477,8 @@ function saveEntrega() {
             xhrError(jqXHR, textStatus, errorThrown);
         })
         .always(function(data) {
-            clearUnicaInput()
+            //clearUnicaInput()
+            clsEntrega()
             refreshXhr()            
             console.info("Run: all user always");
         })
@@ -611,105 +546,59 @@ function saveDataCierres(){
             xhrError(jqXHR, textStatus, errorThrown);
         })
         .always(function(data) {
-            clearCierres()
+            clsCierres()
+            refreshXhr()
             $('#cierresModal').modal('hide')
+            console.info("Run: all user always");
+        })
+
+}
+function saveTabsPagos(){
+    console.log("BTN SAVE");
+
+    let generarPagoTotal     = $("#generarPagoTotal").val()
+    let generarPago          = $("#generarPago").val()
+    let generarTipoPago      = $("#generarTipoPago").val()
+    let generarSaldo         = $("#generarSaldo").val()
+    let generarObservaciones = $("#generarObservaciones").val()
+    
+    let settings = {
+        "url": urlDbTabsPagosC + '?type=pagos',
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+            "save_id_advance"         : $('input[type="checkbox"]:checked').val(),
+            "save_id_advance_user"    : $("#id_advance_x").val(),
+            "generarPagoTotal"        : generarPagoTotal     ,
+            "generarPago"             : generarPago          ,
+            "generarTipoPago"         : generarTipoPago      ,
+            "generarSaldo"            : generarSaldo         ,
+            "generarObservaciones"    : generarObservaciones 
+        }
+    };
+
+    let jqxhr1 = $.ajax(settings).done(function(response) {
+            console.log("Run: Cierres")
+        })
+        .done(function(data) {
+            $.each(data, function(i, val) {})
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+            //btnDisables()
+            clsPagos()
             refreshXhr()
             console.info("Run: all user always");
         })
 
 }
- //BEGIN---------------------------------------------------------->
-
-    //BEGIN:--------------------->
-    function loadingVale(typeX) {
-        //--->
-        console.log("%cXHR: %cloadinngVale", "color: red", "color: green");
-        
-        if(typeX == "unica"){
-            x_id="input_eu_nvale"
-        }else if(typeX == "nueva"){
-            x_id="input_emnvaleE1"
-        }else if(typeX == "entrega"){
-            x_id="input_novale"
-        }else if(typeX == "cierresimple"){
-            x_id="save_vale_cs"
-        }else if(typeX == "save_cierredos"){
-            x_id="save_cierredos"
-    }
-
-        let jqxhr = $.getJSON(urlValeR + "/?name=novale&type=actual", function(data) {
-            })
-            .done(function(data) {
-                $.each(data, function(i, val) {
-
-                    if(val.detail_id_advance == null){
-
-                        }else{
-
-                            }
-                    $("#"+x_id).val(parseInt(val.id)+1)
-
-                    })
-            })
-            .fail(function(data, jqXHR, textStatus, errorThrown) {
-                //--->
-                console.info("Run: all user loading error");
-                xhrError(jqXHR, textStatus, errorThrown);
-            })
-            .always(function(data) {
-//                $("#input_cs_precio").val($('.'+$('input[type="checkbox"]').val()+'.precio').html())
-            })
-            //--->  
-    }
- //END---------------------------------------------------------->
-
-    //BEGIN:---------------------> pagos
-    function saveTabsPagos(){
-        console.log("BTN SAVE");
-
-        let generarPagoTotal     = $("#generarPagoTotal").val()
-        let generarPago          = $("#generarPago").val()
-        let generarTipoPago      = $("#generarTipoPago").val()
-        let generarSaldo         = $("#generarSaldo").val()
-        let generarObservaciones = $("#generarObservaciones").val()
-        
-        let settings = {
-            "url": urlDbTabsPagosC + '?type=pagos',
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                /*"Authorization": "Basic cm9vdDphZG1pbg==",*/
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            "data": {
-                "save_id_advance"         : $('input[type="checkbox"]:checked').val(),
-                "save_id_advance_user"    : $("#id_advance_x").val(),
-                "generarPagoTotal"        : generarPagoTotal     ,
-                "generarPago"             : generarPago          ,
-                "generarTipoPago"         : generarTipoPago      ,
-                "generarSaldo"            : generarSaldo         ,
-                "generarObservaciones"    : generarObservaciones 
-            }
-        };
-
-        let jqxhr1 = $.ajax(settings).done(function(response) {
-                console.log("Run: Cierres")
-            })
-            .done(function(data) {
-                $.each(data, function(i, val) {})
-            })
-            .fail(function(data, jqXHR, textStatus, errorThrown) {
-                console.info("Run: all user loading error");
-                xhrError(jqXHR, textStatus, errorThrown);
-            })
-            .always(function(data) {
-                //btnDisables()
-                refreshXhr()
-                console.info("Run: all user always");
-            })
-
-    }
-
 //END------------------------------------------------------------>
 /*****************************************************************
  *                            - BEGIN -                          *
@@ -717,8 +606,44 @@ function saveDataCierres(){
  *                            Save Btn                           *
  *****************************************************************/
 
+function loadingMetalesSaldo(){
+    //--->
+    console.log("%cXHR: %cmetales/detalles loadingMetalesSaldo", "color: red", "color: green");
+    $("#loadingMetalesCierres").fadeIn().empty()
 
- function loadingSelectCierre(){
+    let id_advance = $("#id_advance_x").val();
+
+    let jqxhr = $.getJSON(urlSaldoR + "/?name=Saldo&type=saldo&id=" + id_advance, function(data) {
+        })
+        .done(function(data) {
+            //--->
+            $.each(data, function(i, val) {
+                if(val.Error){
+                    console.error("%cXHR: %cmetales/detalles Error DB saldo", "color: red", "color: yellow");
+                }else{
+                    //$("#btnModalSaldo").hide()
+                    //$("#btnModalCierre,#btnModalEntrega,#btnentregasMultipleModal,#btnModalEntregaUnica,#reloadCaja").show()
+
+                    $(".saldoActual").html(val.detail_saldo_actual)
+            
+                    $("#xhrCliente").html(val.firstname + " " + val.secondname)
+                    $("#xhrSaldo").html(val.detail_saldo_actual)
+                    $("#xhrCliente").show()
+                    $("#xhrSaldotxt").show()
+                }
+            })
+                //--->
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            //--->
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+        })
+        //--->  
+}
+function loadingSelectCierre(){
     //--->
     $("#cierres_origen_grs").empty().append("<option value=\"null\"> - Opciones -</option>")
 
@@ -729,7 +654,10 @@ function saveDataCierres(){
         .done(function(data) {
             //--->
             $.each(data, function(i, val) {
-                let detail_grs = $("#cierres_origen_grs").append("<option value=\"" + val.detail_grs + " " + val.detail_precio + " " + val.id_advance +"\">" + val.detail_grs + " Grs - $" + val.detail_precio + "</option>");
+                if(val.detail_grs > 0){
+                    let detail_grs = $("#cierres_origen_grs").append("<option value=\"" + val.detail_grs + " " + val.detail_precio + " " + val.id_advance +"\">" + val.detail_grs + " Grs - $" + val.detail_precio + "</option>");
+                }
+                
             })
             //--->
         })
@@ -741,6 +669,35 @@ function saveDataCierres(){
         .always(function(data) {
             $(".loading-origen-x").addClass("d-none")
             $(".loading-origen").removeClass("d-none")
+        })
+        //--->  
+}
+function loadingSelectCierreMul(){
+    //--->
+    $("#cierres_origen_grs_mul").empty().append("<option value=\"null\"> - Opciones -</option>")
+
+    let id_advance = $("#id_advance_x").val();
+    
+    let jqxhr = $.getJSON(urlDbTabsCierreR + "/?name=selectCierre&type=cierre&id=" + id_advance, function(data) {
+        })
+        .done(function(data) {
+            //--->
+            $.each(data, function(i, val) {
+                if(val.detail_grs > 0){
+                    let detail_grs = $("#cierres_origen_grs_mul").append("<option value=\"" + val.detail_grs + " " + val.detail_precio + " " + val.id_advance +"\">" + val.detail_grs + " Grs - $" + val.detail_precio + "</option>");
+                }
+                
+            })
+            //--->
+        })
+        .fail(function(data, jqXHR, textStatus, errorThrown) {
+            console.info("Run: all user loading error");
+            xhrError(jqXHR, textStatus, errorThrown);
+        })
+        .always(function(data) {
+            $(".loading-origen-x-mul").addClass("d-none")
+            
+            $(".loading-origen-mul").removeClass("d-none")
         })
         //--->  
 }

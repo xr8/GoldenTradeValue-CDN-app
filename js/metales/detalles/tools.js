@@ -22,7 +22,7 @@ function  allTools(){
     plusEntrada()
     btnDeleteEntregas()    
     */
-    $("#cierres_id_advance").val(makeid(20))
+    $("#cierres_id_advance,#cierres_id_advance_mul").val(makeid(20))
 
 }
 function allModal(){
@@ -34,73 +34,44 @@ function allModal(){
 }
 function allBtn(){
     btnCierre()
-    //btnPagos()
     btnEntrega()
     btnCierreS()
-    
+    btnPagos()
+}
+function loadXhr(){
+    console.log("%cXHR: %cmetales/detalles loadXhr", "color: red", "color: green");
+
+    loadingTabsCierre()
+    loadingTabsEntregas()
+    loadingTabsCierres()
+    loadingTabsPagos()
+
+    loadingMetalesSaldo()
+}
+function refreshXhr(){
+    console.log("%cXHR: %cmetales/detalles refreshXhr", "color: red", "color: green");
+    loadingTabsCierre()
+    loadingTabsEntregas()
+    loadingTabsCierres()
+    loadingTabsPagos()
+
+    loadingMetalesSaldo()
 }
 /************************************************************/
 /*                           TOOLS                          */
 /************************************************************/
+function clearUnicaInput(){
+    //Entregas
+    $("#input_barra,#input_ley,#input_fino").val("")
+    $("#input_fino").attr("title","barra * ley / 24k = fino");
+    //Cierres
+    $("#input_finopza,#input_importe").val("")
+    //Pagos
+    $("#input_total,#input_pagos,#input_saldo").val("")
 
-//--------------------------------------------------------------->
-function checkOnlyOne(){
-    $(document).on('click', 'input[type="checkbox"]', function() {
-        x = $('input[type="checkbox"]').not(this).prop('checked', false)
-  
-        let y = $(this).val();
-  
-        //--------------------->
-        if($('input[type="checkbox"]').is(':checked')){
-            clearCierres()
-
-            $("#btnModalCierres").attr("disabled",false)
-
-            let checkEntregas = $('input[type="checkbox"]:checked').attr('class')
-                checkEntregas = checkEntregas.split(" ")
-            
-            switch(checkEntregas[0]){
-                case 'checkCierre':
-                    alert("cierre")
-                    break;
-                case 'checkEntregas':
-                    alert("entregas")
-                    break;
-                case 'checkECierres':   
-                    alert("cierres")
-                    break;
-                case 'checkPagos':   
-                    alert("pagos")
-                    break;
-                default:
-                    alert("default")
-                    break;
-              }
-
-        }else{
-            $("#btnModalCierres").attr("disabled",true)
-            alert("checked false")
-        }
-        //--------------------->
-    })
+    $("#input_eunvale,#input_eu_nolext,#input_eu_grsaf,#metales_eu_precio,#input_eu_barra,#input_eu_ley,#input_eu_fino,#input_eu_finopza,#input_eu_importe,#input_eu_pagos,#input_eu_total,#input_eu_saldo").val("")
 }
-function clearCierres(){
-    $("#cierresTxt").html("00.00 Grs")
 
-    var $select = $('#cierres_origen,#cierres_origen_grs');
-        $select.val("null");
-        
-        $("#cierres_origen_grs").empty().append("<option value=\"null\"> - Opciones -</option>")
-
-        $("#generar_fino_pza,#generar_precio,#generar_importe").val("")
-
-        //$('input[type="checkbox"]').not(this).prop('checked', false);
-        
-        //$("#btnModalCierres").attr("disabled",true)
-}
-/************************************************************/
-/*                                                          */
-/************************************************************/
 function changeOrigenGrs(){
     $("#cierres_origen").on('change',function() {
         
@@ -135,7 +106,7 @@ function finoChange_C(){
 
         let generar_fino_pza = $("#generar_fino_pza").val()
 
-        if(cierresTxt[0] >= generar_fino_pza){
+        if(cierresTxt[0] >= parseFloat(generar_fino_pza)){
             
             let generar_fino_pza = parseFloat($(this).val())
             let generar_precio   = parseFloat($("#generar_precio").val())
@@ -149,59 +120,60 @@ function finoChange_C(){
         
     })        
 }
+function fino_eu_Change(){
+    console.log("Run: fino_eu_Change")
+    //A)input_eu_barra - input_eu_ley - input_eu_fino
+    $("#input_eu_gr,#input_eu_ley").on('click',function(){
+        if($("#input_eu_grs").val()){
+            $(this).val("")
+            $("#input_eu_fino").val("")
+        }        
+        if($("#input_eu_ley").val()){
+            $(this).val("")
+            $("#input_eu_fino").val("")
+        }  
+    })
 
+    //B Calcular el fino 
+    $("#input_eu_grs,#input_eu_ley").on('change',function() {
+        inputCalcular_eu_Importe()
+        //inputCalcular_eu_Saldo()
+    })
+    //c cierres
+    $("#input_eu_precio").on('click',function(){
+        if($("#input_eu_precio").val()){
+            $(this).val("")
+            $("#input_eu_importe").val("")
+        }              
+    })    
+    $("#input_eu_precio").on('change',function() {
+        inputCalcular_eu_ImporteFP()
+    })
 
+   //D
+   $("#input_eu_finopza").on('click',function(){
+        if($("#input_eu_finopza").val()){
+            $(this).val("")
+        }              
+    })  
 
+    $("#input_eu_finopza").on('change',function(){
+        inputCalcular_eu_ImportePza()
+    })  
 
+    //E PAGOS
+    $("#input_eu_pagos").on('click',function(){
+        if($("#input_eu_pagos").val()){
+            $(this).val("")
+        }              
+    })  
 
+    $("#input_eu_pagos").on('change',function(){
+        inputCalcular_eu_Saldo()
+    })  
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-function btnDisables(){
-    $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled",true).removeClass('btn-primary').addClass('btn-secondary');
 }
-function btnEnables(){
-    $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled",false).removeClass('btn-secondary').addClass('btn-primary');
-}
-//---------------------> loadingMetalesReaderEntregas() 
-function zerocien(x) {
-    //x >1,=1,<9,=9   x = 1...9                      0009
-    if (x == 1 || x <= 9) {
-        y = "000" + x;
-        //x >= 10 and x x == 99 x = 10...99     0099
-    } else if (x == 10 || x <= 99) {
-        y = "00" + x;
-        //x >= 100 and x x == 999 x = 100...999 0999
-    } else if (x == 100 || x <= 999) {
-        y = "0" + x;
-        //x >= 1000 x = 1000 .... °°            9999
-    } else if (x >= 1000) {
-        y = x;
-    } else { y = x; }
-
-    return y;
-}
-function zeronull(x) {
-    //x >1,=1,<9,=9   x = 1...9                      0009
-    if (x == null || x==0) {
-        y = "sin informacion";
-    }
-
-    return y;
-}
-
-
-
 function finoChange(){
     //A)
     $("#input_fino,#input_finopza").val("")
@@ -319,7 +291,21 @@ function finoChange(){
     
 }
 
+function btnDisables(){
+    $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled",true).removeClass('btn-primary').addClass('btn-secondary');
+}
+function btnEnables(){
+    $("#btnModalCierreSimple,#btnModalEntrega,#btnModalCierreDos").attr("disabled",false).removeClass('btn-secondary').addClass('btn-primary');
+}
 
+function zeronull(x) {
+    //x >1,=1,<9,=9   x = 1...9                      0009
+    if (x == null || x==0) {
+        y = "sin informacion";
+    }
+
+    return y;
+}
 function inputCalcularImporte(){
     /*
        id="input_barra"
@@ -411,11 +397,6 @@ function inputCalcularSaldo(){
         }
 
 }
-//--------------------------------------------------------------->
-
-//--------------------------------------------------------------->
-
-
 function btnDeleteEntregas(){
     console.log("Run: btnDeleteEntregas")
     $(".btnDeleteEntregas").on('click',function(){
@@ -424,9 +405,6 @@ function btnDeleteEntregas(){
             $("."+yyy[2]).remove();
     })
 }
-//--------------------------------------------------------------->
-
-//--------------------------------------------------------------->
 function inputSaldo(x){
     /*
     input_total
@@ -444,7 +422,6 @@ function inputSaldo(x){
     //Result
     //$("#input_saldo").val(parseFloat(x) + parseFloat(input_saldo[1]) - parseFloat(input_pagos))
 }
-//--------------------------------------------------------------->
 function changeFino() {
 
     $("#generarBarra,#generarLey").change(function() {
@@ -466,7 +443,6 @@ function changeFino() {
 
     });
 }
-//--------------------------------------------------------------->
 function makeid(length) {
     var result           = [];
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

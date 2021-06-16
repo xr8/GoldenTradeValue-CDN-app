@@ -92,26 +92,19 @@ function btnEntregaUnica(){
 /************************************************************/
 /*                            MODAL                         */
 /************************************************************/
-
-/********************************/
-/*    Tabs Generar Cierre       */
-/********************************/
 function clickModalCierre(){
     $("#btnModalCierre").on('click',function() {
-        console.info("Run: Click Btn cierre 123321")
-        $("#generar_c_fecha,#generar_c_tipo,#generar_c_grs,#generar_c_precio").val("")
+        console.info("Run: Click Btn cierre")
+        clsModalCierre()
     })
 }
-/********************************/
-/*           Entrega Nueva      */
-/********************************/
 function clickModalEntrega(){
     $("#btnModalEntrega").on('click',function() {
         
         $(".ge-show").fadeOut().addClass("d-none")
         $(".ge-show-load").fadeIn().removeClass("d-none")
 
-        btnId = $('input[type="checkbox"]:checked').val();
+        btnId = $('input[type="checkbox"]:checked').val()
         
         $("#metalesPrecio").empty().append($(".precio_id." + btnId).text())
         $("#metalesPrecioInput").empty().val($(".precio_id." + btnId).text())
@@ -125,37 +118,38 @@ function clickModalEntrega(){
         loadingVale(typeX)
     })
 }
-
-/********************************/
-/*    Tabs Generar Cierres      */
-/********************************/
 function clickModalCierres(){
     $("#btnModalCierres").on('click',function(){
         
-        let checkEntregas = $('input[type="checkbox"]:checked').attr('class')
-        checkEntregas = checkEntregas.split(" ")
+        
+        /*
+        var checkEntregas = $('input[type="checkbox"]:checked').attr('class');
+            checkEntregas = checkEntregas.split(" ");
         
         x = $("td.fino." + checkEntregas[2]).html()
         $("#cierresTxt").html(x)
-        
+        */
+        /*
         let xyz = $('input[type="checkbox"]:checked').attr('class')
                 xyz = xyz.split(" ")
 
         $("#cierre_id_advance").val(xyz[2])
 
-        $('input[type="checkbox"]').not(this).prop('checked', false);
+        //$('input[type="checkbox"]').not(this).prop('checked', false);
         setTimeout(function(){
-            $("#btnModalCierres").attr("disabled",true)
+            $("#btnMenuCierres").attr("disabled",true)
         }, 2000);
+        */
         
     })
+
+    $("#btnModalCierresMultiple").on('click',function(){
+        loadingSelectCierreMul()
+    })
 }
-/********************************/
-/*    Tabs Generar Pagos        */
-/********************************/
 function clickModalPagos(){
     $("#btnModalPagos").on('click',function() {
-        console.info("Run: Click Btn cierre 123321")
+        console.info("Run: Click Btn pago")
 
         $("#generarSaldo").val($("#xhrSaldo").html())
         //btnPagosSaldo()
@@ -166,10 +160,6 @@ function clickModalPagos(){
 /************************************************************/
 /*                            SAVE                          */
 /************************************************************/
-
-/********************************/
-/*    Tabs Generar Cierre       */
-/********************************/
 function btnCierre(){
     $("#btnGenerarCierre").on('click',function() { 
         console.log("Btn generar cierre")
@@ -177,18 +167,22 @@ function btnCierre(){
         saveDataCierre()
     }) 
 }
-/********************************/
-/*           Entrega Nueva      */
-/********************************/
 function btnEntrega(){
     $("#btnGenerarEntrega").on('click',function() { 
         saveEntrega()
     })
 }
-
 function btnCierreS(){
     $("#btnGenerarCierres").on('click',function() { 
         console.info("Run: Click Btn cierre simple")
-        saveDataCierres()       
+        saveDataCierres()
+        $('#cierresModal').modal('hide')
+    })
+}
+function btnPagos(){
+    $("#btnGenerarPago").on('click',function() { 
+        console.info("Run: Click Btn cierre simple")
+        saveTabsPagos()
+        $('#pagosModal').modal('hide')
     })
 }

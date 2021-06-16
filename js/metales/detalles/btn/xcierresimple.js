@@ -67,17 +67,7 @@ function btnEntregaUnica(){
         saveEntregaUnica()
     })
 }
-function clearUnicaInput(){
-    //Entregas
-    $("#input_barra,#input_ley,#input_fino").val("")
-    $("#input_fino").attr("title","barra * ley / 24k = fino");
-    //Cierres
-    $("#input_finopza,#input_importe").val("")
-    //Pagos
-    $("#input_total,#input_pagos,#input_saldo").val("")
 
-    $("#input_eunvale,#input_eu_nolext,#input_eu_grsaf,#metales_eu_precio,#input_eu_barra,#input_eu_ley,#input_eu_fino,#input_eu_finopza,#input_eu_importe,#input_eu_pagos,#input_eu_total,#input_eu_saldo").val("")
-}
 function fino_eu_Change(){
     console.log("Run: fino_eu_Change")
     //A)input_eu_barra - input_eu_ley - input_eu_fino
